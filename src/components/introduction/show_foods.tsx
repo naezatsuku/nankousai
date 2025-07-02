@@ -25,15 +25,15 @@ export default function GetFood(
 
     useEffect(() => {
         const getData = async () => {
-            const result = await getFoodData()
+            
+            const result = await getFoodData(name)
+            console.log(result);
             if(result == null || result == "failed") {
                 console.log("failed")
                 return
             }
-            const foundData = result.filter((value) => (
-                value.name == name
-            ))
-            setData(foundData)
+            
+            setData(result)
         }
 
         getData()

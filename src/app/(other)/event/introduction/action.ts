@@ -12,17 +12,18 @@ export async function getEventDetails(name:string) {
     const allEvents = event?.concat(new_event)
 
     if(allEvents == null) {
+        
         return "failed"
     }
 
     let newContent = allEvents?.find((value) => (
-        value.name == name
+        value.className == name
     ))
 
-    // console.log(newContent)
+     //console.log(newContent)
 
-    const {data:detail} = await supabase.from('introduction').select(`title, content`).eq("name", name)
-
+    const {data:detail} = await supabase.from('introduction').select(`title, content`).eq("className", name)
+    
     let details:any = []
 
     if(detail == null) {
@@ -93,10 +94,24 @@ export async function getEventDetails(name:string) {
     newEvent.tags = tags
 
     // console.log(tags)
+    //ここにURLを作る新しく作ったimgにそれを保存これは背景のがぞうのURLです
+    if(newEvent.imageBackURL){
+            const filePath = newEvent.imageBackURL;
+            const version = newEvent.imageVersion;
+            const {data}= supabase
+            .storage
+            .from("class-img")
+            .getPublicUrl(filePath)
+            const url = `${data.publicUrl}?v=${version}`;
+            newEvent.img=url;
+            console.log(newEvent.img)
+        }else{
+            newEvent.img= null;
+        }
 
     const result = {
         event:newEvent, detail:details
     }
-
+    
     return result
 }

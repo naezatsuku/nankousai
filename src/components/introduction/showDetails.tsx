@@ -21,6 +21,7 @@ const kaiseiDecol = KaiseiDecol
 
 type eventData = {
     event:{
+        img: string;
         title:string,
         comment:string,
         place:string,
@@ -45,7 +46,7 @@ export default function ShowDetails (
     {event, detail, name}:eventData
 ) {
     const [date, setDate] = useState(false)
-
+    console.log(event);
     const onMenuClicked = () => {
         if(date == false) {
             setDate(true)
@@ -94,54 +95,19 @@ export default function ShowDetails (
         {id:"other", name:"その他", color:"from-sky-600 to-sky-200"},
     ]
 
-    const imgs = [
-        {name:"高校軽音楽部", img:"/Firefly ドラム ギター キーボード ライブ 36783.jpg"},
-        {name:"高校ダンス部", img:"/Firefly kPOP ダンス シルエット ステージの上 複数人 21761 (1).jpg"},
-        {name:"プラネタリウム", img:"/Firefly Planetarium 星空 67264.jpg"},
-        {name:"高校演劇部", img:"/Firefly across the border 83580.jpg"},
-        {name:"科学部", img:"/Firefly 科学部 試験管 フラスコ 机 白 人無し 19210 (1).jpg"},
-        {name:"弦楽部", img:"/Firefly 弦楽部 バイオリン 教室 59986.jpg"},
-        {name:"高校料理部", img:"/Firefly 厨房 お菓子作り 白 23408.jpg"},
-        {name:"文芸同好会", img:"/Firefly 本 おとぎ話 47001.jpg"},
-        {name:"美術部", img:"/美術部_背景.png"},
-        {name:"茶道部", img:"/Firefly 茶道 和室 日本庭園 49822.jpg"},
-        {name:"食堂", img:"/食堂.png"},
-        {name:"中学1年1組", img:"/中1-1背景.png"},
-        {name:"中学1年2組", img:"/中1-2背景.png"},
-        {name:"中学1年3組", img:"/中1-3背景.png"},
-        {name:"中学1年4組", img:"/中1-4背景.png"},
-        {name:"中学2年1組", img:"/中2-1背景.png"},
-        {name:"中学2年2組", img:"/中2-2背景.png"},
-        {name:"中学2年3組", img:"/中2-3背景.png"},
-        {name:"中学2年4組", img:"/中2-4背景.png"},
-        {name:"中学3年1組", img:"/中3-1背景.png"},
-        {name:"中学3年2組", img:"/中3-2背景.png"},
-        {name:"中学3年3組", img:"/中3-3背景.png"},
-        {name:"中学3年4組", img:"/中3-4背景.png"},
-        {name:"高校1年1組", img:"/高1-1背景.png"},
-        {name:"高校1年2組", img:"/高1-2背景.png"},
-        {name:"高校1年3組", img:"/高1-3背景.png"},
-        {name:"高校1年4組", img:"/高1-4背景.png"},
-        {name:"高校1年5組", img:"/高1-5背景.png"},
-        {name:"高校2年1組", img:"/高2-1背景.png"},
-        {name:"高校2年2組", img:"/高2-2背景.png"},
-        {name:"高校2年3組", img:"/高2-3背景.png"},
-        {name:"高校2年4組", img:"/高2-4背景.png"},
-        {name:"高校2年5組", img:"/高2-5背景.png"},
-        {name:"学校紹介", img:"/IMGR6082.JPG"},
-    ]
+    const foodClass=[
+        {name:"高校3年1組"},
+        {name:"高校3年2組"},
+        {name:"高校3年3組"},
+        {name:"高校3年4組"},
+        {name:"高校3年5組"}
 
+    ]
     let img_tag = ""
-    
-    if(imgs.some(
-        n => n.name == name
-    )) {
-        console.log("aaaaaaaa")
-        const found = imgs.find((e) => e.name == name)
-        if(found != null) {
-            img_tag = found.img
-        }
-    } else {
+    //nameはクラス名
+    if(!foodClass.some(n=>n.name == name)){
+        img_tag = event.img;
+    }else{
         if(event.type == "フード") {
             img_tag = "/burger-2762431_1920.jpg"
         } else {
@@ -156,7 +122,8 @@ export default function ShowDetails (
             newDetails.push(detail[i])
         }
     }
-
+    
+    //テーマによって色を変える
     const setTextColor = (e:any, type:string) => {
         let result = ""
 
@@ -287,6 +254,7 @@ export default function ShowDetails (
                     <div className="w-full px-[4vw] lg:px-6 mb-[15vw] lg:w-[80%] lg:mx-auto lg:mb-6">
                         <GetFood name={name}></GetFood>
                     </div>
+                    
                 }
                 {event.available == true ?
                 <div>

@@ -1,5 +1,9 @@
+export const dynamic   = "force-dynamic";
+export const revalidate = 0;
+
 import { serverClient } from "@/utils/supabase/server";
 import ShowEvent from "./show_event_all";
+import { fileURLToPath } from "url";
 
 export default async function GetEvent() {
     const supabase = await serverClient()
@@ -8,8 +12,11 @@ export default async function GetEvent() {
     const {data:new_event} = await supabase.from('new_content').select(`*` );
 
     const allEvents = events?.concat(new_event);
-
+    console.log(allEvents)
     let eventData = []
+    
+
+   
 
     
     for(let i = 0; i < allEvents!.length; i++) {
@@ -75,11 +82,23 @@ export default async function GetEvent() {
             }
             item.time= newTimes
         }
-
+ 
 
         item.types = types
         item.tags = tags
-        item.img = `/${item.className}.png`
+        if(item.imageURL){
+            const filePath = item.imageURL;
+            const version = item.imageVersion;
+            const {data}= supabase
+            .storage
+            .from("class-img")
+            .getPublicUrl(filePath)
+            const url = `${data.publicUrl}?v=${version}`;
+            item.img=url;
+        }else{
+            item.img= null;
+        }
+        
         
         const {type,language, genre, create_at, ...newItem} = item
 
@@ -87,7 +106,7 @@ export default async function GetEvent() {
     }
 
 
-    //console.log(eventData)
+    console.log(eventData)
     return(
         <div>
             <ShowEvent contents={eventData}></ShowEvent>

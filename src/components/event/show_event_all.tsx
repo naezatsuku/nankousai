@@ -78,7 +78,7 @@ export default function ShowEvent(
     }
         const findTime = (id:number)=>{
         const data = timeMap.find(item=>item.id == id);
-        console.log(data);
+        
         
         return data 
     }
@@ -99,9 +99,9 @@ export default function ShowEvent(
 
 
     let new_contents = contents
-   // console.log(contents);
+    //console.log(contents);
     let compare = (a:any,b:any) => {
-        if(a.name > b.name) {
+        if(a.className > b.className) {
             return 1;
         } else {
             return -1
@@ -109,7 +109,6 @@ export default function ShowEvent(
     }
 
     new_contents.sort(compare)
-
     const [targetDiv, animateCard] = useAnimate()
     const [hover,setHover] = useState("")
 
@@ -410,10 +409,10 @@ export default function ShowEvent(
                                         <p className={`${setTextColor(value.tags)} font-medium  mb-[2.5%] lg:mt-1 lg:mb-0 lg:text-xl ${value.title.length < 11 ? "text-[4.8vw] mt-[1%]" : "text-[4vw] mt-[1.2%]"} leading-[130%]`}>{value.title}</p>
                                     </motion.div> 
                                 </Link> */}
-                                <Link href={{pathname:"/event/introduction", query:{name:value.name}}} className="">
-                                    <p className={`${setTextColor(value.tags)} pl-[0.5vw] text-[2.5vw] lg:text-xs xl:text-lg lg:pl-0 font-normal`}>{value.name}</p>
+                                <Link href={{pathname:"/event/introduction", query:{name:value.className}}} className="">
+                                    <p className={`${setTextColor(value.tags)} pl-[0.5vw] text-[2.5vw] lg:text-xs xl:text-lg lg:pl-0 font-normal`}>{value.className}</p>
                                 </Link>
-                                <Link href={{pathname:"/event/introduction", query:{name:value.name}}} className="">
+                                <Link href={{pathname:"/event/introduction", query:{name:value.className}}} className="">
                                     <p className={`${setTextColor(value.tags)} font-medium ${text_size(value.title.length)} bottom-[0.5vw] lg:mb-0 lg:text-2xl xl:text-3xl lg:h-[120%] relative lg:bottom-1
                                     `}>{value.title}</p>
                                 </Link>
@@ -446,7 +445,7 @@ export default function ShowEvent(
                             </div>
                             <Link href={{pathname:"/event/introduction", query:{name:value.className}}} replace>
                                 <div className="h-full aspect-square border-l-2 border-gray-50">
-                                    {value.name == "M-box" ?
+                                    {value.img==null ?
                                         <Image placeholder={`data:image/svg+xml;base64,${toBase64(skeleton(128, 160))}`} src={"/1725741490270.jpg"} alt="展示イラスト" width={1000} height={1000} className=" h-full w-full rounded-r-md object-cover"></Image >
                                     :
                                         <Image placeholder={`data:image/svg+xml;base64,${toBase64(skeleton(128, 160))}`} src={value.img} alt="展示イラスト" width={1000} height={1000} className=" h-full w-full rounded-r-md object-cover"></Image >

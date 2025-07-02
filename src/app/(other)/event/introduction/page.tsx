@@ -14,6 +14,7 @@ const kaiseiDecol = KaiseiDecol
 
 type eventData = {
     event:{
+        img:string
         title:string,
         comment:string,
         place:string,
@@ -33,20 +34,22 @@ export default function Page() {
 
     const params = useSearchParams()
     const name = params.get("name")?.toString()
-
+    
     useEffect(() => {
         if(name == undefined) {
             return
         }
-
+        console.log("hello")
         const getData = async () => {
-            const result = await getEventDetails(name) 
+            
+            const result = await getEventDetails(name);
+            console.log(result);
             if(result == null || result == "failed") {
                 return
             }
             setData(result)
         }
-
+        
         getData()
     },[])
 
