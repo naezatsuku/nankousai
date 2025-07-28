@@ -13,7 +13,7 @@ const kaiseiDecol = KaiseiDecol
 
 type events = Array<
     {
-        name:string
+        className:string
         title:string,
         comment:string,
         place:string,
@@ -137,18 +137,19 @@ export default function Page() {
     ]
 
     const getTitle = (name:string) => {
+        console.log(name)
         const found = data?.find((value) => (
-            value.name == name
+            value.className == name
         ))
 
-        return found?.title
+        return found?.title 
     }
 
     
 
     return (
         <div className="py-[30vw] 2xl:py-40 lg:py-32">
-            <title>フロアマップ | 第71回南高祭・展示の部2024</title>      
+            <title>フロアマップ</title>      
             <h1 className={`${kaiseiDecol.className} text-center text-[12vw] text-[darkturquoise] lg:text-6xl 2xl:text-8xl`}>フロアマップ</h1>
 
             <div className="hidden lg:block 2xl:mt-20 lg:mt-14">

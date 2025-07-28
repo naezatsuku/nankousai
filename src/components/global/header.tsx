@@ -77,23 +77,22 @@ export default function Header() {
         {link:"/", name:"トップ"}, 
         {link:"/event", name:"展示一覧"}, 
         {link:"/info#access", name:"アクセス"}, 
-        {link:"/map", name:"マップ"}, 
-        {link:"/timetable", name:"タイムテーブル"},
+        
+        
         {link:"/gallery", name:"ギャラリー"},
     ]
 
     const links_pc = [
         {link:"/event", name:"イベント"}, 
         {link:"/info#access", name:"アクセス"}, 
-        {link:"/map", name:"マップ"}, 
-        {link:"/timetable", name:"タイムテーブル"},
+        
+        
         {link:"/gallery", name:"ギャラリー"},
     ]
 
     const link_pc_mini = [
         {link:"/event", name:"イベント"}, 
-        {link:"/map", name:"マップ"}, 
-        {link:"/timetable", name:"タイムテーブル"},
+        
     ]
 
     const pullDownMenu = () => {

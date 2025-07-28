@@ -1,5 +1,5 @@
 "use client"
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import ScrollContainer from "react-indiana-drag-scroll"
 import Image from "next/image";
 import { MdOutlinePlace } from "react-icons/md";
@@ -15,14 +15,12 @@ import { KaiseiDecol } from "@/app/fonts";
 import ShowTime from "./ShowTime";
 import { supabase } from "@/lib/supabaseClient";
 
-
-
-
 const kaiseiDecol = KaiseiDecol
 
 type Props = {
     contents:Array<{
-        name:string;
+        id:number
+        className:string;
         place:string;
         time:Array<string>;
         comment:string;
@@ -31,9 +29,9 @@ type Props = {
         img:string;
         types:Array<string>;
         tags:Array<string>;
-        id:number;
+        prevTime:number
+        waitTime:number
     }>
-    
 }
 
 type content = {
@@ -47,59 +45,95 @@ type content = {
     types:Array<string>;
     tags:Array<string>;
 }
+type TimeMap ={
+    id:number,
+    className:string
+    prevTime:number
+    waitTime:number
+}
+const STORAGE_KEY = 'refreshCooldownEnd'
 
 export default function ShowEvent(
     {contents}:Props
-) { 
-    const [timeMap,setTimeMap] = useState<Array<any>>([]);
-    const fetchData = async ()=>{
-        try{
-            const res = await fetch(`/api/renewAll`,{
-                method:"PATCH",
-                headers:{'Content-Type':"application/json"},
-                body:JSON.stringify({message:"it is patch"})});
-            const data =await  res.json();
-            
-            const MapList:Array<any>=[];
-
-            data.data.map((item:any,index:number) => {
-                const id = item.id;
-                const waitTime = item.waitTime;
-                const prevTime = item.prevTime;
-                const Map = {id:id,waitTime:waitTime,prevTime:prevTime};
-                MapList.push(Map);
-            });
-            
-            setTimeMap(MapList);
-            console.log(timeMap)
-        }catch(error){
-            console.error(error);
-        }
-    }
-        const findTime = (id:number)=>{
-        const data = timeMap.find(item=>item.id == id);
-        
-        
-        return data 
-    }
-    useEffect(()=>{
-        fetchData();
-        const channel = supabase
-        .channel("realtime")
-        .on("postgres_changes",{event : "UPDATE",schema:"public",table:"contents"},(payload)=>{
-            fetchData();
-        })
-        .subscribe();
-        return ()=>{
-            supabase.removeChannel(channel);
-        }
-    },[])
-
-
-
-
+) {
     let new_contents = contents
-    //console.log(contents);
+    const [timeMap,setTimeMap] = useState<Array<TimeMap>>()
+    // クールダウン中フラグ
+    const [cooldown, setCooldown] = useState(false)
+    // 残り時間（秒）
+    const [timeLeft, setTimeLeft] = useState(0)
+    const COOLDOWN_SEC = 600;
+
+    const computeTimeLeft = useCallback(() => {
+        const end = Number(localStorage.getItem(STORAGE_KEY) || 0)
+        const now = Date.now()
+        const diff = Math.ceil((end - now) / 1000)
+        return diff > 0 ? diff : 0
+    }, [])
+    useEffect(() => {
+        const remaining = computeTimeLeft()
+        if (remaining > 0) {
+          setCooldown(true)
+          setTimeLeft(remaining)
+        }
+    }, [computeTimeLeft])
+
+
+
+    const findTime = (id:number)=>{
+        return timeMap?.find((item)=> item.id == id);
+    }
+    const refecth = async ()=>{
+        const {data,error} = await supabase.from("contents").select("id,className,prevTime,waitTime");
+        if(error){
+            return;
+        }
+        const times = data as Array<TimeMap>
+        setTimeMap(times);
+    }
+    const handleRefresh = async ()=>{
+        if(cooldown) return;
+
+        const endTime = Date.now() + COOLDOWN_SEC * 1000
+        localStorage.setItem(STORAGE_KEY, String(endTime))
+
+        setCooldown(true);
+        setTimeLeft(COOLDOWN_SEC);
+        try{
+            await refecth();
+        }finally{
+
+        }
+    }
+    // クールダウン開始後に1秒ごとに timeLeft をデクリメント
+    useEffect(() => {
+      if (!cooldown) return
+
+      const timer = setInterval(() => {
+        setTimeLeft(prev => {
+          if (prev <= 1) {
+            clearInterval(timer)
+            setCooldown(false)
+            return 0
+          }
+          return prev - 1
+        })
+      }, 1000)
+
+      return () => clearInterval(timer)
+    }, [cooldown])
+
+    useEffect(()=>{
+        const setTime = async () =>{
+        const timeMap:TimeMap[]= []
+        for(const {id,className,prevTime,waitTime} of contents){
+            timeMap.push({id,className,prevTime,waitTime});
+        }
+        console.log(timeMap);
+        setTimeMap(timeMap);
+    }
+        setTime()
+    },[contents])
     let compare = (a:any,b:any) => {
         if(a.className > b.className) {
             return 1;
@@ -109,6 +143,7 @@ export default function ShowEvent(
     }
 
     new_contents.sort(compare)
+
     const [targetDiv, animateCard] = useAnimate()
     const [hover,setHover] = useState("")
 
@@ -186,17 +221,15 @@ export default function ShowEvent(
         }
     }
 
-    const initContent = (tag:string | undefined) => {
-        if(tag == undefined) {
-            return new_contents
-        }
-
-        const select = selectCard([tag])
-        return select
-    }
-
-    const init = initContent(type)
-    const [selected_card, setSelectCard] = useState<Array<any>>(init)
+    //initContentをけし、UseEffectで管理
+        const [selected_card, setSelectCard] = useState<Array<any>>([]);
+        useEffect(() => {
+            if (new_contents.length > 0) {
+                const filtered = selectCard(selected);
+                setSelectCard(filtered);
+                setNotfound(filtered.length === 0);
+                }
+            }, [new_contents, selected]);
     
 
     // const textColors = [
@@ -288,10 +321,9 @@ export default function ShowEvent(
         // alert(selected[0])
 
         const selectedData = selectCard(newData)
-    
+        // console.log(selectedData)
         setSelectCard(selectedData)
-        
-         //console.log("取得展示数："+selectedData.length)
+        // console.log("取得展示数："+selectedData.length)
         if(selectedData.length == 0) {
             setNotfound(true)
         } else {
@@ -302,6 +334,10 @@ export default function ShowEvent(
     } 
 
     const miniTagClicked = (e:string) => {
+        if (!Tags.some(item => item.name === e)) {
+          console.log("オリジナルタグです", e);
+          return //いずれクラスオリジナルのみ表示させるかな
+        }
         const newArray = [e]
         const find_tag = Tags.find((value) => value.name == e)
         const otherTags = Tags.filter(value => value.name != e)
@@ -354,7 +390,7 @@ export default function ShowEvent(
         <div className="pb-[20vw] lg:pb-0">
             <div className="">
                 <ScrollContainer>
-                    <div className="flex mt-[5vw] lg:mt-8 lg:mx-6">
+                    <div className="flex mt-[5vw] md:mt-[4vw] lg:mt-8 lg:mx-6">
                         {allTags.map((value:any) => (
                             <motion.div key={value.id} className={`flex-shrink-0 drop-shadow-lg relative  cursor-pointer  rounded-lg mx-[2vw] lg:mx-3 bg-gradient-to-br p-[0.5%] ${value.color} h-[10vw] lg:h-12 lg:p-[2px] inline-block `} variants={variant_tag} animate={selected.includes(value.name) == true ? "selected" : "notoSelected"} transition={{ease:"easeInOut", duration:0.1}}>    
                                 <input 
@@ -384,6 +420,25 @@ export default function ShowEvent(
                 <div className="w-full flex">
                     <p className="cursor-pointer inline-block mx-auto drop-shadow px-[4vw] py-[1vw] rounded-lg bg-slate-100 text-[2.5vw] text-gray-500 mt-[4vw] lg:text-base lg:mt-8 lg:py-1 lg:px-10" onClick={() => {clearTag()}}>選択済みのタグをクリア</p>
                 </div>
+                <div className="fixed inset-x-0 bottom-4 flex justify-center z-50">
+                    <button
+                      onClick={handleRefresh}
+                      disabled={cooldown}
+                      className={`
+                        mx-auto mt-3 px-[4vw] py-[1.2vw] lg:px-6 lg:py-2
+                        bg-gradient-to-br from-[#05bd92] to-[#f3e50a]
+                        text-white rounded-lg drop-shadow-lg transition-transform duration-200
+                        ${cooldown ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'}
+                      `}
+                    >
+                      {cooldown
+                        ? `あと${timeLeft}秒`
+                        : '更新'}
+                    </button>
+                </div>
+
+                
+                
             </div>
             {/* <div>
                 {selected.map((value) => (
@@ -398,17 +453,10 @@ export default function ShowEvent(
                 }
 
                 {selected_card.map((value:any, index:number) => (
-                    
-                    <motion.div  key={find_cardIndex(value)} className="mx-[4vw] h-[36vw] mt-[8vw] lg:mt-10 bg-slate-100  flex justify-between p-[0.2vw] opacity-90 drop-shadow rounded-lg lg:w-[47%] lg:max-w-[580px] lg:h-auto lg:mx-0 lg:aspect-[2.4/1] lg:mb-4 lg:p-[1px]"
+                    <motion.div  key={find_cardIndex(value)} className="w-full  max-w-[92%] mx-auto h-[36vw] my-[4vw] lg:mt-10 bg-slate-100  flex justify-between p-[0.2vw] opacity-90 drop-shadow rounded-lg lg:w-[47%] lg:max-w-[580px] lg:h-auto lg:mx-0 lg:aspect-[2.4/1] lg:mb-4 lg:p-[1px]"
                     initial={{y:20, opacity:0}} animate={selected_card.includes(value)? {y:0, opacity:1} : {y:20, opacity:0}} transition={{ease:"easeOut", duration:0.4, delay:find_cardIndex(value) * 0.05}}>
-                        <div className="w-full h-full rounded-md bg-white flex">
-                            <div className="flex-grow rounded-l-md pl-[2vw] pr-[1vw] my-[2vw] flex flex-col justify-around lg:my-3 lg:pl-4 lg:pr-2">
-                                {/* <Link href={{pathname:"/event/introduction", query:{name:value.name}}} className="relative lg:hidden" replace>
-                                    <motion.div onHoverStart={e => setHover(value.name)} onHoverEnd={e => setHover("")}>
-                                        <p className={`${setTextColor(value.tags)} pl-[0.5vw] text-[2.5vw] lg:text-xs lg:pl-0 font-normal`}>{value.name}</p>
-                                        <p className={`${setTextColor(value.tags)} font-medium  mb-[2.5%] lg:mt-1 lg:mb-0 lg:text-xl ${value.title.length < 11 ? "text-[4.8vw] mt-[1%]" : "text-[4vw] mt-[1.2%]"} leading-[130%]`}>{value.title}</p>
-                                    </motion.div> 
-                                </Link> */}
+                        <div className="w-full h-full rounded-md bg-white flex min-h-0">
+                            <div className="flex-none basis-[calc(63%-1.5vw)] px-[2vw] py-2  lg:pl-2 lg:pr-2  min-w-0  flex flex-col justify-around rounded-l-md">
                                 <Link href={{pathname:"/event/introduction", query:{name:value.className}}} className="">
                                     <p className={`${setTextColor(value.tags)} pl-[0.5vw] text-[2.5vw] lg:text-xs xl:text-lg lg:pl-0 font-normal`}>{value.className}</p>
                                 </Link>
@@ -416,13 +464,14 @@ export default function ShowEvent(
                                     <p className={`${setTextColor(value.tags)} font-medium ${text_size(value.title.length)} bottom-[0.5vw] lg:mb-0 lg:text-2xl xl:text-3xl lg:h-[120%] relative lg:bottom-1
                                     `}>{value.title}</p>
                                 </Link>
-                                
+                                <div className={`font-medium `}>
                                 <div className={`font-medium `}>
                                     <Suspense>
-                                        
                                         <ShowTime TimeMap={findTime(value.id)} ></ShowTime>
                                     </Suspense>
-                                    
+                                                
+                                </div>
+                                                
                                 </div>
                                 <div className="text-[2.5vw] leading-[160%] lg:text-sm flex text-nowrap ">
                                     <p className="flex items-center">
@@ -433,18 +482,26 @@ export default function ShowEvent(
                                         <IoTimeOutline className=" translate-y-[7%] mr-[0.5%]" />
                                         {value.time[0]} {value.time.length > 1 && ` ...`}
                                     </p>
-                                    
                                 </div>
-                                <div className={`w-full flex  lg:my-0 ${value.title.length < 11 ? "my-0": "my-0"}`}>
-                                    {value.types.map((value:string) => (
-                                        <div key={value} className={`w-1/3 aspect-[3.3/1] bg-gradient-to-br ${Tags.find((item) => (item.name == value))?.color} rounded-md flex mr-[5%] opacity-90 cursor-pointer`} onClick={() => {miniTagClicked(value)}}>
-                                            <p className="m-auto text-[2vw] lg:text-xs text-gray-50 font-medium">{value}</p>
-                                        </div>
-                                    ))}
-                                </div>
+                            
+                                <ScrollContainer vertical={false} className={`w-full flex flex-nowrap overflow-x-auto lg:my-0 `}>
+                                        {value.types.map((type:string, idx:number) => (
+                                    <div
+                                        key={`${type}-${idx}`}
+                                        className={`w-1/3 flex-shrink-0 mr-[5%] aspect-[3.3/1] bg-gradient-to-br ${
+                                          Tags.find((item) => item.name === type)?.color ??
+                                          "bg-gradient-to-r from-pink-500 to-pink-300"
+                                        }  text-white  rounded-md flex items-center justify-center opacity-90 cursor-pointer active:scale-95 transition-transform duration-200 hover:opacity-100`}
+                                        onClick={() => miniTagClicked(type)}
+                                    >
+                                        <p className="m-auto text-[2vw] lg:text-xs text-gray-50 font-medium">{type}</p>
+                                    </div>
+                                  ))}
+                                 </ScrollContainer>
+                            
                             </div>
-                            <Link href={{pathname:"/event/introduction", query:{name:value.className}}} replace>
-                                <div className="h-full aspect-square border-l-2 border-gray-50">
+                            <Link href={{pathname:"/viewer/introduction", query:{name:value.className}}} replace className="flex-none w-[calc(35%-1vw)] p-0">
+                                <div className="h-full aspect-square border-l-2 border-gray-50 overflow-hidden">
                                     {value.img==null ?
                                         <Image placeholder={`data:image/svg+xml;base64,${toBase64(skeleton(128, 160))}`} src={"/1725741490270.jpg"} alt="展示イラスト" width={1000} height={1000} className=" h-full w-full rounded-r-md object-cover"></Image >
                                     :
@@ -453,7 +510,6 @@ export default function ShowEvent(
                                     
                                 </div>
                             </Link>
-                            
                         </div>
                         
                     </motion.div>
@@ -461,9 +517,6 @@ export default function ShowEvent(
                 <div className="hidden lg:flex mx-[4vw] h-1 mt-[8vw] lg:mt-10  justify-between p-[0.2vw] opacity-90 drop-shadow rounded-lg lg:w-[47%] lg:max-w-[580px] lg:h-auto lg:mx-0  lg:mb-4 lg:p-[1px]"></div>
                 <div className="hidden 2xl:flex mx-[4vw] h-1 mt-[8vw] lg:mt-10  justify-between p-[0.2vw] opacity-90 drop-shadow rounded-lg lg:w-[47%] lg:max-w-[580px] lg:h-auto lg:mx-0 lg:mb-4 lg:p-[1px]"></div>
             </motion.div>
-            <div>
-                hello
-            </div>
         </div>
     )
 }

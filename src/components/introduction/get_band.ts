@@ -1,14 +1,32 @@
 "use server"
 
-import { serverClient } from "@/utils/supabase/server"
 
-type band_type = {
+import { serverClient } from "@/utils/supabase/server"
+import { UUID } from "crypto"
+type Time_slot = {
+    date:string,
+    time:string
+}
+type RowData = {
+    id:UUID;
+    name:string,
+    time:Array<Time_slot>,
+    comment:string,
+    available:boolean,
+    imgURL:string,
+    imageVersion:string
+}
+type Slot = {
+    id:UUID,
     name:string,
     time:string,
+    date:string,
     comment:string,
-    available:boolean
+    available:boolean,
+    imgURL:string,
+    imageVersion:string
 }
-
+type GroupedSlot = Record<string,Slot[]>
 type new_data = {
     name:string,
     time:string,
@@ -26,68 +44,43 @@ export async function getBandData() {
     if(band == null) {
         return "failed"
     }
-    let new_data:Array<new_data>  = []
-
-    let edit_data = band.map(({name, time, comment, available}:band_type) => {
-        const split = time.split(" ")
-
-        const split_map = split.map((i:string) =>{
-            const splitTime = i.split("~")
-            const edit_Times = splitTime.map((value) => (
-                value.split("-")
-            )) 
-            const new_edit_Times = edit_Times.map((value) => {
-                var newData = []
-                if(value[3].charAt(0) == "0") {
-                    newData = [value[3].replace("0", ""),value[4]]
-                } else {
-                    newData = [value[3], value[4]]
-                }
-                return newData
-            })
-            const time_numbers = edit_Times.map((value) => (
-                value.map((e) => (
-                    Number(e)
-                ))
-            ))
-            const timesAsDate = time_numbers.map((e) => {
-                const date = new Date(e[0], e[1] - 1, e[2], e[3], e[4])
-                console.log("date:"+ date)
-                return new Date(e[0], e[1] - 1, e[2], e[3], e[4])
-            })
-            const timeAsTimeStamp = timesAsDate.map((value) => (Math.floor(value.getTime() / 1000)))
-            let timeText = ["",new_edit_Times[0][0] + ":" + new_edit_Times[0][1], new_edit_Times[1][0] + ":" + new_edit_Times[1][1]]
-
-            if(i.includes("09-07") || i.includes("9-7")) {
-                timeText[0] = "9/7"
-            } else {
-                timeText[0] = "9/8"
+    console.log("band",band)
+    const edited_data = await Promise.all(
+        band.map(async(value)=>{
+            const {data} = await supabase.storage.from("band-img").getPublicUrl(value.imgURL);
+            const url = `${data.publicUrl}?v=${value.imageVersion}`
+            return {
+                ...value,
+                imgURL:url || "not-found.png"
             }
-            new_data.push({
-                name:name, time:i, comment:comment, available:available, timeStamp:timeAsTimeStamp, timeText:timeText
-            })
+    })
+)   
+    const formatData = edited_data as RowData[];
+    const grouped :GroupedSlot ={}
+
+    for(const slot of formatData){
+        const {time,...other} = slot;
+
+        time.map((value,index)=>{
+            if(!grouped[value.date]){
+                grouped[value.date] =[]
+            }
+            const result ={...other,date:value.date,time:value.time}
+            grouped[value.date].push(result)
         })
-    })
+    }
+    for(const date in grouped){
+        grouped[date].sort((a,b)=>{
+            const t1 = a.time.split("~")[0];
+            const t2 = b.time.split("~")[0];
+            return t1.localeCompare(t2);
+        })
+    }
+    const resultedData: Slot[] = Object.keys(grouped)
+        .sort((a, b) => a.localeCompare(b)) 
+        .flatMap((date) => grouped[date]);
 
-    const on97 = new_data.filter((value) => (
-        value.timeText[0] == "9/7"
-    ))
-
-    const on98 = new_data.filter((value) => (
-        value.timeText[0] == "9/8"
-    ))
-
-    const sorted97 = Array.from(on97).sort((a,b) => {
-        return a.timeStamp[0] - b.timeStamp[0]
-    })
-
-    const sorted98 = Array.from(on98).sort((a,b) => {
-        return a.timeStamp[0] - b.timeStamp[0]
-    })
-
-    const sorted = sorted97.concat(sorted98)
-
-    console.log(sorted)
-
-    return sorted
+    
+    return resultedData;
+    const new_data:Array<new_data>  = []
 }

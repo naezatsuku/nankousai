@@ -69,7 +69,6 @@ export default function ShowDetails (
             rotate:"180deg"
         }
     }
-
     const Tags = [
         {id:"tenji", name:"展示", color:"from-blue-500 via-indigo-500 to-purple-500"},
         {id:"food", name:"フード", color:"from-orange-400 via-orange-400 to-yellow-400"},
@@ -93,6 +92,7 @@ export default function ShowDetails (
         {id:"h-2", name:"高校2年", color:"from-pink-300 via-rose-400 to-red-400"},
         {id:"h-3", name:"高校3年", color:"from-yellow-300 to-amber-400"},
         {id:"other", name:"その他", color:"from-sky-600 to-sky-200"},
+        {id:"custom",name:"任意",color:"from-purple-400 to-purple-600"}
     ]
 
     const foodClass=[
@@ -103,19 +103,11 @@ export default function ShowDetails (
         {name:"高校3年5組"}
 
     ]
-    let img_tag = ""
+    let img_tag = null
     //nameはクラス名
-    if(!foodClass.some(n=>n.name == name)){
-        img_tag = event.img;
-    }else{
-        if(event.type == "フード") {
-            img_tag = "/burger-2762431_1920.jpg"
-        } else {
-            img_tag = "/AdobeStock_335757173.jpeg"
-        }
-    }
+    
 
-    let newDetails:detail = []
+    const newDetails:detail = []
 
     for(let i = 0; i < detail.length; i++) {
         if(detail[i].content.includes("テキスト") == false) {
@@ -179,7 +171,7 @@ export default function ShowDetails (
     return(
         <div className="mt-[min(15vw,80px)]  md:mt-[13vw]  lg:mt-[min(15vw,80px)] bg-white min-h-screen">
             <div className="w-full h-[35vw] lg:h-60 relative">
-                <Image src={img_tag} alt="ヘッダー画像" fill priority className="object-cover object-center z-0 opacity-95 brightness-90"></Image>
+                <Image src={img_tag || "/NOIMAGE.png"} alt="ヘッダー画像" fill priority className="object-cover object-center z-0 opacity-95 brightness-90"></Image>
                 <div className="w-auto h-full absolute z-[6] flex ">
                     <p className={`${kaiseiDecol.className} pl-[3vw] my-auto text-[10vw] lg:text-7xl text-white font-bold`}>{name}</p>
                 </div>
@@ -227,11 +219,6 @@ export default function ShowDetails (
                         <Pranetarium_tiket></Pranetarium_tiket>
                     </div>
                 }
-                {name == "茶道部" &&
-                    <div className="w-full px-[4vw]  lg:px-5 pb-[3vw] lg:pb-14">
-                        <SadouClub></SadouClub>
-                    </div>
-                }
                 {name == "高校軽音楽部" &&
                     <Keion></Keion>
                 }
@@ -267,7 +254,7 @@ export default function ShowDetails (
                                 <p className={`${kaiseiDecol.className} text-[7vw] lg:text-4xl lg:ml-6 lg:py-4 ml-[2vw] py-[1vw] bg-gradient-to-b from-[#01e1e5] to-[#009294]  text-transparent bg-clip-text font-bold`}>{value.title}</p>
                             </div>
                             <div className="ml-[2vw] mr-[3vw] my-[3vw] text-[4vw] lg:ml-4 lg:mr-6 lg:text-2xl lg:my-5 lg:leading-[150%] text-[#00b2b5] font-light tracking-[-0.01rem]  opacity-80 leading-[160%] text-justify">
-                                <p> &ensp;{value.content}</p>
+                                <p className="whitespace-pre-line"> &ensp;{value.content}</p>
                             </div>
                         </div>
                     ))}
@@ -279,17 +266,41 @@ export default function ShowDetails (
                 }
                 
 
-                
                 <div className="my-[5vw] lg:mt-14 lg:mb-0 lg:pb-14 rounded-lg  lg:mx-6">
                     <p className={`my-[3vw] ${kaiseiDecol.className} text-[5vw] text-[darkturquoise] text-center lg:text-4xl lg:py-8 lg:my-0`}>・・・関連タグ・・・</p>
                     <div className=" flex flex-wrap mx-[3vw] justify-start lg:mx-4 ">
-                        {event.tags.map((value) => (
-                            <Link key={value} href={{pathname:"/event", query:{type:value} }}>
-                                <div className={`my-[2vw] w-[25vw] aspect-[3/1] bg-gradient-to-br ${Tags.find((item) => (item.name == value))?.color} rounded-md flex mx-[2vw] opacity-90 lg:ml-0 lg:mr-6 lg:max-w-[10.5rem] lg:mb-6 lg:mt-0`}>
-                                    <p className="m-auto  text-[3vw] lg:text-lg text-gray-50 font-medium">{value}</p>
+                        {event.tags.map((value) => {
+                          const tagData = Tags.find((item) => item.name === value);
+                          if (tagData) {
+                            return (
+                              <Link key={value} href={{ pathname: "/event", query: { type: value } }}>
+                                <div
+                                  className={`my-[2vw] w-[25vw] aspect-[3/1] bg-gradient-to-br ${tagData.color} rounded-md flex mx-[2vw] opacity-90 lg:ml-0 lg:mr-6 lg:max-w-[10.5rem] lg:mb-6 lg:mt-0`}
+                                >
+                                  <p className="m-auto text-[3vw] lg:text-lg text-gray-50 font-medium">{value}</p>
                                 </div>
-                            </Link>    
-                        ))} 
+                              </Link>
+                            );
+                          }else{
+                            return (
+                            
+                                <div key = {value}
+                              
+                              className="my-[2vw] w-[25vw] aspect-[3/1] bg-gradient-to-br from-purple-400 to-purple-600 rounded-md flex flex-col justify-center mx-[2vw] opacity-70 lg:ml-0 lg:mr-6 lg:max-w-[10.5rem] lg:mb-6 lg:mt-0 border border-gray-500"
+                            >
+                              <div className="text-center text-white font-medium text-[3vw] lg:text-lg">
+                                {value}
+                              </div>
+                              <div className="text-center text-white text-[2.5vw] lg:text-sm mt-1 opacity-80">
+                                クラスオリジナル
+                              </div>
+                            </div>
+                            
+                            
+                          );
+                          }
+                          
+                        })}
                     </div>
 
                 </div>

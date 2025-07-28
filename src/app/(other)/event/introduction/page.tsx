@@ -9,6 +9,7 @@ import Loading from "@/components/global/parts/loading"
 import NotFound from "@/components/global/parts/notFound"
 
 import { KaiseiDecol } from "@/app/fonts";
+import Link from "next/link"
 
 const kaiseiDecol = KaiseiDecol
 
@@ -51,7 +52,7 @@ export default function Page() {
         }
         
         getData()
-    },[])
+    },[name])
 
     const jsonLd = {
         "@context": "http://schema.org",
@@ -83,12 +84,14 @@ export default function Page() {
                 <div>
                     <ShowDetails event={data.event} detail={data.detail} name={name}></ShowDetails>
                     <BackTo link="/event" name="展示一覧"></BackTo>
+                    
                 </div>  
                 :
                 <div className="pt-[35vw] lg:pt-24 ">
                     <Loading></Loading>
                     {/* <p className={`text-[5vw] ${kaiseiDecol.className} text-center bg-gradient-to-br from-fuchsia-500 via-purple-400 to-sky-400 bg-clip-text text-transparent`}>・・・読み込み中・・・</p> */}
                 </div>
+                
                 }
             </div>
             : <NotFound text="展示一覧" link="/event"></NotFound>

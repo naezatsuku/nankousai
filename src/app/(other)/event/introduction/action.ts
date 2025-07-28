@@ -1,22 +1,24 @@
 "use server"
 
-import { serverClient } from "@/utils/supabase/server"
+import { serverClient } from "@/utils/supabase/server";
+
+
 
 export async function getEventDetails(name:string) {
     const supabase = await serverClient()
 
     const {data:event} = await supabase.from('contents').select(`*` );
 
-    const {data:new_event} = await supabase.from('new_content').select(`*`);
+    
 
-    const allEvents = event?.concat(new_event)
+    const allEvents = event
 
     if(allEvents == null) {
         
         return "failed"
     }
 
-    let newContent = allEvents?.find((value) => (
+    const newContent = allEvents?.find((value) => (
         value.className == name
     ))
 
@@ -36,43 +38,20 @@ export async function getEventDetails(name:string) {
         details = detail
     }
 
-    let newEvent = newContent
+    const newEvent = newContent
     
+    if(!newEvent.time){
+        newEvent.time=["終日開催"]
+    }
     if(newContent.time == null) {   
         newEvent.time = ["終日開催"] 
     } else {
-        const splitTime = newContent.time.split(" ")
-        const editedTimeText = splitTime.map((value:string) => (
-            value.split("~")
-        ))
-        var newTimes:any = []
-        for(let i = 0; i < editedTimeText.length; i++) {
-            const time = editedTimeText[i]
-            const newTime = time.map((value:string) =>(
-                value.replace("2024-", "").split("-")
-            ))
-            const timeNeo = newTime.map((value:Array<string>) => {
-                if(value[3].length == 1){
-                    return value[2] + ":0" + value[3]
-                } else {
-                    return value[2] + ":" + value[3]
-                }
-            })
-
-            var text:string = ""
-            if(time[0].includes("9-7")) {
-                text = "9/7  "+ timeNeo[0] + "~" + timeNeo[1]
-            } else {
-                text = "9/8  "+ timeNeo[0] + "~" + timeNeo[1]
-            }
-            newTimes.push(text)
-        }
-        newEvent.time= newTimes
+        newEvent.time = newEvent.time;
     }
    
-    let tags = [newEvent.type]
+    const tags = [newEvent.type]
     
-    let keyword = ["高校", "中学"] 
+    const keyword = ["高校", "中学"] 
     for(let i = 0; i < keyword.length; i++) {
         if(name.includes(keyword[i])) {
             tags.push(keyword[i])
@@ -91,7 +70,10 @@ export async function getEventDetails(name:string) {
         tags.push(newEvent.genre)
     }
 
-    newEvent.tags = tags
+    const flattened = tags.flat();  // tags.flat(1) と同義
+    newEvent.tags = flattened.filter((tag, idx, arr) =>
+      arr.indexOf(tag) === idx
+    );
 
     // console.log(tags)
     //ここにURLを作る新しく作ったimgにそれを保存これは背景のがぞうのURLです

@@ -1,6 +1,8 @@
 "use server"
 
-import { serverClient } from "@/utils/supabase/server"
+import { serverClient } from "@/utils/supabase/server";
+
+
 
 
 export async function getFoodData(name:string) {
