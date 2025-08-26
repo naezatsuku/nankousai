@@ -6,6 +6,7 @@ import GetEvent from "@/components/event/get_event"
 import Loading from "@/components/global/parts/loading"
 
 import { KaiseiDecol } from "@/app/fonts";
+import Head from "next/head";
 
 const kaiseiDecol = KaiseiDecol
 
@@ -35,9 +36,12 @@ export default function page() {
         "https://drive.google.com/file/d/137obuAzNIB6r-501h6D0-6SoFgLnqXd3/view?usp=drive_link"
     ],
     };
-
+    <Head>
+        <link rel="canonical" href="https://nankousai.vercel.app/" />
+    </Head>
     return(
         <div className="pt-[min(15vw,80px)] h-screen bg-white md:pt-[13vw]  lg:pt-[min(15vw,80px)]">
+
             <div className="w-full h-[35vw] lg:h-60 relative">
                 <Image src={"/coloful_sky.jpg"} alt="展示の様子" fill priority className="object-cover z-0 opacity-95"></Image>
                 {/* <div className="w-full h-full absolute  z-[5] opacity-15 bg-gradient-to-r   base-gradient"></div> */}
