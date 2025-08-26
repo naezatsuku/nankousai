@@ -45,7 +45,7 @@ export default function page() {
                 <Attention></Attention>
             </div>
             <div>
-                <BackTo link="/" name="トップ"></BackTo>
+                {/* <BackTo link="/" name="トップ"></BackTo> */}
             </div>
             <script
                 type="application/ld+json"

@@ -5,6 +5,7 @@ import Header from "@/components/global/header"
 import Events from "@/components/top/event"
 import Guide from "@/components/top/guide"
 import Map from "@/components/top/map"
+import Image from "next/image"
 
 export default function page() {
   const jsonLd = {
@@ -34,13 +35,13 @@ export default function page() {
   };
 
   return(
-    <main className="w-full " > 
-      <div className="lg:hidden">
+    <main className="w-full" > 
+      <div className="h-[100svh]  bg-[#F02004]">
         <MainTitle></MainTitle>
       </div>
-      <div className="hidden lg:block" >
+      {/* <div className="hidden lg:block" >
         <MainTitlePC></MainTitlePC>
-      </div>
+      </div> */}
       <div className="w-full sticky top-0 z-50" >
         <Header></Header>
       </div>

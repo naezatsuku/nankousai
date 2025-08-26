@@ -267,7 +267,7 @@ export default function ShowDetails (
                 
 
                 <div className="my-[5vw] lg:mt-14 lg:mb-0 lg:pb-14 rounded-lg  lg:mx-6">
-                    <p className={`my-[3vw] ${kaiseiDecol.className} text-[5vw] text-[darkturquoise] text-center lg:text-4xl lg:py-8 lg:my-0`}>・・・関連タグ・・・</p>
+                    <p className={`my-[3vw] ${kaiseiDecol.className} text-[5vw]  text-center lg:text-4xl lg:py-8 lg:my-0`}>・・・関連タグ・・・</p>
                     <div className=" flex flex-wrap mx-[3vw] justify-start lg:mx-4 ">
                         {event.tags.map((value) => {
                           const tagData = Tags.find((item) => item.name === value);

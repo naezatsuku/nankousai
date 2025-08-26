@@ -32,7 +32,7 @@ export function SquareButtonPinkShadow(
     return(
         <div className="w-full aspect-[3.2/1] rounded-lg relative drop-shadow-lg">
             <div className="w-full h-full rounded-lg bg-white">
-                <div className="w-full h-full bg-gradient-to-br from-fuchsia-500 via-purple-400 to-sky-400 absolute opacity-70 rounded-md lg:rounded-lg"></div>
+                <div className="w-full h-full bg-gradient-to-br  light-gradient absolute opacity-70 rounded-md lg:rounded-lg"></div>
                 <div className="h-full w-full absolute z-10 flex">
                     <p className={`text-white m-auto text-[4.5vw] lg:text-2xl`}>{text}</p>
                 </div>
@@ -47,7 +47,7 @@ export function SquareButtonPinkShadow2(
     return(
         <div className="w-full aspect-[3/1] rounded-lg relative drop-shadow-lg">
             <div className="w-full h-full rounded-md bg-white">
-                <div className="w-full h-full bg-gradient-to-br from-fuchsia-500 via-purple-400 to-sky-400 absolute opacity-70 rounded-md"></div>
+                <div className="w-full h-full bg-gradient-to-br  light-gradient absolute opacity-70 rounded-md"></div>
                 <div className="h-full w-full absolute z-10 flex">
                     <p className={`text-white m-auto text-[3.5vw] lg:text-xl ${kaiseiDecol.className}`}>{text}</p>
                 </div>
@@ -62,7 +62,7 @@ export function SquareButtonWhite(
     return(
         <div className="w-full aspect-[3/1] rounded-lg relative drop-shadow-lg">
             <div className="w-full h-full rounded-md">
-                {/* <div className="w-full h-full bg-gradient-to-br from-fuchsia-500 via-purple-400 to-sky-400 absolute opacity-70 rounded-md"></div> */}
+                {/* <div className="w-full h-full bg-gradient-to-br  light-gradient absolute opacity-70 rounded-md"></div> */}
                 <div className="h-full w-full absolute z-10 flex">
                     <p className={`text-white m-auto text-[3.5vw] ${kaiseiDecol.className}`}>{text}</p>
                 </div>
@@ -76,11 +76,35 @@ export function SquareButtonPinkWhite(
 ) {
     return(
         <div className="w-full aspect-[3.2/1] relative ">
-            <div className="w-full h-full bg-gradient-to-br from-fuchsia-500 via-purple-400 to-sky-400 absolute p-[2%] z-0 rounded-md lg:rounded-lg">
+            <div className="w-full h-full bg-gradient-to-br  light-gradient absolute p-[2%] z-0 rounded-md lg:rounded-lg">
                 <div className="w-full h-full bg-white rounded-md"></div>
             </div>
             <div className="h-full w-full absolute z-10 flex">
-                <p className="bg-gradient-to-br from-fuchsia-500 via-purple-400 to-sky-400 bg-clip-text text-transparent m-auto text-[3.5vw] lg:text-xl font-medium">{text}</p>
+                <p className="bg-gradient-to-br  light-gradient bg-clip-text text-transparent m-auto text-[3.5vw] lg:text-xl font-medium">{text}</p>
+            </div>
+        </div>
+    )
+}
+
+export function SquareButtonWhiteBase (
+    {text}:Props
+) {
+    return(
+        <div className="w-full aspect-[3.2/1] bg-white relative rounded-full overflow-hidden opacity-90">
+            <div className="h-full w-full absolute z-10 flex">
+                <p className="bg-gradient-to-br base-gradient  bg-clip-text text-transparent m-auto text-[3.5vw] lg:text-xl font-medium">{text}</p>
+            </div>
+        </div>
+    )
+}
+
+export function SquareButtonTransparentBase (
+    {text}:Props
+) {
+    return(
+        <div className="w-full aspect-[3.2/1] bg-none border-2 border-white relative rounded-full overflow-hidden opacity-90">
+            <div className="h-full w-full absolute z-10 flex">
+                <p className="text-white m-auto text-[3.5vw] lg:text-xl font-medium">{text}</p>
             </div>
         </div>
     )

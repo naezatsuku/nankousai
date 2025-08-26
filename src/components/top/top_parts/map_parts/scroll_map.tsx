@@ -12,9 +12,9 @@ export default function ScrollMap(
     {img}:Props
 ) {
     return(
-        <div className="w-full aspect-square  rounded-full  p-[1%] lg:p-[6px] bg-gradient-to-br from-sky-500 via-[#05bd92] to-[#f3e50a]">
+        <div className="w-full aspect-square  rounded-full  p-[1%] lg:p-[6px] bg-gradient-to-br base-gradient">
             <div className="w-full h-full rounded-full  bg-white relative lg:hidden">
-                {/* <div className="w-full h-full bg-[darkturquoise] absolute rounded-full opacity-[0.3] pointer-events-none"></div> */}
+                {/* <div className="w-full h-full   base-bg absolute rounded-full opacity-[0.3] pointer-events-none"></div> */}
                 {/* <ScrollContainer ignoreElements="tips" className="w-full h-full rounded-full">
                     <div className="w-[150vw] p-[10vw]"> 
                         <div className="tips">

@@ -10,6 +10,8 @@ import "swiper/css";
 import "swiper/css/effect-coverflow"
 import { useState } from "react";
 import Link from "next/link";
+import color from "../../data/color.json"
+import {Rounded_base} from "../global/parts/rounded_button";
 
 import { KaiseiDecol } from "@/app/fonts";
 
@@ -95,17 +97,26 @@ export default function Map() {
         setActiveSlide(i + 1)
     }
 
+    const swiper_color =  {
+        from:`[&_.swiper-button-prev::after]:from-[${color["tri-gradient"].from}] `,
+        via:`[&_.swiper-button-prev::after]:via-[${color["tri-gradient"].via}] `,
+        to:`[&_.swiper-button-prev::after]:via-[${color["tri-gradient"].to}] `
+    }
+
     return(
         <div className="my-[20vw] 2xl:my-28 lg:my-20">
-            <h2 className={`${kaiseiDecol.className} text-center text-[11vw] 2xl:text-7xl lg:text-6xl text-[darkturquoise] font-bold`}>フロアマップ</h2>       
-            <Link href={"/map"} >
-                <div className="w-[35vw] mx-auto my-[3vw] lg:max-w-[200px] lg:my-8">
+            <h2 className={`${kaiseiDecol.className} text-center text-[11vw] 2xl:text-7xl lg:text-6xl  font-bold`}>フロアマップ</h2>       
+            <Link href={"/"} >
+                <div className="w-[35vw] mx-auto my-[3vw] lg:max-w-[200px] lg:my-8 lg:hidden">
                     <RoundButtonTurquoise text="別ページで見る" size={40}></RoundButtonTurquoise>
+                </div>
+                <div className="w-[15vw] aspect-[3/1]  mx-auto my-[3vw] hidden lg:block lg:max-w-[200px]">
+                    <Rounded_base text="別ページで見る" size={20} color="base-gradient"></Rounded_base>
                 </div>   
             </Link>
             <div className="relative">
                 <div className="text-[15vw] left-[3vw] top-[-8%] absolute 2xl:text-9xl xl:text-8xl lg:text-7xl lg:left-[25vw]  z-10">
-                    <p className={`${kaiseiDecol.className} bg-gradient-to-br text-transparent bg-clip-text from-sky-500 via-[#05bd92] to-[#f3e50a]  tracking-wide`}>{active}F</p>  
+                    <p className={`${kaiseiDecol.className} bg-gradient-to-br text-transparent bg-clip-text base-gradient tracking-wide`}>{active}F</p>  
                 </div>    
  
                 <div className="lg:hidden">
@@ -127,15 +138,15 @@ export default function Map() {
                             [&_.swiper-button-prev::after]:bg-gradient-to-br
                             [&_.swiper-button-prev::after]:text-transparent
                             [&_.swiper-button-prev::after]:bg-clip-text
-                            [&_.swiper-button-prev::after]:from-sky-500
-                            [&_.swiper-button-prev::after]:via-[#05bd92]
-                            [&_.swiper-button-prev::after]:to-[#0af3c4]
+                            [&_.swiper-button-prev::after]:from-[#ec1201]
+                            [&_.swiper-button-prev::after]:via-[#ff7300]
+                            [&_.swiper-button-prev::after]:to-[#EEA900]
                             [&_.swiper-button-next::after]:bg-gradient-to-br
                             [&_.swiper-button-next::after]:text-transparent
                             [&_.swiper-button-next::after]:bg-clip-text
-                            [&_.swiper-button-next::after]:from-sky-500
-                            [&_.swiper-button-next::after]:via-[#05bd92]
-                            [&_.swiper-button-next::after]:to-[#c8f30a]
+                            [&_.swiper-button-next::after]:from-[#EEA900]
+                            [&_.swiper-button-next::after]:via-[#ff7300]
+                            [&_.swiper-button-next::after]:to-[#ec1201]
                         z-0 `}
                     >
                         {imgs.map((value,i) => (
@@ -175,15 +186,15 @@ export default function Map() {
                             [&_.swiper-button-prev::after]:bg-gradient-to-br
                             [&_.swiper-button-prev::after]:text-transparent
                             [&_.swiper-button-prev::after]:bg-clip-text
-                            [&_.swiper-button-prev::after]:from-sky-500
-                            [&_.swiper-button-prev::after]:via-[#05bd92]
-                            [&_.swiper-button-prev::after]:to-[#0af3c4]
+                            [&_.swiper-button-prev::after]:from-[#ec1201]
+                            [&_.swiper-button-prev::after]:via-[#ff7300]
+                            [&_.swiper-button-prev::after]:to-[#EEA900]
                             [&_.swiper-button-next::after]:bg-gradient-to-br
                             [&_.swiper-button-next::after]:text-transparent
                             [&_.swiper-button-next::after]:bg-clip-text
-                            [&_.swiper-button-next::after]:from-sky-500
-                            [&_.swiper-button-next::after]:via-[#05bd92]
-                            [&_.swiper-button-next::after]:to-[#c8f30a]
+                            [&_.swiper-button-next::after]:from-[#EEA900]
+                            [&_.swiper-button-next::after]:via-[#ff7300]
+                            [&_.swiper-button-next::after]:to-[#ec1201]
                         z-0 `}
                     >
                         {imgs.map((value,i) => (

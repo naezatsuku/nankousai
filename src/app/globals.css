@@ -66,5 +66,99 @@ body {
 }
 
 @layer base {
+  body {
+    --tw-text-opacity: 1;
+    color: #ec3801;
+    /* サイトのベースカラー定義 */
+  }
+}
+
+/* ベースカラー darkturquoise */
+
+@layer components {
+  .text-color-base {
+    --tw-text-opacity: 1;
+    color: #ec3801;
+  }
   
+  .base-bg {
+    background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+    --tw-gradient-from: #ec1101 var(--tw-gradient-from-position);
+    --tw-gradient-to: rgb(236 18 1 / 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    /* --tw-gradient-to: rgb(243 153 69 / 0)  var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from),  var(--tw-gradient-via-position), var(--tw-gradient-to); */
+    --tw-gradient-to: #eec200 var(--tw-gradient-to-position);
+  }
+
+  
+  /* サイトのベース背景色（文字色と同じが良い） */
+
+  .base-gradient {
+    --tw-gradient-from: #ec1201 var(--tw-gradient-from-position);
+    --tw-gradient-to: rgb(236 18 1 / 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    --tw-gradient-to: rgb(243 153 69 / 0)  var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), #ff7300 var(--tw-gradient-via-position), var(--tw-gradient-to);
+    --tw-gradient-to: #EEA900 var(--tw-gradient-to-position);
+
+  }
+
+  .header-opacity {
+    opacity: 0.8;
+  }
+  /* ヘッダーやボタン等に使用しているカラー */
+
+  .adorned-bg {
+    --tw-gradient-from: #ec1201 var(--tw-gradient-from-position);
+    --tw-gradient-to: rgb(5 189 164 / 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    --tw-gradient-to: #ff7300 var(--tw-gradient-to-position);
+  }
+  /* ヘッダー背景に使用している色 */
+
+  .light-gradient {
+    --tw-gradient-from: #ff48f0 var(--tw-gradient-from-position);
+    --tw-gradient-to: rgb(217 70 239 / 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    --tw-gradient-to: rgb(192 132 252 / 0)  var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), rgb(213, 162, 255) var(--tw-gradient-via-position), var(--tw-gradient-to);
+    --tw-gradient-to: #38cbf8 var(--tw-gradient-to-position);
+  }
+
+  .light-gradient-border {
+    --tw-border-opacity: 1;
+    border-color: rgb(229 100 255 / var(--tw-border-opacity)) /* #e564ff */;
+  }
+  /* アクセントカラーのグラデーション。ロード中の文字や、申し込みボタンなど、目立たせたい部分に使用 */
+
+  .blue-button {
+    --tw-gradient-from: #ec1201 var(--tw-gradient-from-position);
+    --tw-gradient-to: rgb(236 18 1 / 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    --tw-gradient-to: rgb(243 153 69 / 0)  var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), #ff7300 var(--tw-gradient-via-position), var(--tw-gradient-to);
+    --tw-gradient-to: #EEA900 var(--tw-gradient-to-position);
+  }
+
+  .violet-gradient {
+    --tw-gradient-from: #7c3aed var(--tw-gradient-from-position);
+    --tw-gradient-to: rgb(124 58 237 / 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    --tw-gradient-to: rgb(79 70 229 / 0)  var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), #4f46e5 var(--tw-gradient-via-position), var(--tw-gradient-to);
+    --tw-gradient-to: #3b82f6 var(--tw-gradient-to-position);
+  }
+
+  .red-gradient {
+    --tw-gradient-from: #e566f8 var(--tw-gradient-from-position);
+    --tw-gradient-to: rgb(217 70 239 / 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    --tw-gradient-to: rgb(219 39 119 / 0)  var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), #e4488e var(--tw-gradient-via-position), var(--tw-gradient-to);
+    --tw-gradient-to: #ec2719 var(--tw-gradient-to-position);
+  }
+
+  /* 各展示のラベルカラーや、軽音楽部・フードなど個別に設定した色は
+  components→indroductionから直接書き換える */
 }

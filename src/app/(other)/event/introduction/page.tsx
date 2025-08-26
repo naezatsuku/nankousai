@@ -83,20 +83,20 @@ export default function Page() {
                 {data? 
                 <div>
                     <ShowDetails event={data.event} detail={data.detail} name={name}></ShowDetails>
-                    <BackTo link="/event" name="展示一覧"></BackTo>
+                    {/* <BackTo link="/event" name="展示一覧"></BackTo> */}
                     
                 </div>  
                 :
                 <div className="pt-[35vw] lg:pt-24 ">
                     <Loading></Loading>
-                    {/* <p className={`text-[5vw] ${kaiseiDecol.className} text-center bg-gradient-to-br from-fuchsia-500 via-purple-400 to-sky-400 bg-clip-text text-transparent`}>・・・読み込み中・・・</p> */}
+                    {/* <p className={`text-[5vw] ${kaiseiDecol.className} text-center bg-gradient-to-br  light-gradient bg-clip-text text-transparent`}>・・・読み込み中・・・</p> */}
                 </div>
                 
                 }
             </div>
             : <NotFound text="展示一覧" link="/event"></NotFound>
             // <div className="mt-[30vw] w-screen">
-            //     <p className={`text-[7vw] ${kaiseiDecol.className} text-center bg-gradient-to-br from-fuchsia-500 via-purple-400 to-sky-400 bg-clip-text text-transparent`}>ページが見つかりません</p>
+            //     <p className={`text-[7vw] ${kaiseiDecol.className} text-center bg-gradient-to-br  light-gradient bg-clip-text text-transparent`}>ページが見つかりません</p>
             //     <Link href={"/event"}>
             //         <div className="w-[40vw] my-[4vw] mx-auto">
             //             <SquareButtonPinkShadow text="展示一覧に戻る"></SquareButtonPinkShadow>
