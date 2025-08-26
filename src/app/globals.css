@@ -91,6 +91,12 @@ body {
     --tw-gradient-to: #eec200 var(--tw-gradient-to-position);
   }
 
+  .gradient-transparent {
+    background: linear-gradient(90deg, pink, #ff009f);
+  }
+
+  /* #ff9431  #ff009f*/
+
   
   /* サイトのベース背景色（文字色と同じが良い） */
 

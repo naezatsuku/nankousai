@@ -74,7 +74,7 @@ export default function Access() {
     }
 
     return(
-        <div className="mt-[10vw] pt-[20vw] pb-[10vw]  2xl:pt-32 lg:pt-24 lg:mt-5 lg:pb-10    base-bg text-white">
+        <div className=" pt-[20vw] pb-[10vw]  2xl:pt-32 lg:pt-24 lg:pb-10    base-bg text-white">
             <h2 className={`${kaiseiDecol.className} text-center text-[12vw] 2xl:text-8xl lg:text-6xl`}>アクセス</h2>
             <p className="text-[3.5vw] text-center mt-[1vw] mb-[4vw] 2xl:text-2xl lg:text-xl lg:mt-6 2xl:mb-16 lg:mb-10">※自家用車でのご来校はお控えください。</p>   
             <div className="mx-4">
