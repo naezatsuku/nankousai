@@ -2,8 +2,5 @@
 User-agent: *
 Allow: /
 
-# Host
-Host: https://nankousai.vercel.app/
-
 # Sitemaps
 Sitemap: https://nankousai.vercel.app/sitemap.xml
