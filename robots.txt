@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://www.nankousai71.jp
+Host: https://nankousai.vercel.app/
 
 # Sitemaps
-Sitemap: https://www.nankousai71.jp/sitemap.xml
+Sitemap: https://nankousai.vercel.app//sitemap.xml
