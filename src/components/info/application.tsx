@@ -14,7 +14,7 @@ export default function Application() {
             <div className="w-full ">
                 <h2 className={`${kaiseiDecol.className} text-center text-[12vw] text-[darkturquoise] 2xl:text-8xl lg:text-6xl`}>申し込み方法</h2>
                 <div className="w-[45vw] lg:w-64 mx-auto my-[4vw] lg:my-14 opacity-95">
-                    <Link href={"https://teket.jp/6636/37971"} target={"_blank"}>
+                    <Link href={"https://teket.jp/6636/53992"} target={"_blank"}>
                         <SquareButtonPinkShadow text="申し込みページへ"></SquareButtonPinkShadow>
                     </Link>
                     {/* <RoundButtonTarqu text="申し込みページへ" size={50}></RoundButtonTarqu> */}
