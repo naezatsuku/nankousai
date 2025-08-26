@@ -172,7 +172,7 @@ export default function ShowDetails (
     return(
         <div className="mt-[min(15vw,80px)]  md:mt-[13vw]  lg:mt-[min(15vw,80px)] bg-white min-h-screen">
             <div className="w-full h-[35vw] lg:h-60 relative">
-                <Image src={img_tag || "/NOIMAGE.png"} alt="ヘッダー画像" fill priority className="object-cover object-center z-0 opacity-95 brightness-90"></Image>
+                <Image src={img_tag || "/AdobeStock_335757173.jpeg"} alt="ヘッダー画像" fill priority className="object-cover object-center z-0 opacity-95 brightness-90"></Image>
                 <div className="w-auto h-full absolute z-[6] flex ">
                     <p className={`${kaiseiDecol.className} pl-[3vw] my-auto text-[10vw] lg:text-7xl text-white font-bold`}>{name}</p>
                 </div>
