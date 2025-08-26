@@ -30,14 +30,14 @@ export default function HowToApply() {
     return(
         <div className="w-full"> 
             {steps.map((value, index) => (
-                <div className="w-full my-14 lg:hidden">
+                <div className="w-full my-14 lg:hidden" key={index}>
                     <BaseContent key={index} content={value.text} image={value.img} sub_title={value.sub_title} title={value.step} image_description={""}></BaseContent>
                 </div>
             ))
 
             }
             {stepForPC.map((value, index) => (
-                <div className="w-full my-20 hidden lg:block">
+                <div className="w-full my-20 hidden lg:block" key={index}>
                     <BaseContent key={index} content={value.text} image={value.img} sub_title={value.sub_title} title={value.step} image_description={""}></BaseContent>
                 </div>
             ))
