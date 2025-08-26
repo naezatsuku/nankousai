@@ -5,6 +5,7 @@ import Header from "@/components/global/header"
 import Events from "@/components/top/event"
 import Guide from "@/components/top/guide"
 import Map from "@/components/top/map"
+import Head from "next/head"
 
 export default function page() {
   const jsonLd = {
@@ -32,8 +33,14 @@ export default function page() {
       "url":"https://teket.jp/6636/37971"
     }
   };
+  const canonicalUrl = 'https://nankousai.vercel.app/';
 
   return(
+    <>
+    <Head>
+        <link rel="canonical" href={canonicalUrl} />
+    </Head>
+
     <main className="w-full " > 
       <div className="lg:hidden">
         <MainTitle></MainTitle>
@@ -55,5 +62,7 @@ export default function page() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
     </main>
+    </>
+    
   )
 }
