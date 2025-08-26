@@ -6,9 +6,8 @@ export async function getEvents() {
 
     const {data:event} = await supabase.from('contents').select(`*` );
 
-    const {data:new_event} = await supabase.from('new_content').select(`*`);
 
-    const allEvents = event?.concat(new_event)
+    const allEvents = event
 
     if(allEvents == null) {
         return

@@ -103,7 +103,8 @@ export default function ShowDetails (
         {name:"高校3年5組"}
 
     ]
-    let img_tag = null
+    let img_tag = event.img;
+    //nameはクラス名
     //nameはクラス名
     
 
