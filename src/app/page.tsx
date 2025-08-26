@@ -6,13 +6,36 @@ import Events from "@/components/top/event"
 import Guide from "@/components/top/guide"
 import Map from "@/components/top/map"
 import Image from "next/image"
+import Head from "next/head"
 
+export const metadata = {
+  title: "南高祭公式サイト",
+  description: "南高・南高附属中最大の行事へようこそ。フード販売やバンドの生演奏など魅力的な展示を公開しています。どなたも入場無料。ぜひ気軽にお越しください！",
+  keywords: "南高祭, 文化祭, 学園祭, イベント, 展示, フード, 学校",
+  alternates: {
+    canonical: "https://nankousai.vercel.app/",
+  },
+  openGraph: {
+    title: "南高祭公式サイト",
+    description: "南高・南高附属中最大の行事へようこそ。フード販売やバンドの生演奏など魅力的な展示を公開しています。",
+    url: "https://nankousai.vercel.app/",
+    images: [
+      {
+        url: "https://nankousai.vercel.app/2025南高祭ポスター拡張.jpg",
+        width: 1200,
+        height: 630,
+        alt: "南高祭公式サイト",
+      },
+    ],
+    type: "website",
+  },
+};
 export default function page() {
   const jsonLd = {
     "@context": "http://schema.org",
     "@type": "Event",
     "name": "南高祭",
-    "startDate": "2025-09-07T09:30",
+    "startDate": "2025-09-13T09:30",
     "location": {
       "@type": "Place",
       "name": "横浜市立南高等学校・附属中学校",
@@ -30,11 +53,14 @@ export default function page() {
     "offers": {
       "@type": "Offer",
       "price": "0",
-      "url":"https://teket.jp/6636/37971"
+      "url":"https://teket.jp/6636/53992"
     }
   };
+  const canonicalUrl = 'https://nankousai.vercel.app/';
 
   return(
+
+    <>
     <main className="w-full" > 
       <div className="h-[100svh]  bg-[#F02004]">
         <MainTitle></MainTitle>
@@ -56,5 +82,7 @@ export default function page() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
     </main>
+    </>
+    
   )
 }
