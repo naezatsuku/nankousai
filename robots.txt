@@ -6,4 +6,4 @@ Allow: /
 Host: https://nankousai.vercel.app/
 
 # Sitemaps
-Sitemap: https://nankousai.vercel.app//sitemap.xml
+Sitemap: https://nankousai.vercel.app/sitemap.xml
