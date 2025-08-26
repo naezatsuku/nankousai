@@ -52,7 +52,7 @@ export default function Page() {
 
                 </div>: <div>
                     {found ? <div className="w-full bg-white pb-[20vw]">
-                        <h2 className={`mb-[8vw] ${kaiseiDecol.className} text-center text-[12vw] text-[darkturquoise] lg:mb-20  lg:text-6xl 2xl:text-8xl`}>プレビュー</h2>
+                        <h2 className={`mb-[8vw] ${kaiseiDecol.className} text-center text-[12vw]  lg:mb-20  lg:text-6xl 2xl:text-8xl`}>プレビュー</h2>
                         <Image src={found.img} alt={found.title} width={2000} height={3000} placeholder={`data:image/svg+xml;base64,${toBase64(skeleton(128, 128))}`} className="w-[90%] aspect-auto mx-auto drop-shadow-lg lg:w-auto lg:h-[80svh]" priority></Image>
                         <p className="text-[5vw] text-center mt-[5vw] mb-[2vw] text-slate-600 lg:text-5xl lg:mt-14 lg:">{found.title}</p>
                         <p className="text-[4vw] text-right mr-[5vw] text-slate-800 lg:text-4xl">作者：{found.artist}</p>
@@ -60,7 +60,7 @@ export default function Page() {
                     </div>
                     :  <NotFound text="ギャラリー" link="/gallery"></NotFound>
                     // <div className="mt-[30vw] w-screen">
-                    // <p className={`text-[7vw] ${kaiseiDecol.className} text-center bg-gradient-to-br from-fuchsia-500 via-purple-400 to-sky-400 bg-clip-text text-transparent`}>ページが見つかりません</p>
+                    // <p className={`text-[7vw] ${kaiseiDecol.className} text-center bg-gradient-to-br  light-gradient bg-clip-text text-transparent`}>ページが見つかりません</p>
                     //     <Link href={"/gallery"}>
                     //         <div className="w-[40vw] my-[4vw] mx-auto">
                     //             <SquareButtonPinkShadow text="ギャラリーに戻る"></SquareButtonPinkShadow>

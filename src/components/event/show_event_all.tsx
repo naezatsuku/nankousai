@@ -447,8 +447,8 @@ export default function ShowEvent(
             </div> */}
             <motion.div className="bg-white pb-[10vw] lg:flex flex-wrap justify-around" ref={targetDiv}>
                 {notfound == true && 
-                    <motion.div initial={{y:20, opacity:0}} animate={{y:0, opacity:1}} transition={{ease:"easeOut", duration:0.4}} className="w-full h-[35vw] flex">
-                        <p className={`${kaiseiDecol.className} m-auto text-[7vw] bg-gradient-to-br from-fuchsia-500 via-purple-400 to-sky-400 bg-clip-text text-transparent `}>・・・該当なし・・・</p>
+                    <motion.div initial={{y:20, opacity:0}} animate={{y:0, opacity:1}} transition={{ease:"easeOut", duration:0.4}} className="w-full h-[35vw] xl:h-[15vw] flex">
+                        <p className={`${kaiseiDecol.className} m-auto text-[6vw] lg:text-5xl bg-gradient-to-br  light-gradient bg-clip-text text-transparent `}>・・・該当なし・・・</p>
                     </motion.div>
                 }
 
@@ -465,7 +465,7 @@ export default function ShowEvent(
                                     `}>{value.title}</p>
                                 </Link>
                                 <div className={`font-medium `}>
-                                <div className={`font-medium `}>
+                                <div className={`font-medium ${setTextColor(value.tags)}`}>
                                     <Suspense>
                                         <ShowTime TimeMap={findTime(value.id)} ></ShowTime>
                                     </Suspense>

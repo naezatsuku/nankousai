@@ -106,8 +106,8 @@ export default function Header() {
 
     return(
         <header className="w-full h-[15vw] relative max-h-20 md:max-h-[13vw] lg:max-h-20">
-            <div className="absolute w-full h-full  bg-gradient-to-br  from-[#05a8bd] via-[#05bd92] to-[#f3e50a] opacity-80 -z-10"></div>
-            <div className={ `${pullDown ? "flex" : "hidden"} absolute top-[90px] right-44 rounded-lg   bg-gradient-to-br  from-[#05bda4] to-[#f3e50a] flex-col items-start pb-4  drop-shadow-lg opacity-90 xl:hidden`}>
+            <div className="absolute w-full h-full  bg-gradient-to-br    base-gradient header-opacity -z-10"></div>
+            <div className={ `${pullDown ? "flex" : "hidden"} absolute top-[90px] right-44 rounded-lg   bg-gradient-to-br    adorned-bg flex-col items-start pb-4  drop-shadow-lg opacity-90 xl:hidden`}>
                 <IoMdClose className="ml-auto mr-2 text-white mt-2 text-xl" onClick={pullDownMenu}></IoMdClose>
                 <Link href={"/gallery"}>
                     <p className={` px-4  text-white font-bold  text text-2xl ${kaiseiDecol.className} pb-2 `}>#ギャラリー</p>
@@ -156,7 +156,7 @@ export default function Header() {
                         <motion.div whileHover={{scale:1.05, opacity:1}}  whileTap={{scale:0.95}} transition={{type:"spring", duration:0.2, bounce:0.1}} className={`relative w-[28vw] opacity-90 lg:w-[170px]`}>
                             {/* <RoundButtonPink text={"参加申し込み"} size={40}></RoundButtonPink> */}
                             <SquareButtonPinkShadow2 text="参加申し込み" ></SquareButtonPinkShadow2>
-                            <div ref={targetPink} className="w-full h-full opacity-0 absolute border-[6px] rounded-md top-0 left-0 z-0 border-[#e564ff] "></div>
+                            <div ref={targetPink} className="w-full h-full opacity-0 absolute border-[6px] rounded-md top-0 left-0 z-0 light-gradient-border "></div>
                         </motion.div>
                     </Link>
 
@@ -174,7 +174,7 @@ export default function Header() {
                     
 
                 </div>
-                <div ref={targetMenu} className={`overflow-hidden w-full h-0  bg-gradient-to-br opacity-[0.92]  from-[#05a8bd] via-[#05bd92] to-[#f3e50a] absolute top-0 left-0 z-0 `}>    
+                <div ref={targetMenu} className={`overflow-hidden w-full h-0  bg-gradient-to-br opacity-[0.92]    base-gradient absolute top-0 left-0 z-0 `}>    
 
                     <div className={`flex flex-col ${kaiseiDecol.className} text-white text-[6.5vw] mt-[15vw] w-full items-center`}>
                         {links.map((value) => (

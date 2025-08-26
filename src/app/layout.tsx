@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Kiwi_Maru } from "next/font/google";
 import "./globals.css";
+// グローバルクラス、各階層で使う独自クラスを定義しています。各年のテーマカラーを使いたい場合はここを参照
+
 import { headers } from "next/headers";
 import { LoadingLayout } from "@/components/global/parts/loading_layout";
 import { Analytics } from '@vercel/analytics/react';

@@ -1,0 +1,13 @@
+.light_move {
+    opacity: 0.9;
+    scale: 1.2;
+    animation:light_move 4s ease infinite ;
+}
+
+@keyframes light_move {
+    0%{top:-30%; left:-20%}
+    25%{top:50%; left:-10%}
+    50%{top:50%; left:20%}
+    75%{top:-0%; left:10%}
+    100%{top:-30%; left:-20%}
+}

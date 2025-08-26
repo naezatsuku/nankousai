@@ -251,7 +251,7 @@ export default async function page() {
 
     return(
         <div className="py-[30vw] 2xl:py-40 lg:py-32 h-full bg-white">
-            <h2 className={`${kaiseiDecol.className} text-center text-[12vw] 2xl:text-8xl lg:text-6xl text-[darkturquoise]`}>タイムテーブル</h2>
+            <h2 className={`${kaiseiDecol.className} text-center text-[12vw] 2xl:text-8xl lg:text-6xl text-color-base`}>タイムテーブル</h2>
             {/* <div className="my-[10vw]">
                 <NotReady></NotReady>
             </div> */}
@@ -262,7 +262,7 @@ export default async function page() {
                 
             </div>
             <div>
-                <BackTo link="/" name="トップ"></BackTo>
+                {/* <BackTo link="/" name="トップ"></BackTo> */}
             </div>
             <script
                 type="application/ld+json"

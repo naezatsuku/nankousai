@@ -74,7 +74,7 @@ export default function Access() {
     }
 
     return(
-        <div className="mt-[10vw] pt-[20vw] pb-[10vw]  2xl:pt-32 lg:pt-24 lg:mt-5 lg:pb-10  bg-[darkturquoise] text-white">
+        <div className="mt-[10vw] pt-[20vw] pb-[10vw]  2xl:pt-32 lg:pt-24 lg:mt-5 lg:pb-10    base-bg text-white">
             <h2 className={`${kaiseiDecol.className} text-center text-[12vw] 2xl:text-8xl lg:text-6xl`}>アクセス</h2>
             <p className="text-[3.5vw] text-center mt-[1vw] mb-[4vw] 2xl:text-2xl lg:text-xl lg:mt-6 2xl:mb-16 lg:mb-10">※自家用車でのご来校はお控えください。</p>   
             <div className="mx-4">
@@ -100,11 +100,11 @@ export default function Access() {
                         <p className={`${kaiseiDecol.className} text-[7vw] ml-[2vw] py-[1vw] lg:ml-4 lg:py-6 2xl:text-6xl lg:text-5xl  text-white font-bold`}>{value.title}</p>
                     </div>
                     <div className="lg:flex items-center 2xl:my-8 lg:my-5">
-                        <p className={`text-[3.5vw] font-medium tracking-tight  text-[darkturquoise] px-[5vw] py-[0.2vw] rounded-full  inline-block  text-left mt-[6vw] mb-[0.5vw] translate-y-[0%] bg-white 2xl:text-2xl lg:text-lg 2xl:px-10 2xl:py-2 lg:m-0 lg:mr-4 lg:px-6 lg:py-1`}>
+                        <p className={`text-[3.5vw] font-medium tracking-tight   px-[5vw] py-[0.2vw] rounded-full  inline-block  text-left mt-[6vw] mb-[0.5vw] translate-y-[0%] bg-white 2xl:text-2xl lg:text-lg 2xl:px-10 2xl:py-2 lg:m-0 lg:mr-4 lg:px-6 lg:py-1 text-color-base`}>
                             徒歩            
                         </p>
                         <div className="flex items-center justify-between flex-grow lg:justify-start">
-                            <p className="text-white text-[4vw] ml-[0.5vw] 2xl:text-4xl lg:text-2xl lg:ml-0">{value.title}より徒歩{value.walk}分</p>
+                            <p className="text-white text-[4vw] ml-[0.5vw] 2xl:text-4xl  lg:text-2xl lg:ml-0">{value.title}より徒歩{value.walk}分</p>
                             <Link href={"https://www.google.com/maps/dir/?api=1&destination=横浜市立南高等学校"} target="_blank" className="w-[25vw] mr-[2vw] -translate-y-[30%] lg:translate-y-0 lg:w-40 lg:ml-20">
                                 <SquareButtonPinkShadow2 text="ガイド開始"></SquareButtonPinkShadow2>
                             </Link>
@@ -112,7 +112,7 @@ export default function Access() {
                     </div> 
                     {value.bus == true && 
                     <div>
-                        <p className={`text-[3.5vw] font-medium tracking-tight px-[5vw]  text-[darkturquoise] py-[0.2vw] rounded-full  inline-block  text-left  mt-[7vw] mb-[4vw] translate-y-[0%]  bg-white 2xl:text-2xl lg:text-lg 2xl:px-10 2xl:py-2 lg:m-0 lg:mr-4 lg:mb-3 lg:px-6 lg:py-1`}>
+                        <p className={`text-[3.5vw] font-medium tracking-tight px-[5vw]   py-[0.2vw] rounded-full  inline-block  text-left  mt-[7vw] mb-[4vw] translate-y-[0%]  bg-white 2xl:text-2xl lg:text-lg 2xl:px-10 2xl:py-2 lg:m-0 lg:mr-4 lg:mb-3 lg:px-6 lg:py-1 text-color-base`}>
                             バス         
                         </p>
                         <div className="lg:flex">
@@ -142,7 +142,7 @@ export default function Access() {
                                             <p className="2xl:text-3xl lg:text-xl hidden xl:block">行き先：</p>
                                             {value.bus.map((value) => (
                                                 <div key={value} className="rounded-lg bg-white 2xl:mr-6 lg:mr-2">
-                                                    <p className={`text-[3.5vw] 2xl:text-2xl lg:text-lg font-medium tracking-tight  text-[darkturquoise] py-[1vw] px-[4vw] 2xl:py-3 2xll:px-8  inline-block lg:py-1 lg:px-5`}>
+                                                    <p className={`text-[3.5vw] 2xl:text-2xl lg:text-lg font-medium tracking-tight   py-[1vw] px-[4vw] text-color-base 2xl:py-3 2xll:px-8  inline-block lg:py-1 lg:px-5`}>
                                                         {value}
                                                     </p>
                                                 </div>

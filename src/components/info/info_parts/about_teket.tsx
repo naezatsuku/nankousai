@@ -7,8 +7,8 @@ import { headers } from "next/headers";
 export default function AboutTeket() {
     return(
         <div className="w-full shadow-md rounded-md">
-            <p className="text-[3vw] xl:text-xl lg:text-base text-white bg-[darkturquoise] py-[2.2vw] px-[3vw] xl:p-5 lg:p-3 rounded-t-md">申し込みはTeketを通して行います</p>
-            <p className="text-[darkturquoise] text-[3vw] xl:text-xl lg:text-base pt-[2vw] leading-[160%] pb-[3vw] px-[3vw] xl:p-5 lg:p-3 text-justify rounded-b-lg bg-white font-normal tracking-wide">Teketはインターネット上でイベント等のチケットを取得することができるサービスです。南高祭に参加するにはこのチケットが必要です。</p>
+            <p className="text-[3vw] xl:text-xl lg:text-base text-white   base-bg py-[2.2vw] px-[3vw] xl:p-5 lg:p-3 rounded-t-md">申し込みはTeketを通して行います</p>
+            <p className=" text-[3vw] xl:text-xl lg:text-base pt-[2vw] leading-[160%] pb-[3vw] px-[3vw] xl:p-5 lg:p-3 text-justify rounded-b-lg bg-white font-normal tracking-wide">Teketはインターネット上でイベント等のチケットを取得することができるサービスです。南高祭に参加するにはこのチケットが必要です。</p>
         </div>
     )
 }

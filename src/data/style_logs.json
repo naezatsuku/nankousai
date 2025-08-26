@@ -1,0 +1,24 @@
+{
+    "body":[
+        {"property":"--tw-text-opacity", "value":1},
+        {"property":"color", "value":"darkturquoise"}
+    ],
+
+    "text-color-base":[
+        {"property":"--tw-text-opacity", "value":1},
+        {"property":"color", "value":"darkturquoise"}
+    ],
+
+    "base-bg": [
+        {"property":"--tw-text-opacity", "value":1},
+        {"property":"color", "value":"darkturquoise"}
+    ],
+
+    "base-gradient": [
+        {"property":"A","value":"#05a8bd"}
+    ],
+
+    "adorned-bg":[
+
+    ]
+}

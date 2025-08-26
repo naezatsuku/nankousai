@@ -2,7 +2,8 @@
 import { motion } from "framer-motion";
 import { useAnimate } from "framer-motion";
 import { KaiseiDecol } from "@/app/fonts";
-
+import styles from "./parts.module.css"
+import { useState } from "react";
 const kaiseiDecol = KaiseiDecol
 
 type Props = {
@@ -78,7 +79,7 @@ export function RoundButtonPurple(
                     <p
                     className={
                         font_size == 50?
-                        `absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-[4.5vw]  2xl:text-xl lg:text-lg text-white inline-block w-full text-transparent font-normal  tracking-wide z-20`:
+                        `absolute top-1/2  -translate-y-1/2 left-1/2 -translate-x-1/2 text-[4.5vw]  2xl:text-xl lg:text-lg text-white inline-block w-full text-transparent font-normal  tracking-wide z-20`:
                         `absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-[3.5vw] 2xl:text-xl lg:text-xs text-white inline-block w-full text-transparent font-normal tracking-wide  z-20`} >
                         {text}
                     </p>
@@ -116,7 +117,7 @@ export  function RoundButtonTurquoise(
 
     return(
         <motion.div whileTap={"click"} whileHover={"hover"} variants={variantsA}  className="relative">
-            <motion.div variants={variants} transition={{ease:"easeOut", duration:0.08}}   className={`bg-gradient-to-br from-sky-500 via-[#05bd92] to-[#f3e50a] flex justify-center w-full aspect-[3.2/1] rounded-full p-[1.8%] opacity-85 brightness-105 relative`}>
+            <motion.div variants={variants} transition={{ease:"easeOut", duration:0.08}}   className={`bg-gradient-to-br blue-button flex justify-center w-full aspect-[3.2/1] rounded-full p-[1.8%] opacity-85 brightness-105 relative`}>
                 <div className="w-full h-full bg-white rounded-full text-center relative z-0">
                     <p
                     className={
@@ -129,15 +130,15 @@ export  function RoundButtonTurquoise(
                     className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-[5vw] rounded-full  bg-gradient-to-r from-fuchsia-500 to-sky-500 bg-clip-text inline-block w-full text-transparent font-medium z-20">
                         {text}
                     </button> */}
-                    <div className="absolute w-full h-full bg-gradient-to-br from-[#05a8bd] via-[#05bd92] to-[#f3e50a] rounded-full top-0 opacity-90 z-10"></div>
+                    <div className="absolute w-full h-full bg-gradient-to-br   base-gradient rounded-full top-0 opacity-90 z-10"></div>
                 </div>
             </motion.div>
-            {/* <div className={`bg-gradient-to-br from-[#05a8bd] via-[#05bd92] to-[#f3e50a] flex justify-center w-full aspect-[3.2/1] rounded-full p-[2.3%] absolute top-[12%] left-[2%] -z-10 saturate-150 brightness-[0.8] opacity-80`}>
+            {/* <div className={`bg-gradient-to-br   base-gradient flex justify-center w-full aspect-[3.2/1] rounded-full p-[2.3%] absolute top-[12%] left-[2%] -z-10 saturate-150 brightness-[0.8] opacity-80`}>
                 <div className="w-full h-full bg-white rounded-full text-center relative z-0">
-                    <div className="absolute w-full h-full bg-gradient-to-br from-[#05a8bd] via-[#05bd92] to-[#f3e50a] rounded-full top-0 opacity-80 z-10"></div>
+                    <div className="absolute w-full h-full bg-gradient-to-br   base-gradient rounded-full top-0 opacity-80 z-10"></div>
                 </div>
             </div> */}
-            <motion.div variants={variantsB} transition={{ease:"easeOut", duration:0.08}}   className={`bg-gradient-to-br from-[#05a8bd] via-[#05bd92] to-[#f3e50a] flex justify-center w-full aspect-[3.2/1] rounded-full absolute top-[12%] left-[2.3%] -z-10 saturate-[1.8] brightness-[0.75] opacity-80`}></motion.div>
+            <motion.div variants={variantsB} transition={{ease:"easeOut", duration:0.08}}   className={`bg-gradient-to-br   base-gradient flex justify-center w-full aspect-[3.2/1] rounded-full absolute top-[12%] left-[2.3%] -z-10 saturate-[1.8] brightness-[0.75] opacity-80`}></motion.div>
         </motion.div>
     )
 }
@@ -259,5 +260,84 @@ export default function RoundButtonPink(
                 </div> */}
             </motion.div>
         </motion.div>
+    )
+}
+
+type NewButton = {
+    text:string,
+    size:number,
+    color:string
+}
+
+export function Rounded_withShadow(
+    {text, size, color}:NewButton 
+){
+const font_size = size;
+
+    const variantsA = {
+        hover:{opacity:1}
+    }
+
+    const variantsB = {
+        hover:{ opacity:0.7},
+        click:{opacity:1}
+    }
+
+    const variants = {
+        hover:{scale:1.02, top:"-0.3vw", left:"-1%", opacity:0.95},
+        click:{scale:1, top:"12%",left:"2.3%"}
+    }
+
+    return(
+        <motion.div whileTap={"click"} whileHover={"hover"} variants={variantsA}  className="relative">
+            <motion.div variants={variants} transition={{ease:"easeOut", duration:0.08}}   className={`bg-gradient-to-br ${color} flex justify-center w-full aspect-[3.2/1] rounded-full p-[1.8%] opacity-85 brightness-105 relative`}>
+                <div className="w-full h-full bg-white rounded-full text-center relative z-0">
+                    <p
+                    className={
+                        font_size == 50?
+                        `absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-[4.5vw] 2xl:text-xl lg:text-lg text-white inline-block w-full text-transparent font-normal tracking-wide z-20`:
+                        `absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-[3.5vw] 2xl:text-xl lg:text-xs text-white inline-block w-full text-transparent font-normal tracking-wide z-20`} >
+                        {text}
+                    </p>
+                    <div className={`absolute w-full h-full bg-gradient-to-br rounded-full top-0 opacity-90 z-10 ${color}`}></div>
+                </div>
+            </motion.div>
+            <motion.div variants={variantsB} transition={{ease:"easeOut", duration:0.08}}   className={`bg-gradient-to-br   ${color} flex justify-center w-full aspect-[3.2/1] rounded-full absolute top-[12%] left-[2.3%] -z-10 saturate-[1.8] brightness-[0.75] opacity-80`}></motion.div>
+        </motion.div>
+    )
+}
+
+export function Rounded_base(
+    {text, size, color}:NewButton 
+) {
+    const [hovered, setHovered] = useState(false)
+
+    const button_variants = {
+        hover: {
+            scale:1.08,
+        }
+    }
+
+    const light_variants = {
+        hover:{
+            opacity:1,
+            // y:[0, 80, 80, 0, 0],
+            // x:[0, 0, 80, 80,0],
+            // transition:{
+            //     duration:3,
+            //     repeat: Infinity z-20
+            // }
+        }
+    }
+
+    return(
+        <div className="relative w-full h-full">
+            <motion.div variants={button_variants} onHoverStart={() => {setHovered(true)}} onHoverEnd={() => {setHovered(false)}} transition={{type:"spring", duration:0.4, bounce:0.4}}  whileHover="hover" className={"top-0 flex justify-center items-center left-0 absolute z-20 w-full h-full rounded-full bg-gradient-to-br " + color}>
+                <p className="text-white font-thin text-base md:text-3xl lg:text-base  2xl:text-xl ">{text}</p>
+
+                <motion.div className={`-top-3 pointer-events-none -left-3 scale-110 absolute w-full h-full z-30 rounded-full bg-white  mix-blend-soft-light blur-xl ${hovered? styles.light_move: "opacity-40"}`}></motion.div>
+            </motion.div>
+            <div className={"top-1 left-1 absolute w-full h-full z-10  rounded-full bg-gradient-to-br light-gradient opacity-70 mix-blend-lighten blur-lg " + color}></div>
+        </div>
     )
 }

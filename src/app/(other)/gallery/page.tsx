@@ -37,7 +37,7 @@ export default function page() {
                 <Gallery></Gallery>
             </div>
             <div>
-                <BackTo link="/" name="トップ"></BackTo>
+                {/* <BackTo link="/" name="トップ"></BackTo> */}
             </div>
             <script
                 type="application/ld+json"

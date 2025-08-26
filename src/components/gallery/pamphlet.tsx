@@ -67,7 +67,7 @@ export default function Pamphlet () {
 
     return(
         <div className="w-full">
-            <h2 className={` ${kaiseiDecol.className} text-center text-[12vw] 2xl:text-8xl lg:text-6xl  text-[darkturquoise]`}>パンフレット</h2>
+            <h2 className={` ${kaiseiDecol.className} text-center text-[12vw] 2xl:text-8xl lg:text-6xl  text-color-base`}>パンフレット</h2>
             <div className='mx-auto flex justify-center mt-[3vw] lg:mt-10 pb-[4vw] lg:pb-12 gap-[3vw] lg:gap-12'>
                 <div className="w-[35vw] lg:w-56 opacity-95">
                         <Link href={"https://drive.google.com/file/d/17-4y1mI6OQqgmy5wvCQhzqKWGepIDmk6/view?usp=drive_link"} target='_blank'>
@@ -102,7 +102,7 @@ export default function Pamphlet () {
                 {/* <div className='relative -top-full'>
                     <div className='swiper-pagination !relative  text-[3vw] lg:text-xl' id='pagination'></div>
                 </div> */}
-                <div className='w-full px-[1.5vw] 2xl:w-[70%] lg:w-[80%] lg:-translate-x-1/2 lg:translate-y-5 lg:left-1/2 absolute top-[calc(50%_-_5.5vw)] -translate-y-1/3 flex justify-between z-10 text-[8vw] 2xl:text-6xl lg:text-4xl opacity-80 text-[darkturquoise]'>
+                <div className='w-full px-[1.5vw] 2xl:w-[70%] lg:w-[80%] lg:-translate-x-1/2 lg:translate-y-5 lg:left-1/2 absolute top-[calc(50%_-_5.5vw)] -translate-y-1/3 flex justify-between z-10 text-[8vw] 2xl:text-6xl lg:text-4xl opacity-80 text-color-base'>
                     <div id="button_prev" className="relative cursor-pointer">
                         <SlArrowLeft></SlArrowLeft>
                     </div>
@@ -132,7 +132,7 @@ export default function Pamphlet () {
                         </SwiperSlide>
                     ))}
                 </Swiper>
-                <div className='w-full px-[4vw] absolute top-[calc(50%_-_5.5vw)]  flex justify-between z-10 text-[6vw] opacity-80 text-[darkturquoise]'>
+                <div className='w-full px-[4vw] absolute top-[calc(50%_-_5.5vw)]  flex justify-between z-10 text-[6vw] opacity-80 text-color-base'>
                     <div id="button_prev" className={`relative cursor-pointer`}>
                         <SlArrowLeft></SlArrowLeft>
                     </div>

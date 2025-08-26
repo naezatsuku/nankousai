@@ -150,7 +150,7 @@ export default function Page() {
     return (
         <div className="py-[30vw] 2xl:py-40 lg:py-32">
             <title>フロアマップ</title>      
-            <h1 className={`${kaiseiDecol.className} text-center text-[12vw] text-[darkturquoise] lg:text-6xl 2xl:text-8xl`}>フロアマップ</h1>
+            <h1 className={`${kaiseiDecol.className} text-center text-[12vw]  lg:text-6xl 2xl:text-8xl`}>フロアマップ</h1>
 
             <div className="hidden lg:block 2xl:mt-20 lg:mt-14">
                 {imgs.map((value, index) => (
@@ -182,8 +182,8 @@ export default function Page() {
                 {mapImages.map((value, index) => (
                     <div className="my-[15vw]" key={value.href}>
                         <div className="flex  mx-[4vw] mb-[7vw] relative">
-                            <div className=" w-[2vw] bg-[darkturquoise]"></div>
-                            <p className={`${kaiseiDecol.className} text-[10vw] ml-[2vw] text-[darkturquoise] `}>{value.floor}</p>
+                            <div className=" w-[2vw]   base-bg"></div>
+                            <p className={`${kaiseiDecol.className} text-[10vw] ml-[2vw]  `}>{value.floor}</p>
                             <p className="left-1/2 -translate-x-1/2 -bottom-1/3 absolute text-nowrap text-[3vw] bg-gray-300 px-[2vw] text-white rounded-xl">ズーム・ドラッグで全体を見渡せます</p>
                         </div>
                         <TransformWrapper
@@ -234,7 +234,7 @@ export default function Page() {
 
             </div>
             <div>
-                <BackTo link="/" name="トップ"></BackTo>
+                {/* <BackTo link="/" name="トップ"></BackTo> */}
             </div>
             <script
                 type="application/ld+json"
