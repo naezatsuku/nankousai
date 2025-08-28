@@ -12,9 +12,6 @@ export const metadata = {
   title: "南高祭公式サイト",
   description: "南高・南高附属中最大の行事へようこそ。フード販売やバンドの生演奏など魅力的な展示を公開しています。どなたも入場無料。ぜひ気軽にお越しください！",
   keywords: "南高祭, 文化祭, 学園祭, イベント, 展示, フード, 学校",
-  alternates: {
-    canonical: "https://nankousai.vercel.app/",
-  },
   openGraph: {
     title: "南高祭公式サイト",
     description: "南高・南高附属中最大の行事へようこそ。フード販売やバンドの生演奏など魅力的な展示を公開しています。",
@@ -29,6 +26,10 @@ export const metadata = {
     ],
     type: "website",
   },
+  metadataBase: new URL('https://nankousai.vercel.app/'),
+  alternates: {
+    canonical: '/',
+  },
 };
 export default function page() {
   const jsonLd = {
@@ -36,6 +37,7 @@ export default function page() {
     "@type": "Event",
     "name": "南高祭",
     "startDate": "2025-09-13T09:30",
+    "endDate": "2025-09-13T09:30",
     "location": {
       "@type": "Place",
       "name": "横浜市立南高等学校・附属中学校",
@@ -50,10 +52,17 @@ export default function page() {
     "image": [
       "https://drive.google.com/file/d/137obuAzNIB6r-501h6D0-6SoFgLnqXd3/view?usp=drive_link"
     ],
+    "organizer": {
+      "@type": "Organization",
+      "name": "南高祭実行委員会",
+      "url": "https://nankousai.jp"
+    },
+
     "offers": {
       "@type": "Offer",
       "price": "0",
-      "url":"https://teket.jp/6636/53992"
+      "url":"https://teket.jp/6636/53992",
+      "priceCurrency": "JPY",
     }
   };
   const canonicalUrl = 'https://nankousai.vercel.app/';
