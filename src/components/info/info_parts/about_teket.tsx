@@ -6,9 +6,9 @@ import { headers } from "next/headers";
 
 export default function AboutTeket() {
     return(
-        <div className="w-full shadow-md rounded-md">
-            <p className="text-[3vw] xl:text-xl lg:text-base text-white   base-bg py-[2.2vw] px-[3vw] xl:p-5 lg:p-3 rounded-t-md">申し込みはTeketを通して行います</p>
-            <p className=" text-[3vw] xl:text-xl lg:text-base pt-[2vw] leading-[160%] pb-[3vw] px-[3vw] xl:p-5 lg:p-3 text-justify rounded-b-lg bg-white font-normal tracking-wide">Teketはインターネット上でイベント等のチケットを取得することができるサービスです。南高祭に参加するにはこのチケットが必要です。</p>
+        <div className="w-full shadow-md rounded-md ">
+            <p className="text-[3vw]  md:text-lg text-white   base-bg py-[2.2vw] px-[3vw] md:p-4 lg:p-4 rounded-t-md">申し込みはTeketを通して行います</p>
+            <p className=" text-[3vw] xl:text-lg md:text-lg lg:text-lg pt-[2vw] leading-[160%] pb-[3vw] px-[3vw] md:p-4 lg:p-4 text-justify rounded-b-lg bg-white font-normal tracking-wide">Teketはインターネット上でイベント等のチケットを取得することができるサービスです。南高祭に参加するにはこのチケットが必要です。</p>
         </div>
     )
 }
@@ -57,15 +57,15 @@ export function TeketType() {
     return(
         <div>
             <div className="w-full shadow-md rounded-md lg:hidden">
-                <div className="text-[3vw] xl:p-5 lg:p-3 xl:text-xl lg:text-lg text-white bg-slate-400 py-[2.2vw] px-[3vw]  rounded-t-md flex items-center">申し込みに関して <motion.div variants={variants} className=" cursor-pointer mx-2 text-[4vw] xl:text-xl lg:text-base" animate={isOpen? "up": "down"} onClick={setMenu} ><FaAngleDown></FaAngleDown></motion.div></div>
-                <motion.div variants={variants} animate={isOpen? "open" : "close"} className="text-slate-400 text-[3vw] pt-[3vw] leading-[160%] pb-[3vw] px-[3vw] text-justify rounded-b-lg bg-white font-normal tracking-wide overflow-hidden xl:p-5 lg:p-3 xl:text-xl lg:text-base">
+                <div className="text-[3vw]  md:text-lg  md:p-4 lg:p-4  text-white bg-slate-400 py-[2.2vw] px-[3vw]  rounded-t-md flex items-center">申し込みに関して <motion.div variants={variants} className=" cursor-pointer mx-2 text-[4vw]  " animate={isOpen? "up": "down"} onClick={setMenu} ><FaAngleDown></FaAngleDown></motion.div></div>
+                <motion.div variants={variants} animate={isOpen? "open" : "close"} className="text-slate-400 text-[3vw] pt-[3vw] md:text-lg leading-[160%] pb-[3vw] px-[3vw] md:p-4 lg:p-4  text-justify rounded-b-lg bg-white font-normal tracking-wide overflow-hidden xl:p-5  ">
                     <p>※急激な校内の人員増加による危険防止のため、9:30入場と12:30入場の2種類の「入場用QRコード」をご用意しております。そのため、9:30入場の「入場用QRコード」は枚数に制限を設けております。先着順となりますので、ご理解とご協力をお願いいたします。</p>
                     <p className="mt-[3vw] xl:mt-6 lg:mt-3">※teketの利用には、メールアドレスの登録が必要となります。本校では、来場者の人数を把握し、万一の場合の連絡先の確保のために本システムを利用しておりますが、本校でメールアドレスの情報は入手しておりません。teketシステムの個人情報の取扱いにご同意いただいたうえで、ご登録・お手続きください。</p>
                 </motion.div>
             </div>
             <div className="w-full shadow-md rounded-md hidden lg:block">
-                <div className="text-[3vw] xl:p-5 lg:p-3 xl:text-xl lg:text-lg text-white bg-slate-400 py-[2.2vw] px-[3vw]  rounded-t-md flex items-center">申し込みに関して <motion.div variants={new_variants} className=" cursor-pointer mx-2 text-[4vw] xl:text-xl lg:text-base" animate={isOpen? "up": "down"} onClick={setMenu} ><FaAngleDown></FaAngleDown></motion.div></div>
-                <motion.div variants={new_variants} animate={isOpen? "open" : "close"} className="text-slate-400 text-[3vw] pt-[3vw] leading-[160%] pb-[3vw] px-[3vw] text-justify rounded-b-lg bg-white font-normal tracking-wide overflow-hidden xl:p-5 lg:p-3 xl:text-xl lg:text-base">
+                <div className="text-[3vw] md:p-4 lg:p-4  md:text-lg text-white bg-slate-400 py-[2.2vw] px-[3vw]  rounded-t-md flex items-center">申し込みに関して <motion.div variants={new_variants} className=" cursor-pointer mx-2 text-[4vw]  md:text-lg" animate={isOpen? "up": "down"} onClick={setMenu} ><FaAngleDown></FaAngleDown></motion.div></div>
+                <motion.div variants={new_variants} animate={isOpen? "open" : "close"} className="text-slate-400 text-[3vw] pt-[3vw] leading-[160%] pb-[3vw] px-[3vw] text-justify rounded-b-lg bg-white font-normal tracking-wide overflow-hidden md:p-4 lg:p-4  md:text-lg ">
                     <p>※急激な校内の人員増加による危険防止のため、9:30入場と12:30入場の2種類の「入場用QRコード」をご用意しております。そのため、9:30入場の「入場用QRコード」は枚数に制限を設けております。先着順となりますので、ご理解とご協力をお願いいたします。</p>
                     <p className="mt-[3vw] xl:mt-6 lg:mt-3">※teketの利用には、メールアドレスの登録が必要となります。本校では、来場者の人数を把握し、万一の場合の連絡先の確保のために本システムを利用しておりますが、本校でメールアドレスの情報は入手しておりません。teketシステムの個人情報の取扱いにご同意いただいたうえで、ご登録・お手続きください。</p>
                 </motion.div>
