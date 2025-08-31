@@ -64,11 +64,12 @@ export default function Page() {
     };
 
     const mapImages = [
-        {floor:"1階", href:"/フロアマップ1.png"},
-        {floor:"2階", href:"/フロアマップ2.png"},
-        {floor:"3階", href:"/フロアマップ3.png"},
-        {floor:"4階", href:"/フロアマップ4.png"},
-        {floor:"5階", href:"/フロアマップ5.png"},
+        {floor:"1階", href:"/0001.png"},
+        {floor:"2階-1", href:"/0002.png"},
+        {floor:"2階-2", href:"/0003.png"},
+        {floor:"3階", href:"/0004.png"},
+        {floor:"4階", href:"/0005.png"},
+        {floor:"5階", href:"/0006.png"},
     ]
     const imgs = [
         {img:"/フロアマップ1.png", test:[
@@ -152,7 +153,7 @@ export default function Page() {
             <title>フロアマップ</title>      
             <h1 className={`${kaiseiDecol.className} text-center text-[12vw]  lg:text-6xl 2xl:text-8xl`}>フロアマップ</h1>
 
-            <div className="hidden lg:block 2xl:mt-20 lg:mt-14">
+            {/* <div className="hidden lg:block 2xl:mt-20 lg:mt-14">
                 {imgs.map((value, index) => (
                     <div key={index} className={`grid grid-cols-[repeat(2,1fr)] min-h-[500px]  w-[90%] mx-auto 2xl:mb-32 mb-16 relative
                     ${value.test.length < 10 ? "grid-rows-[80svh]" : "xl:grid-rows-[140svh] grid-rows-[150svh]"}`}>
@@ -174,6 +175,13 @@ export default function Page() {
                                 </Link>
                             ))}
                         </div>
+                    </div>
+                ))}
+            </div> */}
+            <div className="hidden lg:block 2xl:mt-20 lg:mt-14 xl:mx-40 mx-16">
+                {mapImages.map((value, index) => (
+                    <div className="w-full aspect-auto mb-20" key={index}>
+                        <Image src={value.href} alt="フロアマップ" width={2000} height={1000} className="w-full aspect-auto"></Image>
                     </div>
                 ))}
             </div>
@@ -219,7 +227,7 @@ export default function Page() {
                                 <Image src={value.href} alt="フロアマップ" width={1000} height={2000}></Image>
                             </TransformComponent>
                         </TransformWrapper>
-                        <div className="  mt-[3vw]">
+                        {/* <div className="  mt-[3vw]">
                             <p className="text-center text-[3.5vw] text-gray-400">展示一覧</p>
                             <div className="flex flex-wrap mx-[4vw] justify-center mt-[1vw]">
                                 {imgs[index].test.map((value, index) => (
@@ -228,7 +236,7 @@ export default function Page() {
                                     </div>
                                 ))}
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 ))}
 
