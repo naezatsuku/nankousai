@@ -16,6 +16,7 @@ import SadouClub from "./sadou_club";
 import Pranetarium_tiket from "./atentions";
 import { CookingClubNotice } from "./atentions";
 import { Cafe_trash } from "./atentions";
+import AnimatedClockArc from "../Clock/ClockArc";
 
 const kaiseiDecol = KaiseiDecol
 
@@ -28,7 +29,9 @@ type eventData = {
         time:Array<string>,
         type:string,
         tags:Array<string>,
-        available:boolean
+        available:boolean,
+        waitTime:number,
+        renewTime:string,
     },
     detail:Array<{
         title:string,
@@ -211,6 +214,13 @@ export default function ShowDetails (
                         ))}
                     </motion.div>}
                     
+                </div>
+                <div className="flex justify-center ">
+                    <div className="flex justify-center flex-col w-auto h-auto p-6 bg-slate-50  border-slate-100 shadow-xl rounded-xl">
+                        <AnimatedClockArc minutes={event.waitTime} />
+                        <div className="text-center mt-2 text-black text-lg ">現在の待ち時間</div>
+                        <div className="text-center mt-2 text-black text-lg ">更新:{event.renewTime}</div>
+                    </div>
                 </div>
                 <div className="w-full my-[7vw] px-12 lg:my-10">
                         <p className={`text-[3.5vw] lg:text-2xl font-medium tracking-tight text-slate-500 text-center ${kaiseiDecol.className}`}>{event.comment}</p>

@@ -22,7 +22,9 @@ type eventData = {
         time:Array<string>,
         type:string,
         tags:Array<string>,
-        available:boolean
+        available:boolean,
+        waitTime:number,
+        renewTime:string,
     },
     detail:Array<{
         title:string,
@@ -58,7 +60,7 @@ export default function Page() {
         "@context": "http://schema.org",
         "@type": "Event",
         "name": "南高祭",
-        "startDate": "2024-09-07T09:30",
+        "startDate": "2025-09-013T09:30",
         "location": {
           "@type": "Place",
           "name": "横浜市立南高等学校・附属中学校",
@@ -79,7 +81,7 @@ export default function Page() {
         <div className="h-screen bg-white">
             {name?
             <div className="w-full">
-                <title>{name} | 第71回南高祭・展示の部2024</title>
+                <title>{name} | 第72回南高祭・展示の部2025</title>
                 {data? 
                 <div>
                     <ShowDetails event={data.event} detail={data.detail} name={name}></ShowDetails>
