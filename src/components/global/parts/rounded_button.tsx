@@ -333,7 +333,7 @@ export function Rounded_base(
     return(
         <div className="relative w-full h-full">
             <motion.div variants={button_variants} onHoverStart={() => {setHovered(true)}} onHoverEnd={() => {setHovered(false)}} transition={{type:"spring", duration:0.4, bounce:0.4}}  whileHover="hover" className={"top-0 flex justify-center items-center left-0 absolute z-20 w-full h-full rounded-full bg-gradient-to-br " + color}>
-                <p className="text-white font-thin text-base md:text-3xl lg:text-base  2xl:text-xl ">{text}</p>
+                <p className="text-white font-thin text-base md:text-3xl lg:text-xs xl:text-base  2xl:text-xl ">{text}</p>
 
                 <motion.div className={`-top-3 pointer-events-none -left-3 scale-110 absolute w-full h-full z-30 rounded-full bg-white  mix-blend-soft-light blur-xl ${hovered? styles.light_move: "opacity-40"}`}></motion.div>
             </motion.div>

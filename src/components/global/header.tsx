@@ -105,13 +105,13 @@ export default function Header() {
      }
 
     return(
-        <header className="w-full h-[15vw] relative max-h-20 md:max-h-[13vw] lg:max-h-20">
+        <header className="w-full h-[15vw] relative max-h-20 md:max-h-[13vw] lg:max-h-16 xl:max-h-20 ">
             <div className="absolute w-full h-full  bg-gradient-to-br    base-gradient header-opacity -z-10"></div>
             <div className={ `${pullDown ? "flex" : "hidden"} absolute top-[90px] right-44 rounded-lg   bg-gradient-to-br    adorned-bg flex-col items-start pb-4  drop-shadow-lg opacity-90 xl:hidden`}>
                 <IoMdClose className="ml-auto mr-2 text-white mt-2 text-xl" onClick={pullDownMenu}></IoMdClose>
                 <Link href={"/gallery"}>
                     <p className={` px-4  text-white font-bold  text text-2xl ${kaiseiDecol.className} pb-2 `}>#ギャラリー</p>
-                </Link>
+                </Link> 
                 <Link href={"/info#access"}>
                     <p className={`px-4  text-white font-bold  tethite text-2xl ${kaiseiDecol.className} py-2 `}>#アクセス</p>
                 </Link>
@@ -119,8 +119,8 @@ export default function Header() {
             <div className="w-full h-full flex items-center justify-between">
                 <Link href={"/"} onClick={clickLogo}>
                     <motion.div whileHover={{scale:1.05, opacity:1}} whileTap={{scale:0.9}} transition={{type:"spring", duration:0.2, bounce:0.2}} className="relative ml-[3.5vw] flex items-center opacity-90 xl:ml-10 ">
-                        <Image src={"/70周年ロゴB.png"} alt="70周年ロゴ" width={500} height={500} className="h-[6.8vw] w-[7vw] lg:w-10 lg:h-10 xl:translate-y-[0.1rem]"></Image>
-                        <p className={` text-white mx-[2px] font-light text-[6vw] lg:text-4xl -translate-y-[5%] xl:-translate-y-0mx-[1.2vw] lg:mx-2 ${kaiseiDecol.className}`}>南高祭</p>
+                        <Image src={"/70周年ロゴB.png"} alt="70周年ロゴ" width={500} height={500} className="h-[6.8vw] w-[7vw] lg:w-9 lg:h-9 xl:h-10 xl:w-10 xl:translate-y-[0.1rem]"></Image>
+                        <p className={` text-white mx-[2px] font-light text-[6vw] lg:text-3xl -translate-y-[5%] xl:-translate-y-0mx-[1.2vw] lg:mx-2 xl:text-4xl ${kaiseiDecol.className}`}>南高祭</p>
                         <div ref={targetLogo}  className="absolute border-white opacity-0 w-10 h-10 border-0 rounded-full top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2"></div>
                     </motion.div>
                 </Link>
@@ -151,9 +151,9 @@ export default function Header() {
                     {/* <BsThreeDots className="mx-5" onClick={pullDownMenu}></BsThreeDots> */}
                 </div>
                 
-                <div className="flex items-center  z-10 ml-[3vw] lg:mr-7 lg:ml-2">
+                <div className="flex items-center  z-10 ml-[3vw] lg:mr-7 lg:ml-5 xl:ml-3">
                     <Link ref={targetButton} href={"/info"} onClick={clickButton}>
-                        <motion.div whileHover={{scale:1.05, opacity:1}}  whileTap={{scale:0.95}} transition={{type:"spring", duration:0.2, bounce:0.1}} className={`relative w-[28vw] opacity-90 lg:w-[170px]`}>
+                        <motion.div whileHover={{scale:1.05, opacity:1}}  whileTap={{scale:0.95}} transition={{type:"spring", duration:0.2, bounce:0.1}} className={`relative w-[28vw] opacity-90 lg:w-[140px] xl:w-[170px]`}>
                             {/* <RoundButtonPink text={"参加申し込み"} size={40}></RoundButtonPink> */}
                             <SquareButtonPinkShadow2 text="参加申し込み" ></SquareButtonPinkShadow2>
                             <div ref={targetPink} className="w-full h-full opacity-0 absolute border-[6px] rounded-md top-0 left-0 z-0 light-gradient-border "></div>

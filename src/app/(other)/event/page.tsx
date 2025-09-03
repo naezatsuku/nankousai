@@ -40,13 +40,13 @@ export default function page() {
         <link rel="canonical" href="https://nankousai.vercel.app/" />
     </Head>
     return(
-        <div className="pt-[min(15vw,80px)] h-screen bg-white md:pt-[13vw]  lg:pt-[min(15vw,80px)]">
+        <div className="pt-[min(15vw,80px)] h-screen bg-white md:pt-[13vw]  lg:pt-16 xl:pt-[min(15vw,80px)]">
 
-            <div className="w-full h-[35vw] lg:h-60 relative">
+            <div className="w-full h-[30vw] lg:h-48 2xl:h-60 relative">
                 <Image src={"/coloful_sky.jpg"} alt="展示の様子" width={2000} height={1000} priority className="object-cover z-0 opacity-95 w-full h-full absolute"></Image>
                 {/* <div className="w-full h-full absolute  z-[5] opacity-15 bg-gradient-to-r   base-gradient"></div> */}
                 <div className="w-full h-full absolute z-[6] flex">
-                    <p className={`${kaiseiDecol.className} ml-[3vw] my-auto text-[10vw] lg:text-7xl text-white font-bold`}>展示一覧</p>
+                    <p className={`${kaiseiDecol.className} ml-[3vw] xl:ml-[2%] my-auto text-[8vw] lg:text-6xl 2xl:text-7xl text-white font-bold`}>展示一覧</p>
                 </div>
             </div>
             <Suspense

@@ -173,11 +173,11 @@ export default function ShowDetails (
     }
  
     return(
-        <div className="mt-[min(15vw,80px)]  md:mt-[13vw]  lg:mt-[min(15vw,80px)] bg-white min-h-screen">
-            <div className="w-full h-[35vw] lg:h-60 relative">
+        <div className="mt-[min(15vw,80px)]  md:mt-[13vw]   lg:mt-16 xl:mt-[min(15vw,80px)] bg-white min-h-screen">
+            <div className="w-full h-[35vw] lg:h-44 xl:h-60 relative">
                 <Image src={img_tag || "/AdobeStock_335757173.jpeg"} alt="ヘッダー画像" fill priority className="object-cover object-center z-0 opacity-95 brightness-90"></Image>
                 <div className="w-auto h-full absolute z-10 flex ">
-                    <p className={`${kaiseiDecol.className} pl-[3vw] my-auto text-[10vw] lg:text-7xl text-white font-bold`}>{name}</p>
+                    <p className={`${kaiseiDecol.className} pl-[3vw] my-auto text-[10vw] lg:text-6xl xl:text-7xl text-white font-bold`}>{name}</p>
                 </div>
             </div>
             <div className="max-w-[1100px] lg:mx-auto pb-[20vw] lg:pb-[5vw] bg-white lg:px-4 lg:shadow-md ">
@@ -185,7 +185,7 @@ export default function ShowDetails (
                     <p className={`text-[3.5vw] font-medium tracking-tight  text-white px-[3vw] py-[0.2vw] rounded-full  inline-block  text-left  my-[0.7vw] translate-y-[0%]   ${setTextColor(event.tags, "bg")} lg:text-lg lg:px-8 lg:py-1 lg:mt-6 lg:mb-2`}>
                         タイトル           
                     </p>
-                    <p className={`text-[8vw] font-bold leading-[140%] lg:leading-[125%] tracking-tight  text-left ${kaiseiDecol.className} ${setTextColor(event.tags, "text")} lg:text-7xl`}>{event.title}</p>
+                    <p className={`text-[8vw] font-bold leading-[140%] lg:leading-[125%] tracking-tight  text-left ${kaiseiDecol.className} ${setTextColor(event.tags, "text")} lg:text-6xl xl:text-7xl`}>{event.title}</p>
                 </div>
                 <div className="mx-[3.5vw] mt-[4vw] text-[4.5vw] lg:text-3xl lg:mx-6 lg:mt-8 leading-[160%] text-slate-500 ">
                     <p className="flex items-center mb-[1vw] lg:mb-3">
