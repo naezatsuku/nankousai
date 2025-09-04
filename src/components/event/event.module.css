@@ -1,0 +1,16 @@
+@keyframes text-slide {
+    from {
+        transform: translateX(0%);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+.text_slide  {
+ animation: text-slide 12s infinite linear 0.1s both;
+ display: inline-block;
+    text-wrap: nowrap;
+    white-space: nowrap;
+}

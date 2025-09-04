@@ -10,7 +10,7 @@ import { useAnimate } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { skeleton } from "@/components/global/skeleton";
 import { toBase64 } from "@/components/global/skeleton";
-
+import styles from "@/components/event/event.module.css"
 import { KaiseiDecol } from "@/app/fonts";
 import ShowTime from "./ShowTime";
 import { supabase } from "@/lib/supabaseClient";
@@ -382,7 +382,7 @@ export default function ShowEvent(
         } else if (length < 18) {
             return "text-[4.5vw]"
         } else {
-            return "text-[4vw]"
+            return "text-[4.5vw]"
         }
     }
 
@@ -456,15 +456,17 @@ export default function ShowEvent(
                     <motion.div  key={find_cardIndex(value)} className="w-full  max-w-[92%] mx-auto  my-[4vw] lg:my-5 bg-slate-100  flex justify-between p-[0.2vw] opacity-90 drop-shadow rounded-lg lg:w-[47%] lg:max-w-[580px] lg:h-auto lg:mx-0 aspect-[2.6/1] lg:aspect-[2.4/1] lg:p-[1px] xl:w-[31%] xl:max-w-none 2xl:max-h-[250px]"
                     initial={{y:20, opacity:0}} animate={selected_card.includes(value)? {y:0, opacity:1} : {y:20, opacity:0}} transition={{ease:"easeOut", duration:0.4, delay:find_cardIndex(value) * 0.05}}>
                         <div className="w-full h-full rounded-md bg-white flex min-h-0">
-                            <div className="flex-none basis-[calc(63%-1.5vw)] px-[2vw] py-2 2xl:py-3  lg:pl-3 lg:pr-2  min-w-0  flex flex-col justify-around rounded-l-md">
+                            <div className={`flex-none basis-[calc(63%-1.5vw)] px-[2vw] py-2 2xl:py-3  lg:pl-3 lg:pr-2  min-w-0  flex flex-col justify-around rounded-l-md}  ${setTextColor(value.tags)}`}>
                                     <Link href={{pathname:"/event/introduction", query:{name:value.className}}} className="">
-                                        <p className={`${setTextColor(value.tags)} pl-[0.5vw] text-[2.5vw] lg:text-base 2xl:text-lg lg:pl-0 font-normal `}>{value.className}</p>
+                                        <p className={` $pl-[0.5vw] text-[2.5vw] lg:text-base 2xl:text-lg lg:pl-0 font-normal `}>{value.className}</p>
                                     </Link>
-                                    <Link href={{pathname:"/event/introduction", query:{name:value.className}}} className="">
-                                        <p className={`${setTextColor(value.tags)} font-medium ${text_size(value.title.length)} bottom-[0.5vw] lg:mb-0 lg:text-3xl xl:text-2xl 2xl:text-3xl lg:h-[120%] relative lg:bottom-1 
+                                    <Link href={{pathname:"/event/introduction", query:{name:value.className}}} className={`overflow-hidden flex w-[100%] space-x-6`}>
+                                        <p className={` ${text_size(value.title.length)} bottom-[0.5vw] lg:mb-0 lg:text-3xl xl:text-2xl 2xl:text-3xl lg:h-[120%] relative lg:bottom-1 text-nowrap   ${setTextColor(value.tags)}  ${value.title.length > 12 && styles.text_slide}  
                                         `}>{value.title}</p>
+                                        {value.title.length > 12 && <p className={` ${text_size(value.title.length)} bottom-[0.5vw] lg:mb-0 lg:text-3xl xl:text-2xl 2xl:text-3xl lg:h-[120%]   relative lg:bottom-1 text-nowrap   ${setTextColor(value.tags)}  ${styles.text_slide} 
+                                        `}>{value.title}</p>}
+                                        
                                     </Link>
-
                                 
                                 <div >
                                     <div className={`font-medium ${setTextColor(value.tags)} pb-[2%]`}>

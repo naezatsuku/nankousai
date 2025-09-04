@@ -154,7 +154,7 @@ export default function MainTitle() {
         <div className="w-full h-[100svh] overflow-hidden">
             {/* デスクトップPC用レイアウト */}
             <div className="hidden xl:block h-full w-full  relative" >
-                <motion.div animate={{opacity:0}} transition={{delay:0.2, duration:0.5}} className="w-full h-full absolute top-0 left-0 z-40 flex justify-center items-center">
+                <motion.div animate={{opacity:0}} transition={{delay:0.2, duration:0.5}} className="w-full h-full absolute top-0 left-0 z-40 flex justify-center items-center pointer-events-none">
                     <p className={`text-4xl text-yellow-400 ${kaiseiDecol.className}`}>welcome</p>
                 </motion.div>
                 <Image height={2000} width={6000} src={"/pc背景決.jpg"} alt="背景用ポスター画像" className=" aspect-auto h-full w-full object-cover object-right-top -z-10" priority></Image>
@@ -176,7 +176,7 @@ export default function MainTitle() {
             </div>
             {/* ノートPC,タブレット用(ipadPro)レイアウト */}
             <div  className="h-full w-full hidden lg:max-xl:block relative">
-                <motion.div animate={{opacity:0}} transition={{delay:0.2, duration:0.5}} className="w-full h-full absolute top-0 left-0 z-40 flex justify-center items-center">
+                <motion.div animate={{opacity:0}} transition={{delay:0.2, duration:0.5}} className="w-full h-full absolute top-0 left-0 z-40 flex justify-center items-center pointer-events-none">
                     <p className={`text-4xl text-yellow-400 ${kaiseiDecol.className}`}>welcome</p>
                 </motion.div>
                 <motion.div variants={bg_image_animation} custom={1500} className="bottom-0 right-0 absolute z-[5] h-full w-full bg-[#F02004]" initial="initial" whileInView="animate"></motion.div>
@@ -190,7 +190,7 @@ export default function MainTitle() {
             {/* タブレット用レイアウト */}
             <div className="h-full w-full hidden md:max-lg:block relative
             ">
-                <motion.div animate={{opacity:0}} transition={{delay:0.2, duration:0.5}} className="w-full h-full absolute top-0 left-0 z-40 flex justify-center items-center">
+                <motion.div animate={{opacity:0}} transition={{delay:0.2, duration:0.5}} className="w-full h-full absolute top-0 left-0 z-40 flex justify-center items-center pointer-events-none">
                     <p className={`text-3xl text-yellow-400 ${kaiseiDecol.className}`}>welcome</p>
                 </motion.div>
                 <Image height={1800} width={3200} src={"/2025_nankouposter.jpg"} alt="背景用ポスター" className="aspect-auto h-full w-full object-cover object-left-top -z-10" priority></Image>
@@ -201,7 +201,7 @@ export default function MainTitle() {
             </div>
             {/* スマホ用レイアウト */}
             <div className="h-full w-full md:hidden relative">
-                <motion.div animate={{opacity:0}} transition={{delay:0.2, duration:0.5}} className="w-full h-full absolute top-0 left-0 z-40 flex justify-center items-center">
+                <motion.div animate={{opacity:0}} transition={{delay:0.2, duration:0.5}} className="w-full h-full absolute top-0 left-0 z-40 flex justify-center items-center pointer-events-none">
                     <p className={`text-3xl text-yellow-400 ${kaiseiDecol.className}`}>welcome</p>
                 </motion.div>
                  <Image height={3000} width={1000} src={"/南高祭スマホ.jpg"} alt="背景用ポスター" className="aspect-auto h-full w-full object-cover object-right-bottom -z-10" priority></Image>   
