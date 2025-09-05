@@ -25,6 +25,7 @@ type eventData = {
         available:boolean,
         waitTime:number,
         renewTime:string,
+        TimeVisible:boolean
     },
     detail:Array<{
         title:string,
