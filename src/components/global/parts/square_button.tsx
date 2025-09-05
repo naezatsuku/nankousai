@@ -49,7 +49,7 @@ export function SquareButtonPinkShadow2(
             <div className="w-full h-full rounded-md bg-white">
                 <div className="w-full h-full bg-gradient-to-br  light-gradient absolute opacity-70 rounded-md"></div>
                 <div className="h-full w-full absolute z-10 flex">
-                    <p className={`text-white m-auto text-[3.5vw] lg:text-xl ${kaiseiDecol.className}`}>{text}</p>
+                    <p className={`text-white m-auto text-[3.5vw] lg:text-lg xl:text-xl ${kaiseiDecol.className}`}>{text}</p>
                 </div>
             </div>
         </div>

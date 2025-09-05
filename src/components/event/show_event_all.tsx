@@ -10,7 +10,7 @@ import { useAnimate } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { skeleton } from "@/components/global/skeleton";
 import { toBase64 } from "@/components/global/skeleton";
-
+import styles from "@/components/event/event.module.css"
 import { KaiseiDecol } from "@/app/fonts";
 import ShowTime from "./ShowTime";
 import { supabase } from "@/lib/supabaseClient";
@@ -382,7 +382,7 @@ export default function ShowEvent(
         } else if (length < 18) {
             return "text-[4.5vw]"
         } else {
-            return "text-[4vw]"
+            return "text-[4.5vw]"
         }
     }
 
@@ -390,9 +390,9 @@ export default function ShowEvent(
         <div className="pb-[20vw] lg:pb-0">
             <div className="">
                 <ScrollContainer>
-                    <div className="flex mt-[5vw] md:mt-[4vw] lg:mt-8 lg:mx-6">
+                    <div className="flex mt-[5vw] md:mt-[4vw] lg:mt-8 lg:mx-5 xl:mx-[1.8%] mx-[4%]">
                         {allTags.map((value:any) => (
-                            <motion.div key={value.id} className={`flex-shrink-0 drop-shadow-lg relative  cursor-pointer  rounded-lg mx-[2vw] lg:mx-3 bg-gradient-to-br p-[0.5%] ${value.color} h-[10vw] lg:h-12 lg:p-[2px] inline-block `} variants={variant_tag} animate={selected.includes(value.name) == true ? "selected" : "notoSelected"} transition={{ease:"easeInOut", duration:0.1}}>    
+                            <motion.div key={value.id} className={`flex-shrink-0 drop-shadow-lg relative  cursor-pointer  rounded-lg mr-[2vw] lg:mr-3 bg-gradient-to-br p-[0.3%] ${value.color} h-[8vw] lg:h-12 lg:p-[2px] inline-block `} variants={variant_tag} animate={selected.includes(value.name) == true ? "selected" : "notoSelected"} transition={{ease:"easeInOut", duration:0.1}}>    
                                 <input 
                                     id={value.id}
                                     value={value.name} 
@@ -403,7 +403,7 @@ export default function ShowEvent(
                                 />
                                 <label 
                                     htmlFor={value.id}
-                                    className={`text-[4vw] lg:text-lg
+                                    className={`text-[3vw] lg:text-lg
                                     font-medium cursor-pointer flex h-full relative`}
                                 >
                                     <motion.div variants={variant_tag_bg} animate={selected.includes(value.name) == true ? "selected" : "notoSelected"} transition={{ease:"easeOut", duration:0.1}} className={`z-0 bg-white absolute rounded-md h-full w-full `}></motion.div>
@@ -418,7 +418,7 @@ export default function ShowEvent(
                     
                 </ScrollContainer>
                 <div className="w-full flex">
-                    <p className="cursor-pointer inline-block mx-auto drop-shadow px-[4vw] py-[1vw] rounded-lg bg-slate-100 text-[2.5vw] text-gray-500 mt-[4vw] lg:text-base lg:mt-8 lg:py-1 lg:px-10" onClick={() => {clearTag()}}>選択済みのタグをクリア</p>
+                    <p className="cursor-pointer inline-block mx-auto drop-shadow px-[4vw] py-[1vw] rounded-lg bg-slate-100 text-[2.5vw] text-gray-500 mt-[3vw] lg:text-base lg:mt-6 lg:py-1 lg:px-10" onClick={() => {clearTag()}}>選択済みのタグをクリア</p>
                 </div>
                 <div className="fixed inset-x-0 bottom-4 flex justify-center z-50">
                     <button
@@ -445,7 +445,7 @@ export default function ShowEvent(
                     <p>{value}</p>
                 ))}
             </div> */}
-            <motion.div className="bg-white pb-[10vw] lg:flex flex-wrap justify-around" ref={targetDiv}>
+            <motion.div className="bg-white pb-[10vw] lg:flex flex-wrap justify-around lg:px-2" ref={targetDiv}>
                 {notfound == true && 
                     <motion.div initial={{y:20, opacity:0}} animate={{y:0, opacity:1}} transition={{ease:"easeOut", duration:0.4}} className="w-full h-[35vw] xl:h-[15vw] flex">
                         <p className={`${kaiseiDecol.className} m-auto text-[6vw] lg:text-5xl bg-gradient-to-br  light-gradient bg-clip-text text-transparent `}>・・・該当なし・・・</p>
@@ -453,55 +453,59 @@ export default function ShowEvent(
                 }
 
                 {selected_card.map((value:any, index:number) => (
-                    <motion.div  key={find_cardIndex(value)} className="w-full  max-w-[92%] mx-auto h-[36vw] my-[4vw] lg:mt-10 bg-slate-100  flex justify-between p-[0.2vw] opacity-90 drop-shadow rounded-lg lg:w-[47%] lg:max-w-[580px] lg:h-auto lg:mx-0 lg:aspect-[2.4/1] lg:mb-4 lg:p-[1px]"
+                    <motion.div  key={find_cardIndex(value)} className="w-full  max-w-[92%] mx-auto  my-[4vw] lg:my-5 bg-slate-100  flex justify-between p-[0.2vw] opacity-90 drop-shadow rounded-lg lg:w-[47%] lg:max-w-[580px] lg:h-auto lg:mx-0 aspect-[2.6/1] lg:aspect-[2.4/1] lg:p-[1px] xl:w-[31%] xl:max-w-none 2xl:max-h-[250px]"
                     initial={{y:20, opacity:0}} animate={selected_card.includes(value)? {y:0, opacity:1} : {y:20, opacity:0}} transition={{ease:"easeOut", duration:0.4, delay:find_cardIndex(value) * 0.05}}>
                         <div className="w-full h-full rounded-md bg-white flex min-h-0">
-                            <div className="flex-none basis-[calc(63%-1.5vw)] px-[2vw] py-2  lg:pl-2 lg:pr-2  min-w-0  flex flex-col justify-around rounded-l-md">
-                                <Link href={{pathname:"/event/introduction", query:{name:value.className}}} className="">
-                                    <p className={`${setTextColor(value.tags)} pl-[0.5vw] text-[2.5vw] lg:text-xs xl:text-lg lg:pl-0 font-normal`}>{value.className}</p>
-                                </Link>
-                                <Link href={{pathname:"/event/introduction", query:{name:value.className}}} className="">
-                                    <p className={`${setTextColor(value.tags)} font-medium ${text_size(value.title.length)} bottom-[0.5vw] lg:mb-0 lg:text-2xl xl:text-3xl lg:h-[120%] relative lg:bottom-1
-                                    `}>{value.title}</p>
-                                </Link>
-                                <div className={`font-medium `}>
-                                <div className={`font-medium ${setTextColor(value.tags)}`}>
-                                    <Suspense>
-                                        <ShowTime TimeMap={findTime(value.id)} ></ShowTime>
-                                    </Suspense>
-                                                
+                            <div className={`flex-none basis-[calc(63%-1.5vw)] px-[2vw] py-2 2xl:py-3  lg:pl-3 lg:pr-2  min-w-0  flex flex-col justify-around rounded-l-md}  ${setTextColor(value.tags)}`}>
+                                    <Link href={{pathname:"/event/introduction", query:{name:value.className}}} className="">
+                                        <p className={` $pl-[0.5vw] text-[2.5vw] lg:text-base 2xl:text-lg lg:pl-0 font-normal `}>{value.className}</p>
+                                    </Link>
+                                    <Link href={{pathname:"/event/introduction", query:{name:value.className}}} className={`overflow-hidden flex w-[100%] space-x-6`}>
+                                        <p className={` ${text_size(value.title.length)} bottom-[0.5vw] lg:mb-0 lg:text-3xl xl:text-2xl 2xl:text-3xl lg:h-[120%] relative lg:bottom-1 text-nowrap   ${setTextColor(value.tags)}  ${value.title.length > 12 && styles.text_slide}  
+                                        `}>{value.title}</p>
+                                        {value.title.length > 12 && <p className={` ${text_size(value.title.length)} bottom-[0.5vw] lg:mb-0 lg:text-3xl xl:text-2xl 2xl:text-3xl lg:h-[120%]   relative lg:bottom-1 text-nowrap   ${setTextColor(value.tags)}  ${styles.text_slide} 
+                                        `}>{value.title}</p>}
+                                        
+                                    </Link>
+                                
+                                <div >
+                                    <div className={`font-medium ${setTextColor(value.tags)} pb-[2%]`}>
+                                        <Suspense>
+                                            <ShowTime TimeMap={findTime(value.id)} ></ShowTime>
+                                        </Suspense>
+                                                    
+                                    </div>      
+                                     <div className="text-[2.5vw] leading-[160%] lg:text-sm xl:text-xs 2xl:text-sm flex text-nowrap pb-[2%] text-black">
+                                        <p className="flex items-center">
+                                            <MdOutlinePlace className="translate-y-[2%] mr-[0.5%]"/>
+                                            {value.place}    
+                                        </p>
+                                        <p className="flex items-center mx-4">
+                                            <IoTimeOutline className=" translate-y-[7%] mr-[0.5%]" />
+                                            {value.time[0]} {value.time.length > 1 && ` ...`}
+                                        </p>
+                                    </div>
+                                     
                                 </div>
-                                                
-                                </div>
-                                <div className="text-[2.5vw] leading-[160%] lg:text-sm flex text-nowrap ">
-                                    <p className="flex items-center">
-                                        <MdOutlinePlace className="translate-y-[2%] mr-[0.5%]"/>
-                                        {value.place}    
-                                    </p>
-                                    <p className="flex items-center mx-4">
-                                        <IoTimeOutline className=" translate-y-[7%] mr-[0.5%]" />
-                                        {value.time[0]} {value.time.length > 1 && ` ...`}
-                                    </p>
-                                </div>
-                            
+                               
                                 <ScrollContainer vertical={false} className={`w-full flex flex-nowrap overflow-x-auto lg:my-0 `}>
                                         {value.types.map((type:string, idx:number) => (
                                     <div
                                         key={`${type}-${idx}`}
-                                        className={`w-1/3 flex-shrink-0 mr-[5%] aspect-[3.3/1] bg-gradient-to-br ${
+                                        className={`w-1/3 xl:w-[35%] 2xl:w-1/3 flex-shrink-0 mr-[5%] aspect-[3/1] bg-gradient-to-br ${
                                           Tags.find((item) => item.name === type)?.color ??
                                           "bg-gradient-to-r from-pink-500 to-pink-300"
                                         }  text-white  rounded-md flex items-center justify-center opacity-90 cursor-pointer active:scale-95 transition-transform duration-200 hover:opacity-100`}
                                         onClick={() => miniTagClicked(type)}
                                     >
-                                        <p className="m-auto text-[2vw] lg:text-xs text-gray-50 font-medium">{type}</p>
+                                        <p className="m-auto text-[2vw] lg:text-xs xl:text-[8px] 2xl:text-xs  text-gray-50 font-medium">{type}</p>
                                     </div>
                                   ))}
                                  </ScrollContainer>
                             
                             </div>
-                            <Link href={{pathname:"/viewer/introduction", query:{name:value.className}}} replace className="flex-none w-[calc(35%-1vw)] p-0">
-                                <div className="h-full aspect-square border-l-2 border-gray-50 overflow-hidden">
+                            <Link href={{pathname:"/viewer/introduction", query:{name:value.className}}} replace className="flex-none w-[calc(35%-1vw)] p-0 flex-grow overflow-hidden">
+                                <div className="xl:w-full w-auto xl:h-auto h-full aspect-square border-l-2 border-gray-50 ">
                                     {value.img==null ?
                                         <Image placeholder={`data:image/svg+xml;base64,${toBase64(skeleton(128, 160))}`} src={"/1725741490270.jpg"} alt="展示イラスト" width={1000} height={1000} className=" h-full w-full rounded-r-md object-cover"></Image >
                                     :
@@ -514,8 +518,15 @@ export default function ShowEvent(
                         
                     </motion.div>
                 ))}
-                <div className="hidden lg:flex mx-[4vw] h-1 mt-[8vw] lg:mt-10  justify-between p-[0.2vw] opacity-90 drop-shadow rounded-lg lg:w-[47%] lg:max-w-[580px] lg:h-auto lg:mx-0  lg:mb-4 lg:p-[1px]"></div>
-                <div className="hidden 2xl:flex mx-[4vw] h-1 mt-[8vw] lg:mt-10  justify-between p-[0.2vw] opacity-90 drop-shadow rounded-lg lg:w-[47%] lg:max-w-[580px] lg:h-auto lg:mx-0 lg:mb-4 lg:p-[1px]"></div>
+                {/* <div className="hidden lg:flex mx-[4vw] h-1 mt-[8vw] lg:mt-10  justify-between p-[0.2vw] opacity-90 drop-shadow rounded-lg lg:w-[47%] lg:max-w-[580px] lg:h-auto lg:mx-0  lg:mb-4 lg:p-[1px]"></div> */}
+                {((selected_card.length % 3 == 2) || 
+                (selected_card.length % 3 == 1)  ) && 
+                    <div className="hidden xl:block lg:aspect-[2.4/1] lg:p-[1px] xl:w-[31%] xl:max-w-none 2xl:max-h-[250px]"></div>
+                }
+                {(selected_card.length % 3 == 1) && 
+                    <div className="hidden xl:block lg:aspect-[2.4/1] lg:p-[1px] xl:w-[31%] xl:max-w-none 2xl:max-h-[250px]"></div>
+                }
+                
             </motion.div>
         </div>
     )

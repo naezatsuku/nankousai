@@ -12,48 +12,9 @@ import { openAsBlob } from "fs";
 const kaiseiDecol = KaiseiDecol
 
 
-// export default function MainTitle() {
-//     return(
-//         <div className="h-[100svh] w-full overflow-hidden relative">
-//             <Image src={"/南高祭ポスター背景.png"} alt="背景" fill  priority className="object-cover -z-10 object-top"></Image>
-//             <Image src={"/センター鳥.png"} alt="ちゅんちゅん" width={500} height={500} priority className="aspect-auto w-[26%] top-[81.5vw] left-[43.5%] absolute z-10"></Image>
-//             <Image src={"/鳥1.png"} alt="ちゅんちゅん1号" width={500} height={500} priority className="aspect-auto w-[35%] top-[14vw] left-[65%] absolute z-10"></Image>
-//             <Image src={"/鳥2.png"} alt="ちゅんちゅん2号" width={500} height={500} priority className="aspect-auto w-[28%] top-[18vw] left-[42%] absolute z-20"></Image>
-//             <Image src={"/鳥3.png"} alt="ちゅんちゅん3号" width={500} height={500} priority className="aspect-auto w-[30%] top-[12vw] left-[82%] absolute z-30"></Image>
-//             <Image src={"/鳥4.png"} alt="ちゅんちゅん4号" width={500} height={500} priority className="aspect-auto w-[57%] top-[2.5vw] left-[43%] absolute z-40"></Image>
-//             <Image src={"/鳥5.png"} alt="ちゅんちゅん5号" width={500} height={500} priority className="aspect-auto w-[22%] top-[-9vw] left-[87%] absolute z-50"></Image>
-//             <Image src={"/鳥6.png"} alt="ちゅんちゅん6号" width={500} height={500} priority className="aspect-auto w-[21%] top-[-19.5vw] left-[68%] absolute z-60"></Image>
-//             <Image src={"/鳥7.png"} alt="ちゅんちゅん7号" width={500} height={500} priority className="aspect-auto w-[28%] top-[-8.5vw] left-[42%] absolute z-70 rotate-[20deg]"></Image>
-//             <div>
-//                 <h1 className={
-//                     `absolute left-[6vw] top-[6vw] text-white ${kaiseiDecol.className}
-//                     flex flex-col text-[25vw] md:text-[18vw] leading-[100%] opacity-90 font-bold`
-//                 }>
-//                    <span>祭</span>
-//                    <span>現</span> 
-//                    <span>不</span>
-//                    <span>可</span>
-//                    <span>能</span>
-//                 </h1>
-//             </div>
-//             <div className="absolute w-[43vw] top-[112vw] md:hidden left-[50%]">
-//                 <Link href={"/info"}>
-//                     <Image priority src={"/流氷.png"} alt="流氷" width={500} height={500} className=""></Image>
-//                     <button className={`${kaiseiDecol.className} absolute top-[38%] left-[12%] text-[5.5vw] text-[#15b5b8]`}>参加申し込み</button>
-//                 </Link>
-//             </div>
-//             <p className={`absolute top-[155vw] md:top-[80svh] left-[7vw] text-[7.5vw] md:text-[6vw] text-white opacity-90 z-40
-//                 ${kaiseiDecol.className}`}>南高祭71st</p>
-//             <RiArrowDownWideFill className="absolute text-white bottom-[1%] left-1/2 -translate-x-1/2 size-[12vw] opacity-85"></RiArrowDownWideFill>
-//         </div>
-//     )
-// }
-
 export default function MainTitle() {
     const [count, setCount] = useState(0);
     const [button, animateButton] = useAnimate();
-    const [eventHalo, animateEventHalo] = useAnimate();
-    const [registerHalo, animateRegisterHalo] = useAnimate();
     
     useEffect(() => {
         if(count == 0) {
@@ -193,6 +154,9 @@ export default function MainTitle() {
         <div className="w-full h-[100svh] overflow-hidden">
             {/* デスクトップPC用レイアウト */}
             <div className="hidden xl:block h-full w-full  relative" >
+                <motion.div animate={{opacity:0}} transition={{delay:0.2, duration:0.5}} className="w-full h-full absolute top-0 left-0 z-40 flex justify-center items-center pointer-events-none">
+                    <p className={`text-4xl text-yellow-400 ${kaiseiDecol.className}`}>welcome</p>
+                </motion.div>
                 <Image height={2000} width={6000} src={"/pc背景決.jpg"} alt="背景用ポスター画像" className=" aspect-auto h-full w-full object-cover object-right-top -z-10" priority></Image>
                 {/* ポスターのエマージングアニメーション用赤幕 */}
                 <motion.div variants={bg_image_animation} className="bottom-0 right-0 absolute z-0 h-full w-full bg-[#F02004]" initial="initial" custom={4000} whileInView="animate"></motion.div>
@@ -200,31 +164,6 @@ export default function MainTitle() {
                 <motion.div variants={variants} initial={count == 0?"initial" :"loop_initial"} animate={count == 0?"animate" :"loop_animate"} ref={button} >
                     <SunButton name="展示一覧" pos=" top-[0svh] left-[-3svh] h-[55svh] "></SunButton>
                     <SunButton name="事前登録" pos=" top-[35svh] left-[55svh] h-[28svh] "></SunButton>
-
-                    {/* <motion.div variants={button_animations}  className="absolute top-[35svh] left-[55svh] h-[28svh] aspect-square z-20" onHoverStart={(function() {animateEventHalo(eventHalo.current, {opacity:0.8}, {duration:0.4})})} onHoverEnd={(function() {animateEventHalo(eventHalo.current, {opacity:0}, {duration:0.4})})}>
-                        <Link href={"/info"}>
-                            <Image src={"/事前登録ミニ.png"} alt="事前登録用ボタン" width={500} height={500} className="w-full h-full object-cover aspect-square "></Image>
-                        </Link>
-                    </motion.div>   
-                    
-                    <motion.div variants={button_animations} className="absolute top-[0svh] left-[-3svh] h-[55svh] aspect-square z-20"  onHoverStart={(function() {animateRegisterHalo(registerHalo.current, {opacity:0.95}, {duration:0.4})})} onHoverEnd={(function() {animateRegisterHalo(registerHalo.current, {opacity:0}, {duration:0.4})})}>
-                        <Link href={"/event"}>
-                            <Image src={"/展示一覧ミニ.png"} alt="展示一覧ジャンプボタン" width={900} height={900} className="aspect-square object-cover w-full h-full "></Image>
-                        </Link>
-                    </motion.div>
-                    <div ref={eventHalo} className="opacity-0">
-                        {sun_halo.map((item, index) => 
-                        <div key={index} className={"absolute  top-[35svh]  left-[55svh] h-[28svh] aspect-square " + item}></div>
-                        )}  
-                    </div>
-                    <div ref={registerHalo} className="opacity-0">
-                        {sun_halo.map((item, index) => 
-                        <div key={index} className={"absolute top-[0svh] left-[-3svh] h-[55svh] aspect-square " + item }></div>
-                        )   } 
-                    </div>
-                    {ripples.map((item) => 
-                        <motion.div className={"absolute aspect-square z-10 opacity-0 border-2 border-yellow-400 rounded-full " + item.style} custom={item.time_rug} variants={ripples_animations} key={item.name}></motion.div>
-                    )} */}
                 </motion.div>
                 {/* VISIT US!!の部分 */}
                 <motion.div variants={variants} initial="initial" whileInView="animate">
@@ -237,6 +176,9 @@ export default function MainTitle() {
             </div>
             {/* ノートPC,タブレット用(ipadPro)レイアウト */}
             <div  className="h-full w-full hidden lg:max-xl:block relative">
+                <motion.div animate={{opacity:0}} transition={{delay:0.2, duration:0.5}} className="w-full h-full absolute top-0 left-0 z-40 flex justify-center items-center pointer-events-none">
+                    <p className={`text-4xl text-yellow-400 ${kaiseiDecol.className}`}>welcome</p>
+                </motion.div>
                 <motion.div variants={bg_image_animation} custom={1500} className="bottom-0 right-0 absolute z-[5] h-full w-full bg-[#F02004]" initial="initial" whileInView="animate"></motion.div>
                 <Image height={2000} width={6000} src={"/pc背景決.jpg"} alt="背景用ポスター" className="  w-full object-cover object-right-top absolute bottom-0 right-0 h-[125svh] aspect-[3/1] z-0" priority></Image>
                 
@@ -244,51 +186,30 @@ export default function MainTitle() {
                     <SunButton name="展示一覧" pos=" top-[-2svh] left-[-3svw] h-[55svh] max-h-[50svw]  "></SunButton>
                     <SunButton name="事前登録" pos=" top-[30svh] left-[40svw] h-[33svh] max-h-[28svw]"></SunButton>
                 </motion.div>
-                {/* <div className="absolute top-[-2svh] left-[-3svw] h-[55svh] max-h-[50svw] aspect-square z-10">
-                    <Link href={"/event"}>
-                        <Image src={"/展示一覧ミニ.png"} alt="展示一覧ジャンプボタン" width={900} height={900} className="aspect-square object-cover w-full h-full "></Image>
-                    </Link>      
-                </div>
-                <div className="absolute top-[30svh] left-[40svw] h-[33svh] max-h-[28svw] aspect-square z-10">
-                    <Link href={"/info"}>
-                        <Image src={"/事前登録ミニ.png"} alt="事前登録用ボタン" width={500} height={500} className="w-full h-full object-cover aspect-square "></Image>
-                    </Link>  
-                </div>  */}
-
             </div>
             {/* タブレット用レイアウト */}
             <div className="h-full w-full hidden md:max-lg:block relative
             ">
+                <motion.div animate={{opacity:0}} transition={{delay:0.2, duration:0.5}} className="w-full h-full absolute top-0 left-0 z-40 flex justify-center items-center pointer-events-none">
+                    <p className={`text-3xl text-yellow-400 ${kaiseiDecol.className}`}>welcome</p>
+                </motion.div>
                 <Image height={1800} width={3200} src={"/2025_nankouposter.jpg"} alt="背景用ポスター" className="aspect-auto h-full w-full object-cover object-left-top -z-10" priority></Image>
                 <motion.div variants={bg_image_animation} custom={1000} className="bottom-0 right-0 absolute z-0 h-full w-full bg-[#F02004]" initial="initial" whileInView="animate"></motion.div>
                 <motion.div variants={variants} initial={count == 0?"initial" :"loop_initial"} animate={count == 0?"animate" :"loop_animate"} ref={button} >
                     <SunButton name="展示一覧" pos=" bottom-[5vw] right-[5vw] w-[38svw] "></SunButton>
                 </motion.div>
-                {/* <div className="absolute bottom-[5vw] right-[5vw] w-[38svw] aspect-square z-10">
-                    <Link href={"/event"}>
-                        <Image src={"/展示一覧ミニ.png"} alt="事前登録用ボタン" width={500} height={500} className="w-full h-full object-cover aspect-square "></Image>
-                    </Link> 
-                    
-                </div>  */}
             </div>
             {/* スマホ用レイアウト */}
             <div className="h-full w-full md:hidden relative">
+                <motion.div animate={{opacity:0}} transition={{delay:0.2, duration:0.5}} className="w-full h-full absolute top-0 left-0 z-40 flex justify-center items-center pointer-events-none">
+                    <p className={`text-3xl text-yellow-400 ${kaiseiDecol.className}`}>welcome</p>
+                </motion.div>
                  <Image height={3000} width={1000} src={"/南高祭スマホ.jpg"} alt="背景用ポスター" className="aspect-auto h-full w-full object-cover object-right-bottom -z-10" priority></Image>   
                  <motion.div variants={bg_image_animation} className="bottom-0 right-0 absolute z-0 h-full w-full bg-[#F02004]" initial="initial" whileInView="animate" custom={800}></motion.div>
                  <motion.div variants={variants} initial={count == 0?"initial" :"loop_initial"} animate={count == 0?"animate" :"loop_animate"} ref={button} >
                     <SunButton name="展示一覧" pos=" top-[12vw]  right-[-2vw] w-[50svw] max-w-[20svh] "></SunButton>
                     <SunButton name="事前登録" pos=" top-[8vw] left-[10vw] w-[30svw] max-w-[16svh] "></SunButton>
                 </motion.div>
-                 {/* <div className="absolute top-[12vw]  right-[-2vw] w-[50svw] max-w-[20svh] aspect-square z-10">
-                    <Link href={"/event"}>
-                        <Image src={"/展示一覧ミニ.png"} alt="事前登録用ボタン" width={500} height={500} className="w-full h-full object-cover aspect-square "></Image>
-                    </Link>   
-                </div> 
-                <div className="absolute top-[8vw] left-[10vw] w-[30svw] max-w-[16svh] aspect-square z-10">
-                    <Link href={"/info"}>
-                        <Image src={"/事前登録ミニ.png"} alt="事前登録用ボタン" width={500} height={500} className="w-full h-full object-cover aspect-square "></Image>
-                    </Link>    
-                </div>  */}
             </div>
         </div>
     )
