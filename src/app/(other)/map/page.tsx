@@ -9,23 +9,28 @@ import { getEvents } from "./getEventData";
 import { SlArrowRightCircle } from "react-icons/sl";
 import BackTo from "@/components/global/back_button";
 import { title } from "process";
+import { table } from "console";
+import { PiPolygon } from "react-icons/pi";
+import path from "path";
+import { number } from "motion/react";
 
 const kaiseiDecol = KaiseiDecol
 
 type event = {
-        id:number
-        className:string;
-        place:string;
-        time:Array<string>;
-        comment:string;
-        title:string;
-        available:boolean;
-        img:string;
-        types:Array<string>;
-        tags:Array<string>;
-        prevTime:number
-        waitTime:number
-    }
+    id:number
+    className:string;
+    place:string;
+    place_modified:string;
+    time:Array<string>;
+    comment:string;
+    title:string;
+    available:boolean;
+    img:string;
+    types:Array<string>;
+    tags:Array<string>;
+    prevTime:number
+    waitTime:number
+}
 
 type events = Array<
     event
@@ -35,26 +40,80 @@ type area = {
     name:string,
     positionX:string,
     positionY:string,
-        width:string,
-    height:string,
+    width_relative:string,
+    height_relative:string,
     width_num:number,
     height_num:number,
+    coordinate:Array<number>,
+    path:string,
+    type:string
 }   
+
+type filtered = {floor:number, class:events, all:events, time_limited:events, other:events}
 
 
 export default function Page() {
-    const [data, setData] = useState<events>()
+    const [filteredData, setFilteredData] =useState<Array<filtered>>() 
 
     useEffect(() => {
+        let filtered:Array<filtered> = map_img.map((value) => 
+        ({floor:value.floor ,class:[], time_limited:[], all:[],other:[]}));
+
         const getData = async () => {
             const result = await getEvents() 
             if(result == null) {
-                return
+                return 
             }
-            setData(result)
+
+
+            result.forEach((value) => {
+
+                let name_modified = ""
+                if(value.place != null) {
+                    if(value.place.includes("教室")) {
+                        name_modified = value.place.replace("教室","");
+                    } if(value.place.includes("-")) {
+                        let name_splitted = name_modified.split("-");
+                        name_modified = name_splitted[0] + "年" + name_splitted[1] + "組" 
+                    }
+                }
+                
+
+                let floor:Array<number> = []
+                coordinatesOfArea.forEach((d) => {
+                    if(d.name == name_modified) {
+                        floor.push(d.floor)
+                    }
+                })
+
+                value.place_modified = name_modified 
+                if(floor.length > 0) {
+                    floor.forEach((n) => {
+                        filtered[n - 1].all.push(value)
+                        if (!(value.time[0] == "終日開催" || value.time[0] == "")) {
+                            filtered[n -1].time_limited.push(value)
+                            return
+                        } else if(value.types != undefined) {
+                            if(value.types.includes("クラス展示")) {
+                                filtered[n-1].class.push(value)
+                                return
+                            }
+                        } else {
+                            filtered[n -1].other.push(value)
+                        }
+                        
+                        console.log(filtered[n-1])
+                    })
+                }
+            })
+
+             setFilteredData(filtered)
         }
 
         getData()
+
+       
+        
     },[]);
 
     // 下のcoordinateはこのmap_imgの画像に合わせて配置されています
@@ -68,126 +127,173 @@ export default function Page() {
     ];
 
     const coordinatesOfArea = [
-        {coordinate:"57,2895,645,3515", name:"食堂",floor:1}, 
-        {coordinate:"1384,2332,2049,2920", name:"南高ホール",floor:1}, 
-        {coordinate:"1155,2224,1378,2330", name:"エントランス前",floor:1}, 
-        {coordinate:"906,932,2113,1668", name:"くすのき広場",floor:1}, 
-        {coordinate:"1348,302,2172,611", name:"駐車場",floor:1}, 
-        {coordinate:"429,2113,566,2335", name:"職員室前",floor:1}, 
-        {coordinate:"645,2451,733,2588", name:"エレベーター前",floor:1}, 
-        {coordinate:"104,91,524,653", name:"サブアリーナ",floor:2}, 
-        {coordinate:"526,94,1115,1135", name:"メインアリーナ",floor:2}, 
-        {coordinate:"1163,2261,1656,2867", name:"南高ホール",floor:2}, 
-        {coordinate:"916,2214,1167,2356", name:"パイの実",floor:2},
-        {coordinate:"1442,1275,1986,2159", name:"図書館",floor:2},
-        {coordinate:"525,1384,722,1576", name:"中学1年4組",floor:2},
-        {coordinate:"525,1577,721,1770", name:"中学1年3組",floor:2},
-        {coordinate:"524,1775,718,1968", name:"中学1年2組",floor:2},
-        {coordinate:"523,1968,720,2160", name:"中学1年1組",floor:2},
-        {coordinate:"108,1577,448,1769", name:"工芸室",floor:2},
-        {coordinate:"105,1966,251,2283", name:"美術室",floor:2},
-        {coordinate:"106,2457,452,2647", name:"書道室",floor:2},
-        {coordinate:"253,2649,448,2841", name:"和室",floor:2},
-        {coordinate:"255,3113,522,3426", name:"音楽室",floor:2},
-        {coordinate:"523,3183,674,3427", name:"アンサンブル室",floor:2},
-        {coordinate:"721,2455,919,2648", name:"高校1年5組",floor:2},
-        {coordinate:"723,2650,921,2843", name:"高校1年4組",floor:2},
-        {coordinate:"722,2843,920,3036", name:"高校1年3組",floor:2},
-        {coordinate:"721,3040,919,3233", name:"高校1年2組",floor:2},
-        {coordinate:"721,3233,919,3426", name:"高校1年1組",floor:2},
-        {coordinate:"653,80,1134,610", name:"化学実験室",floor:3},
-        {coordinate:"784,792,1135,1138", name:"生物・化学センター",floor:3},
-        {coordinate:"122,1141,388,1491", name:"プラネタリウム",floor:3},
-        {coordinate:"787,1321,1489,1842", name:"生物実験室",floor:3},
-        {coordinate:"125,2025,651,2376", name:"理科講義室",floor:3},
-        {coordinate:"1141,2021,1486,2549", name:"物理実験室",floor:3},
-        {coordinate:"1135,3255,1490,3782", name:"地学実験室",floor:3},
+        {coordinate:"648,3507,115,3507,115,3425,87,3425,85,3395,59,3395,59,3004,83,3002,87,2979,113,2974,115,2888,646,2890", name:"食堂",floor:1, type:"polygon"}, 
+        {coordinate:"1433,2334,1994,2334,1991,2809,2047,2809,2050,2918,1382,2918,1377,2809,1435,2806", name:"南高ホール",floor:1, type:"polygon"}, 
+        {coordinate:"1375,2332,1155,2223", name:"エントランス前",floor:1, type:"rect"}, 
+        {coordinate:"906,932,2113,1750", name:"くすのき広場",floor:1, type:"rect"}, 
+        {coordinate:"2210,606,1337,296", name:"駐車場",floor:1, type:"rect"}, 
+        {coordinate:"564,2334,421,2113", name:"職員室前",floor:1, type:"rect"}, 
+        {coordinate:"645,2451,733,2588", name:"エレベーター前",floor:1, type:"rect"}, 
+        {coordinate:"104,91,524,653", name:"サブアリーナ",floor:2, type:"rect"}, 
+        {coordinate:"526,94,1115,1135", name:"メインアリーナ",floor:2, type:"rect"}, 
+        {coordinate:"1163,2261,1656,2867", name:"南高ホール",floor:2, type:"rect"}, 
+        {coordinate:"916,2214,1167,2356", name:"パイの実",floor:2, type:"rect"},
+        {coordinate:"1458,2157,1780,2159,1780,1769,2002,1767,2000,1477,2024,1475,2024,1454,2049,1452,2049,1427,2074,1427,2074,1355,2053,1353,2049,1330,2026,1328,2026,1305,2002,1303,2002,1284,1929,1282,1929,1305,1900,1303,1900,1330,1875,1328,1881,1353,1757,1355,1759,1695,1680,1695,1680,1718,1705,1720,1707,1768,1460,1774", name:"図書館",floor:2, type:"polygon"},
+        {coordinate:"525,1384,722,1576", name:"中学1年4組",floor:2, type:"rect"},
+        {coordinate:"525,1577,721,1770", name:"中学1年3組",floor:2, type:"rect"},
+        {coordinate:"524,1775,718,1968", name:"中学1年2組",floor:2, type:"rect"},
+        {coordinate:"523,1968,720,2160", name:"中学1年1組",floor:2, type:"rect"},
+        {coordinate:"108,1577,448,1769", name:"工芸室",floor:2, type:"rect"},
+        {coordinate:"105,1966,251,2283", name:"美術室",floor:2, type:"rect"},
+        {coordinate:"106,2457,452,2647", name:"書道室",floor:2, type:"rect"},
+        {coordinate:"253,2649,448,2841", name:"和室",floor:2, type:"rect"},
+        {coordinate:"255,3113,522,3426", name:"音楽室",floor:2, type:"rect"},
+        {coordinate:"523,3183,674,3427", name:"アンサンブル室",floor:2, type:"rect"},
+        {coordinate:"721,2455,919,2648", name:"高校1年5組",floor:2, type:"rect"},
+        {coordinate:"723,2650,921,2843", name:"高校1年4組",floor:2, type:"rect"},
+        {coordinate:"722,2843,920,3036", name:"高校1年3組",floor:2, type:"rect"},
+        {coordinate:"721,3040,919,3233", name:"高校1年2組",floor:2, type:"rect"},
+        {coordinate:"721,3233,919,3426", name:"高校1年1組",floor:2, type:"rect"},
+        {coordinate:"650,258,784,257,782,80,1136,84,1134,610,655,607", name:"化学実験室",floor:3, type:"polygon"},
+        {coordinate:"784,792,1135,1138", name:"生物・化学センター",floor:3, type:"rect"},
+        {coordinate:"122,1141,388,1491", name:"プラネタリウム",floor:3, type:"rect"},
+        {coordinate:"786,1316,1136,1319,1136,1489,1487,1492,1485,1839,788,1839", name:"生物実験室",floor:3, type:"polygon"},
+        {coordinate:"125,2025,651,2376", name:"理科講義室",floor:3, type:"rect"},
+        {coordinate:"1141,2021,1486,2549", name:"物理実験室",floor:3, type:"rect"},
+        {coordinate:"1135,3255,1490,3782", name:"地学実験室",floor:3, type:"rect"},
         // 名前怪しい↓
-        {coordinate:"1138,2728,1488,3079", name:"地学情報センター",floor:3},
-        {coordinate:"300,2377,652,2638", name:"319教室",floor:3},
-        {coordinate:"303,2636,654,2904", name:"320教室",floor:3},
-        {coordinate:"303,2904,654,3172", name:"321教室",floor:3},
-        {coordinate:"301,3170,652,3438", name:"322教室",floor:3},
-        {coordinate:"304,3434,655,3702", name:"323教室",floor:3},
-        {coordinate:"1112,240,1460,593", name:"高校2年5組",floor:4},
-        {coordinate:"1112,596,1460,949", name:"高校2年4組",floor:4},
-        {coordinate:"1114,949,1462,1302", name:"高校2年3組",floor:4},
-        {coordinate:"1113,1300,1461,1653", name:"高校2年2組",floor:4},
-        {coordinate:"1114,1654,1462,2007", name:"高校2年1組",floor:4},
-        {coordinate:"1463,2179,1812,2531", name:"中学2年4組",floor:4},
-        {coordinate:"1466,2534,1815,2886", name:"中学2年3組",floor:4},
-        {coordinate:"1467,2885,1816,3237", name:"中学2年2組",floor:4},
-        {coordinate:"1465,3238,1814,3590", name:"中学2年1組",floor:4},
-        {coordinate:"628,1651,976,1999", name:"高校3年3組",floor:4},
-        {coordinate:"628,2181,976,2529", name:"高校3年4組",floor:4},
-        {coordinate:"627,2535,975,2883", name:"高校3年5組",floor:4},
-        {coordinate:"627,2885,977,3455", name:"放送室",floor:4},
-        {coordinate:"662,784,1010,1134", name:"中学3年4組",floor:5},
-        {coordinate:"661,1136,1009,1486", name:"中学3年3組",floor:5},
-        {coordinate:"662,1491,1010,1841", name:"中学3年2組",floor:5},
-        {coordinate:"1016,2020,1364,2370", name:"中学3年1組",floor:5},
-        {coordinate:"1014,2372,1274,2719", name:"高校3年5組",floor:5},
-        {coordinate:"627,2535,975,2883", name:"数学科講義室",floor:5},
-        {coordinate:"177,2018,525,2277", name:"512教室",floor:5},
-        {coordinate:"176,2282,524,2541", name:"513教室",floor:5},
-        {coordinate:"176,2550,524,2809", name:"514教室",floor:5},
+        {coordinate:"1138,2728,1488,3079", name:"地学情報センター",floor:3, type:"rect"},
+        {coordinate:"300,2377,652,2638", name:"319教室",floor:3, type:"rect"},
+        {coordinate:"303,2636,654,2904", name:"320教室",floor:3, type:"rect"},
+        {coordinate:"303,2904,654,3172", name:"321教室",floor:3, type:"rect"},
+        {coordinate:"301,3170,652,3438", name:"322教室",floor:3, type:"rect"},
+        {coordinate:"304,3434,655,3702", name:"323教室",floor:3, type:"rect"},
+        {coordinate:"1112,240,1460,593", name:"高校2年5組",floor:4, type:"rect"},
+        {coordinate:"1112,596,1460,949", name:"高校2年4組",floor:4, type:"rect"},
+        {coordinate:"1114,949,1462,1302", name:"高校2年3組",floor:4, type:"rect"},
+        {coordinate:"1113,1300,1461,1653", name:"高校2年2組",floor:4, type:"rect"},
+        {coordinate:"1114,1654,1462,2007", name:"高校2年1組",floor:4, type:"rect"},
+        {coordinate:"1463,2179,1812,2531", name:"中学2年4組",floor:4, type:"rect"},
+        {coordinate:"1466,2534,1815,2886", name:"中学2年3組",floor:4, type:"rect"},
+        {coordinate:"1467,2885,1816,3237", name:"中学2年2組",floor:4, type:"rect"},
+        {coordinate:"1465,3238,1814,3590", name:"中学2年1組",floor:4, type:"rect"},
+        {coordinate:"628,1651,976,1999", name:"高校3年3組",floor:4, type:"rect"},
+        {coordinate:"628,2181,976,2529", name:"高校3年4組",floor:4, type:"rect"},
+        {coordinate:"627,2535,975,2883", name:"高校3年5組",floor:4, type:"rect"},
+        {coordinate:"627,2885,977,3455", name:"放送室",floor:4, type:"rect"},
+        {coordinate:"662,784,1010,1134", name:"中学3年4組",floor:5, type:"rect"},
+        {coordinate:"661,1136,1009,1486", name:"中学3年3組",floor:5, type:"rect"},
+        {coordinate:"662,1491,1010,1841", name:"中学3年2組",floor:5, type:"rect"},
+        {coordinate:"1016,2020,1364,2370", name:"中学3年1組",floor:5, type:"rect"},
+        {coordinate:"1014,2372,1274,2719", name:"高校3年5組",floor:5, type:"rect"},
+        {coordinate:"1013,2725,1273,3068", name:"数学科講義室",floor:5, type:"rect"},
+        {coordinate:"177,2018,525,2277", name:"512教室",floor:5, type:"rect"},
+        {coordinate:"176,2282,524,2541", name:"513教室",floor:5, type:"rect"},
+        {coordinate:"176,2550,524,2809", name:"514教室",floor:5, type:"rect"},
     ]
 
-    let map_filtered:Array<{floor:number, class:events, time_limited:events, other:events, areas:Array<area>}> = map_img.map((value) => 
-        ({floor:value.floor, class:[], time_limited:[], other:[], areas:[]})
+    
+
+    let map_filtered:Array<{floor:number ,areas:Array<area>}> = map_img.map((value) => 
+        ({floor:value.floor ,areas:[]})
     );
 
     coordinatesOfArea.forEach((d) => {
-        const coordinates_splitted = d.coordinate.split(",").map((item) => Number(item))
+        const coordinate_string = d.coordinate.split(",")
+        const coordinates_splitted = coordinate_string.map((item) => Number(item))
+
         const img_width = map_img[d.floor - 1].size[0]
         const img_height = map_img[d.floor - 1].size[1]
 
+        let coordinates_relativeToPosition = [];
+        for(let i = 0; i < coordinates_splitted.length; i++) {
+            if(i % 2 ==0) {
+                coordinates_relativeToPosition.push(coordinates_splitted[i] - img_width)
+            } else {
+                coordinates_relativeToPosition.push(coordinates_splitted[i] - img_height)
+            }
+        }
+
+        let tableForRect = [0,0,0,0]
+
+        const minimum_x = (data:Array<number>) => {
+            let filterX:Array<number> = []
+            data.forEach((n, index) => {if(index % 2 ==0){filterX.push(n)}})
+
+            let minimum:number = 0
+            let maximum:number = 0
+            if(filterX.length != 0) {
+                minimum = filterX.reduce((a, b) => {return Math.min(a,b)})
+                maximum = filterX.reduce((a,b) => {return Math.max(a,b) })
+            }
+            
+
+            tableForRect[0] = minimum
+            tableForRect[2] = maximum
+
+            return minimum
+        }
+
+        const minimum_y = (data:Array<number>) => {
+            let filterY:Array<number> = []
+            data.forEach((n, index) => {if(index % 2 !=0){filterY.push(n)}})
+            let minimum = filterY.reduce((a, b) => {return Math.min(a,b)})
+            let maximum = filterY.reduce((a,b) => {return Math.max(a,b) })
+
+            tableForRect[1] = minimum
+            tableForRect[3] = maximum
+
+            return minimum
+        }
+
+        const minimumX =minimum_x(coordinates_splitted)
+        const minimumY = minimum_y(coordinates_splitted) 
+
+        let path = ""
+        coordinates_splitted.forEach((e,index) => {
+            if(index % 2 == 0) {
+                if(index == 0) {
+                    path = path + "M "
+                } else {
+                    path = path + "L "
+                }
+                let modify = e - tableForRect[0]
+                path = path + String(modify) +" "
+            } else {
+                let modify = e - tableForRect[1]
+                path = path + String(modify) + " "  
+            }
+        })
+
         const push_data = {
-            name:d.name, positionX:String(coordinates_splitted[0] / img_width * 100), positionY:String(coordinates_splitted[1] / img_height * 100), width:String((coordinates_splitted[2] - coordinates_splitted[0]) / img_width * 100), height:String(coordinates_splitted[3] - coordinates_splitted[1] / img_height * 100), height_num:(coordinates_splitted[3] - coordinates_splitted[1]), width_num:(coordinates_splitted[2] - coordinates_splitted[0]) 
+            name:d.name, positionX:String(minimumX / img_width * 100), positionY:String(minimumY / img_height * 100), width_relative:String((tableForRect[2] - tableForRect[0]) / img_width * 100), height_relative:String(tableForRect[3] - tableForRect[1] / img_height * 100), height_num:(tableForRect[3] - tableForRect[1]), width_num:(tableForRect[2] - tableForRect[0]), type:d.type, coordinate:coordinates_relativeToPosition , path:path
         }
 
         map_filtered[d.floor - 1].areas.push(push_data)
     })
 
-    data?.forEach((value) => {
-        let name_modified = ""
-        if(value.place != null) {
-            if(value.place.includes("教室")) {
-                name_modified = value.place.replace("教室","");
-            } if(value.place.includes("-")) {
-                let name_splitted = value.place.split("-");
-                name_modified = name_splitted[0] + "年" + name_splitted[1] + "組" 
-            }
-        }
-        
-
-        const place_found = coordinatesOfArea.find(d => {
-            return d.name == name_modified
-        })
-
-        let target_floor:number = 0;
-        if(place_found != undefined) {
-            target_floor = map_filtered.findIndex(d => {
-                return d.floor = place_found.floor
-            })
-        }
-
-        if (!(value.time[0] == "終日開催" || value.time[0] == "")) {
-            map_filtered[target_floor].time_limited.push(value)
-            return
-        }
-
-        if(value.types != undefined) {
-            if(value.types.includes("クラス展示")) {
-                map_filtered[target_floor].class.push(value)
-                return
-            }
-        }
-
-        map_filtered[target_floor].other.push(value)
-    })
+    type modal_position = {
+        floor:number,
+        name:string,
+        positionX:string,
+        positionY:string
+    }
 
     const [hovered, setHovered] = useState("")
+    const [modal_data, setModal] = useState<{position:modal_position, data:Array<event>}>()
+
+    const filterEventByPlace = (name:string, floor:number, positionX:string, positionY:string) => {
+        let data:Array<filtered> = []
+        if(filteredData != undefined) {
+            data = filteredData
+        }
+        let filter_floor = data[floor]
+        let filter_name = filter_floor?.all.filter((n) => {
+            return n.place_modified == name
+        })
+
+        setModal({position:{floor:floor, name:name, positionX:positionX ,positionY:positionY}, data:filter_name})
+    }
 
     const jsonLd = {
         "@context": "http://schema.org",
@@ -218,75 +324,6 @@ export default function Page() {
         {floor:"4階", href:"/0005.png"},
         {floor:"5階", href:"/0006.png"},
     ]
-    // const imgs = [
-    //     {img:"/フロアマップ1.png", test:[
-    //         {num:"1",name:"高校3年1組"},
-    //         {num:"2",name:"高校3年2組"},
-    //         {num:"3",name:"高校3年3組"},
-    //         {num:"4",name:"高校3年4組"},
-    //         {num:"5",name:"高校3年5組"},
-    //         {num:"6",name:"生徒会本部"},
-    //         {num:"7",name:"高校文芸同好会"},
-    //         {num:"8",name:"書道部"},
-    //     ]},
-    //     {img:"/フロアマップ2.png", test:[
-    //         {num:"9",name:"中学1年1組"},
-    //         {num:"10",name:"中学1年2組"},
-    //         {num:"11",name:"中学1年3組"},
-    //         {num:"12",name:"中学1年4組"},
-    //         {num:"13",name:"高校1年1組"},
-    //         {num:"14",name:"高校1年2組"},
-    //         {num:"15",name:"高校1年3組"},
-    //         {num:"16",name:"高校1年4組"},
-    //         {num:"17",name:"高校1年5組"},
-    //         {num:"18",name:"M-box"},
-    //         {num:"19",name:"美術部"},
-    //         {num:"20",name:"図書委員会"},
-    //         {num:"21",name:"書道部"},
-    //         {num:"22",name:"高校軽音楽部"},
-    //         {num:"23",name:"高校ダンス部"},
-    //         {num:"24",name:"吹奏楽部"},
-    //         {num:"25",name:"茶道部"},
-    //         {num:"26",name:"中学演劇部"},
-    //         {num:"27",name:"高校演劇部"},
-    //         {num:"28",name:"弦楽部"},
-    //     ]},
-    //     {img:"/フロアマップ3.png", test:[
-    //         {num:"29",name:"70・10周年委員会"},
-    //         {num:"30",name:"PTA"},
-    //         {num:"31",name:"PTA合唱団"},
-    //         {num:"32",name:"風の章実行委員会"},
-    //         {num:"33",name:"高校料理部"},
-    //         {num:"34",name:"PTAリサイクル"},
-    //         {num:"35",name:"科学部"},
-    //         {num:"36",name:"プラネタリウム"},
-    //     ]},
-    //     {img:"/フロアマップ4.png", test:[
-    //         {num:"37",name:"中学2年1組"},
-    //         {num:"38",name:"中学2年2組"},
-    //         {num:"39",name:"中学2年3組"},
-    //         {num:"40",name:"中学2年4組"},
-    //         {num:"41",name:"高校2年1組"},
-    //         {num:"42",name:"高校2年2組"},
-    //         {num:"43",name:"高校2年3組"},
-    //         {num:"44",name:"高校2年4組"},
-    //         {num:"45",name:"高校2年5組"},
-    //     ]},
-    //     {img:"/フロアマップ5.png", test:[
-    //         {num:"46",name:"中学3年1組"},
-    //         {num:"47",name:"中学3年2組"},
-    //         {num:"48",name:"中学3年3組"},
-    //         {num:"49",name:"中学3年4組"},
-    //         {num:"50",name:"母親の読書会"},
-    //         {num:"51",name:"学校説明"},
-    //         {num:"52",name:"港南区選挙管理委員会"},
-    //         {num:"53",name:"同窓会"},
-    //     ]},
-    // ]
-
-
-
-    //今後高校の教室配置がたぶん変わるので過去の教室情報を参照してnameの場所だけ編集してください。
     //https://labs.d-s-b.jp/ImagemapGenerator/に上記のmap_imgを読み込ませて座標を取得しました
 
 
@@ -298,58 +335,205 @@ export default function Page() {
         <div className="py-[30vw] 2xl:py-40 lg:py-32">
             <title>フロアマップ</title>      
             <h1 className={`${kaiseiDecol.className} text-center text-[12vw]  lg:text-6xl 2xl:text-8xl`}>フロアマップ</h1>
-
-            {/* <div className="hidden lg:block 2xl:mt-20 lg:mt-14">
-                {imgs.map((value, index) => (
-                    <div key={index} className={`grid grid-cols-[repeat(2,1fr)] min-h-[500px]  w-[90%] mx-auto 2xl:mb-32 mb-16 relative
-                    ${value.test.length < 10 ? "grid-rows-[80svh]" : "xl:grid-rows-[140svh] grid-rows-[150svh]"}`}>
-                        <div className="absolute ">
-                            <p className="text-6xl text-gray-500">{index + 1}F</p>
-                        </div>
-                        <div className="">
-                            <Image src={value.img} alt="フロアマップ" width={1000} height={2000} className="h-full object-contain"></Image>
-                        </div>
-                        <div className={`flex content-start flex-wrap `}>
-                            <div className={`${data! ? "hidden": "block"} `}>
-                                <p className="text-xl my-10 mx-10">Loading...</p>        
-                            </div>
-                            {value.test.map((n,i) => (
-                                <Link href={{pathname:"/event/introduction", query:{name:n.name}}} key={i} className={`rounded-lg flex-grow-0 items-center bg-white drop-shadow-sm border-2 border-slate-100 relative text-blue-900 block w-[45%] h-auto 2xl:py-5 py-4 2xl:px-4 px-2 2xl:mx-5 lg:mx-2 2xl:my-3 my-2  ${data! ? "opacity-100" : "opacity-0"} `}>
-                                    <p className="2xl:text-sm text-xs 2xl:mb-2 mb-1" >#{n.num}&ensp;{n.name}</p> 
-                                    <p className="2xl:text-xl xl:text-base text-xs flex justify-between items-center text-nowrap w-full overflow-hidden">{getTitle(n.name)} <SlArrowRightCircle className="2xl:mr-4 mr-2 absolute right-0 bg-white rounded-full shadow-lg shadow-slate-200"></SlArrowRightCircle></p>
-                                    
-                                </Link>
-                            ))}
-                        </div>
-                    </div>
-                ))}
-            </div> */}
-            <div className="hidden">
+            <div className="mt-12">
                 {map_img.map((value, index) => (
-                    <div key={index} className="w-[85vw] mx-auto flex flex-wrap">
-                        <div className="w-full relative">  
-                            <Image src={value.href} alt={`${value.floor}階の画像`} width={value.size[0]} height={value.size[1]} className="w-full" style={{aspectRatio:value.size[0]/value.size[1]}}>
-                            </Image>
-                            {map_filtered[index].areas.map((map_value, map_index) => (
-                                <div key={map_index} id={map_value.name} 
-                                style={{
-                                    left:map_value.positionX+ "%",
-                                    top:map_value.positionY + "%",
-                                    width:map_value.width + "%",
-                                    aspectRatio:map_value.width_num / map_value.height_num 
-                                }}
-                                className={`absolute bg-red-500 opacity-20 hidden ${hovered == map_value.name && "block"}`}>
+                    <div key={index} className={`w-full mx-auto mb-20 md:mb-28 lg:w-[95%]`}>
+                        <div className="relative flex mx-4 mb-3 md:mx-6 lg:mb-6 lg:items-center lg:hidden">
+                            <div className=" w-[2vw] lg:w-3  lg:h-16 bg-gradient-to-br from-rose-500 to-rose-300"></div>
+                            <p className={`${kaiseiDecol.className}  text-[#f74b69] text-[10vw] ml-[2vw] lg:ml-3 lg:text-5xl  text-nowrap z-10`}>{index+1}階</p>
+                        </div>
+                        <div className={`w-full mx-auto flex flex-wrap lg:flex-nowrap`}>
+                            <div className={`${index == 2 ? "w-[40vw]" : "w-[70vw]"} lg:w-[45%] lg:shrink-0 mx-auto mb-5`}>
+                                <div className="relative  mx-6 mb-6  lg:items-center lg:flex hidden">
+                                    <div className=" w-[2vw] lg:w-3  lg:h-16 bg-gradient-to-br from-rose-500 to-rose-300"></div>
+                                    <p className={`${kaiseiDecol.className}  text-[#f74b69] lg:ml-3 lg:text-5xl  text-nowrap z-10`}>{index+1}階</p>
+                                </div>  
+                                <div className={`${index == 2 ? "lg:w-[50%]" : "lg:w-[65%]"} w-full relative mx-auto`}>
+                                    <div style={{
+                                        top:String(Number(modal_data?.position?.positionY) + 10) + "%",
+                                        left:String(Number(modal_data?.position?.positionX) + 10) + "%"
+                                    }}
+                                    className={`${modal_data?.position?.floor == index ? " lg:block hidden " : " hidden "} absolute w-[500px] z-20 rounded-xl border border-gray-400 shadow-lg bg-white text-black pb-2`}>
+                                        <div className="flex p-5 pb-0 justify-between">
+                                            <div  className="flex items-center">
+                                                <div className=" flex items-center justify-center  bg-[#f9a1bd]  rounded-full w-16 aspect-square">
+                                                    <p className="text-white z-10 text-2xl">{index + 1}F</p>
+                                                </div>
+                                                <p className="text-2xl pl-2">{modal_data?.position.name}</p>
+                                            </div>
+                                            <Image src={"/クロス (1).png"} alt="閉じる" width={300} height={300} className="mt-2 w-10 h-10 cursor-pointer" onClick={() => {setModal({position:{floor:99, name:"", positionX:"" ,positionY:""}, data:[]})}}></Image>           
+                                            </div>
+                                            {modal_data?.data?.length == 0 && 
+                                            <div className="w-full text-center md:text-xl pt-1 pb-4 md:py-5 md:pt-2">
+                                                見つかりませんでした
+                                            </div>
+                                            }
+                                        {modal_data?.data?.map((modal_value, modal_index) => 
+                                            <div key={"modal:" + String(modal_index)} className="px-5">
+                                                <div className={`${(modal_index == 0 || modal_data.data.length == 0) ? "" : "border-b"} border-gray-400 py-2 flex justify-between items-center ${modal_index == modal_data.data.length - 1 && "pb-3 md:pb-4"}`} key={"modal_data"+ String(modal_index)}>
+                                                    <div className=" overflow-hidden">
+                                                        <p className="text-lg">{modal_value.className}</p>
+                                                        <p className="text-3xl text-nowrap whitespace-nowrap py-2">{modal_value.title}</p>
+                                                        <div className="flex text-lg pt-1">
+                                                            <p>{modal_value.time[0]}</p>
+                                                            <p className="pl-5">待ち時間:{modal_value.waitTime}分</p>
+                                                        </div>
+                                                    </div>
+                                                    {modal_value.img == null ? 
+                                                        <Image src={"/pexels-aulsh99-2860705.jpg"} alt="展示いらすと" width={800} height={800} className="aspect-square rounded-full w-40"></Image> :
+                                                        <Image src={modal_value.img} alt="展示いらすと" width={800} height={800} className="aspect-square rounded-full  w-40"></Image>
+                                                    }
+                                                    
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div style={{
+                                        top:String(Number(modal_data?.position?.positionY) + 20) + "%",
+                                        left:"-10%"
+                                    }}
+                                    className={`${modal_data?.position?.floor == index ? " lg:hidden block  " : " hidden "} absolute w-80 md:w-[500px] z-20 rounded-xl border border-gray-400 shadow-lg bg-white text-black `}>
+                                        <div className="flex p-3 md:p-4 md:pb-0 pb-0 justify-between ">
+                                            <div className="flex items-center">
+                                                <div className=" flex items-center justify-center  bg-[#f9a1bd]  rounded-full w-12 md:w-16 aspect-square">
+                                                    <p className="text-white z-10 text-xl md:text-2xl">{index + 1}F</p>
+                                                </div>
+                                                <p className="text-xl md:text-2xl pl-2">{modal_data?.position.name}</p> 
+                                            </div>
+                                            <Image src={"/クロス (1).png"} alt="閉じる" width={300} height={300} className="w-8 h-8 mt-1 aspect-square cursor-pointer" onClick={() => {setModal({position:{floor:99, name:"", positionX:"" ,positionY:""}, data:[]})}}></Image> 
+                                        </div>
+                                            {modal_data?.data?.length == 0 && 
+                                            <div className="w-full text-center md:text-xl pt-1 pb-4 md:py-5 md:pt-2">
+                                                見つかりませんでした
+                                            </div>
+                                        }
+                                        {modal_data?.data?.map((modal_value, modal_index) => 
+                                            <div key={"modal:" + String(modal_index)} className="px-4 md:px-5">
+                                                <div className={`${(modal_index == 0 || modal_data.data.length == 0) ? "" : "border-b"} border-gray-400 py-2 flex justify-between items-center ${modal_index == modal_data.data.length - 1 && "pb-3 md:pb-4"}`} key={"modal_data"+ String(modal_index)}>
+                                                    <div className="overflow-hidden">
+                                                        <p className="text-xs md:text-base">{modal_value.className}</p>
+                                                        <p className="text-xl md:text-2xl text-nowrap whitespace-nowrap py-1">{modal_value.title}</p>
+                                                        <div className="flex text-xs md:text-base">
+                                                            <p>{modal_value.time[0]}</p>
+                                                            <p className="pl-3">待ち時間:{modal_value.waitTime}分</p>
+                                                        </div>
+                                                    </div>
+                                                    {modal_value.img == null ? 
+                                                        <Image src={"/pexels-aulsh99-2860705.jpg"} alt="展示いらすと" width={800} height={800} className="aspect-square rounded-full w-24 md:w-32"></Image> :
+                                                        <Image src={modal_value.img} alt="展示いらすと" width={800} height={800} className="aspect-square rounded-full  w-24  md:w-32"></Image>
+                                                    }
+                                                    
+                                                </div>
+                                            </div>
+                                        )}
+                                        
+                                    </div>
+                                    <Image src={value.href} alt={`${value.floor}階の画像`} width={value.size[0]} height={value.size[1]} className="w-full" style={{aspectRatio:value.size[0]/value.size[1]}}>
+                                    </Image>
+                                    {map_filtered[index].areas.map((map_value, map_index) => (
+                                        <div key={map_index} id={map_value.name} 
+                                        style={{
+                                            left:map_value.positionX+ "%",
+                                            top:map_value.positionY + "%",
+                                            width:map_value.width_relative + "%"
+                                        }} 
+                                        onMouseEnter={() => {setHovered(map_value.name)}} onMouseLeave={() => {setHovered("")}}
+                                        onClick={() => {filterEventByPlace(map_value.name,index,map_value.positionX,map_value.positionY)}}
+                                        className={`absolute  cursor-pointer fill-white mix-blend-screen   ${hovered == map_value.name ? "opacity-50" :"opacity-0"}`}>
+                                            <svg  className="w-full " style={{aspectRatio:map_value.width_num/map_value.height_num}} viewBox={`0 0 ${map_value.width_num} ${map_value.height_num}`}>
+                                                {map_value.type == "rect" && 
+                                                    <rect  x={0} y={0} height={map_value.height_num} width={map_value.width_num}></rect>     
+                                                }
+                                                {map_value.type == "polygon" &&
+                                                    <path d={map_value.path}></path>
+                                                }
+                                            </svg>
+                                            
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
+                                
+                            </div>
+                            <div className="w-full text-black border-rose-400 lg:border-none lg:shadow-none border-2 mx-4 md:mx-6 rounded-xl shadow-md relative lg:mx-0">
+                                {filteredData != undefined &&
+                                    <div className="m-2 my-3 md:m-4 lg:m-0">   
+                                        <p className={`${kaiseiDecol.className} absolute top-4 right-4 text-xl md:text-3xl md:top-6 md:right-6 text-[#f74b69] lg:hidden`}>{index + 1}階</p>
+                                        {filteredData[index].class.length > 0 && 
+                                            <div>
+                                                <div className="flex items-center my-3 md:my-5 lg:m-0 lg:mb-5 relative lg:right-7 xl:right-9" >
+                                                    <Image src={"/classLogo.png"} alt="クラスロゴ" width={300} height={300} className="aspect-square w-11 md:w-16 xl:w-20"></Image>
+                                                    <p className={`pl-1 text-[#f74b69] text-xl md:text-3xl xl:text-4xl xl:pl-4 font-semibold ${KaiseiDecol.className}`}>クラス展示</p>
+                                                </div>
+                                                <div className="flex flex-wrap mx-2 justify-between w-full overflow-hidden mb-2 lg:mb-4">
+                                                    {filteredData[index].class.map((class_value, class_index) => (
+                                                        <div className={`w-[50%] overflow-hidden flex items-center pb-3 md:pb-4 lg:pb-4 xl:pb-6 cursor-pointer ${hovered == class_value.className && " opacity-60"}`} key={`${class_index} + "map`}  onMouseEnter={() => {setHovered(class_value.className)}} onMouseLeave={() => {setHovered("")}} >
+                                                            <div className="min-w-14 md:min-w-24 xl:min-w-32 flex items-center px-2 justify-center shrink-0 text-white bg-[#f9a1bd] rounded-full py-1">
+                                                                <p className="text-[10px] md:text-base lg:text-sm xl:text-lg  text-nowrap whitespace-nowrap">{class_value.className.replace("年", "-").replace("組", "").replace("学", "").replace("校", "")} </p>
+                                                            </div>
+                                                            <div className="pl-2 md:pl-4 overflow-hidden grow min-w-32">
+                                                                <p className="  text-sm md:text-lg lg:text-base xl:text-2xl text-nowrap whitespace-nowrap g">{class_value.title}</p>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        }
+                                        {filteredData[index].time_limited.length > 0 &&
+                                            <div>
+                                                <p className={`${kaiseiDecol.className} absolute top-4 right-4 text-xl md:text-3xl md:top-6 md:right-6 text-[#f74b69] lg:hidden`}>{index + 1}階</p>
+                                                <div className="flex items-center my-3 md:my-5 lg:m-0 lg:mb-5 relative lg:right-7 xl:right-9" >
+                                                    <Image src={"/time_limited.png"} alt="時限ロゴ" width={300} height={300} className="aspect-square w-11 md:w-16 xl:w-20"></Image>
+                                                    <p className={`pl-1 text-[#f74b69] text-xl md:text-3xl xl:text-4xl xl:pl-4 font-semibold ${KaiseiDecol.className}`}>時限開催展示</p>
+                                                </div>
+                                                <div className="flex flex-wrap mx-2 justify-between w-full overflow-hidden">
+                                                    {filteredData[index].time_limited.map((time_value, time_index) => (
+                                                        <div className={`w-[50%] overflow-hidden flex items-center pb-3 md:pb-4 lg:pb-4 xl:pb-6 cursor-pointer ${hovered == time_value.className && " opacity-60"}`} key={`${time_index} + "map`}  onMouseEnter={() => {setHovered(time_value.className)}} onMouseLeave={() => {setHovered("")}}>
+                                                            <div className="min-w-14 md:min-w-24 xl:min-w-32 flex items-center px-2 justify-center shrink-0 text-white bg-[#f9a1bd] rounded-full py-1">
+                                                                <p className="text-[10px] md:text-base lg:text-sm xl:text-lg  text-nowrap whitespace-nowrap">{time_value.className.replace("年", "-").replace("組", "").replace("学", "").replace("校", "")} </p>
+                                                            </div>
+                                                            <div className="pl-2 md:pl-4 overflow-hidden grow min-w-32">
+                                                                <p className="  text-sm md:text-lg lg:text-base xl:text-2xl text-nowrap whitespace-nowrap g">{time_value.title}</p>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        }
+                                        {filteredData[index].other.length > 0 &&
+                                            <div>
+                                                <p className={`${kaiseiDecol.className} absolute top-4 right-4 text-xl md:text-3xl md:top-6 md:right-6 text-[#f74b69] lg:hidden`}>{index + 1}階</p>
+                                                <div className="flex items-center my-3 md:my-5 lg:m-0 lg:mb-5 relative lg:right-7 xl:right-9" >
+                                                    <Image src={"/others.png"} alt="そのほかロゴ" width={300} height={300} className="aspect-square w-11 md:w-16 xl:w-20"></Image>
+                                                    <p className={`pl-1 text-[#f74b69] text-xl md:text-3xl xl:text-4xl xl:pl-4 font-semibold ${KaiseiDecol.className}`}>その他の展示</p>
+                                                </div>
+                                                <div className="flex flex-wrap mx-2 justify-between w-full overflow-hidden">
+                                                    {filteredData[index].other.map((other_value, other_index) => (
+                                                        <div className={`w-[50%] overflow-hidden flex items-center pb-3 md:pb-4 lg:pb-4 xl:pb-6 cursor-pointer ${hovered == other_value.className && " opacity-60"}`} key={`${other_index} + "map`}  onMouseEnter={() => {setHovered(other_value.className)}} onMouseLeave={() => {setHovered("")}}>
+                                                            <div className="min-w-14 md:min-w-24 xl:min-w-32 flex items-center px-2 justify-center shrink-0 text-white bg-[#f9a1bd] rounded-full py-1">
+                                                                <p className="text-[10px] md:text-base lg:text-sm xl:text-lg  text-nowrap whitespace-nowrap">{other_value.className} </p>
+                                                            </div>
+                                                            <div className="pl-2 md:pl-4 overflow-hidden grow min-w-32">
+                                                                <p className="  text-sm md:text-lg lg:text-base xl:text-2xl text-nowrap whitespace-nowrap g">{other_value.title}</p>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                } 
+                            </div>
                         </div>
-                        <div className="w-full">
-
-                        </div>
+                        
+                        
                     </div>
                 ))}
             </div>
 
-            <div className="hidden lg:block 2xl:mt-20 lg:mt-14 xl:mx-40 mx-16">
+            <div className="hidden 2xl:mt-20 lg:mt-14 xl:mx-40 mx-16">
                 {mapImages.map((value, index) => (
                     <div className="w-full aspect-auto mb-20" key={index}>
                         <Image src={value.href} alt="フロアマップ" width={2000} height={1000} className="w-full aspect-auto"></Image>
@@ -357,7 +541,7 @@ export default function Page() {
                 ))}
             </div>
 
-            <div className="my-[15vw] w-full lg:hidden">
+            <div className="my-[15vw] w-full hidden">
                 {mapImages.map((value, index) => (
                     <div className="my-[15vw]" key={value.href}>
                         <div className="flex  mx-[4vw] mb-[7vw] relative">
