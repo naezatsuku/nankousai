@@ -30,7 +30,8 @@ type Props = {
         types:Array<string>;
         tags:Array<string>;
         prevTime:number
-        waitTime:number
+        waitTime:number,
+        TimeVisible:boolean
     }>
 }
 
@@ -470,9 +471,11 @@ export default function ShowEvent(
                                 
                                 <div >
                                     <div className={`font-medium ${setTextColor(value.tags)} pb-[2%]`}>
+                                        {value.TimeVisible &&
                                         <Suspense>
                                             <ShowTime TimeMap={findTime(value.id)} ></ShowTime>
                                         </Suspense>
+                                        }
                                                     
                                     </div>      
                                      <div className="text-[2.5vw] leading-[160%] lg:text-sm xl:text-xs 2xl:text-sm flex text-nowrap pb-[2%] text-black">

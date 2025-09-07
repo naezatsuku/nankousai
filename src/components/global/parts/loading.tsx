@@ -19,13 +19,14 @@ export function LoadingPage() {
         </div>
     )
 }
-
-export function UndisclosedPage() {
+type Props ={
+    message:string
+}
+export function UndisclosedPage({message}:Props) {
     return(
         <div className="w-[100svw] h-[100svh] bg-gradient-to-br base-gradient ">
             <p className={`${kaiseiDecol.className} text-white text-center text-[6vw] absolute left-[50vw] -translate-x-1/2 top-[50vh] -translate-y-1/2 text-nowrap`}>
-            現在非公開中です... <br />
-            南高祭当日までお待ちください...
+            {message}
             </p>
         </div>
     )
