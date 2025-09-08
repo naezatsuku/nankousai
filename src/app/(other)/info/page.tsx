@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import BackTo from "@/components/global/back_button";
 
 export const metadata: Metadata = {
-    title: "インフォメーション | 第71回南高祭・展示の部2024",
+    title: "インフォメーション | 第72回南高祭・展示の部2025",
     description: "南高・南高附属中最大の行事へようこそ。南高創立70周年・附属中創立10周年を迎えた今年、歴代の南高生から引き継がれた、「みんなが仲間に みんなが楽しく みんなで創ろう」の精神を次世代へと繋ぎます。",
 };
 
@@ -14,7 +14,7 @@ export default function page() {
         "@context": "http://schema.org",
         "@type": "Event",
         "name": "南高祭",
-        "startDate": "2024-09-07T09:30",
+        "startDate": "2025-09-013T09:30",
         "location": {
             "@type": "Place",
             "name": "横浜市立南高等学校・附属中学校",

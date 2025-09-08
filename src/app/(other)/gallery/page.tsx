@@ -13,7 +13,7 @@ export default function page() {
         "@context": "http://schema.org",
         "@type": "Event",
         "name": "南高祭",
-        "startDate": "2024-09-07T09:30",
+        "startDate": "2025-09-13T09:30",
         "location": {
             "@type": "Place",
             "name": "横浜市立南高等学校・附属中学校",
