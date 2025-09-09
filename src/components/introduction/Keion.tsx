@@ -8,8 +8,14 @@ import { FaMusic } from "react-icons/fa6";
 import { GoClockFill } from "react-icons/go";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { motion } from "framer-motion";
+import { KaiseiDecol } from "@/app/fonts"
+import { roboto } from "@/app/fonts"
+import {notoSansJP} from "@/app/fonts"
 import Image from "next/image" 
 import { UUID } from "crypto";
+import { AiFillCaretRight } from 'react-icons/ai';
+import { AiFillCaretLeft } from 'react-icons/ai';
+import { FaInstagram } from 'react-icons/fa';
 type band_type = {
     name:string,
     time:string,
@@ -29,135 +35,206 @@ type new_data = {
     available:boolean,
     imgURL:string
 }
-
+type Slot = {
+    id:UUID,
+    name:string,
+    time:string,
+    date:string,
+    comment:string,
+    available:boolean,
+    imgURL:string,
+    imageVersion:string
+}
+type groupedData = {
+    date:string,
+    data:Slot[]
+}
 export default function Keion() {
     console.log("軽音楽部だよ")
-    const [data, setData] = useState<Array<new_data>>()
-    const [num, setNum] = useState(0)
-
+    const [data, setData] = useState<groupedData[]>()
+    const [dates,setDates] = useState<string[]>();//使わないかも
+    const [showData,setShowData] = useState<Slot[]>();
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null);
     useEffect(() => {
         const getData = async () => {
-            const result = await getBandData()
-            console.log(result);
-            if(result == null || result == "failed") {
+            const {groupedByDate:result,dates} = await getBandData()
+            console.log(result,dates);
+            if(result == null) {
                 console.log("failed")
                 return
             }
+            
             setData(result)
+            setDates(dates)
+            setShowData(result[0].data)
         }
 
         getData()
     },[])
-
-    const variants = {
-        open:{
-            height:"auto"
-        },
-        close: {
-            height:0
-        }
+    const setDate = (date:string) =>{
+        const target = data?.find(item => item.date == date);
+        if(!target) return
+        setShowData(target.data);
     }
-
-    const view_variants ={
-        open:{
-            display:"none"
-        },
-        close: {
-            display:"block"
-        }
-    }
-    const numCon = (e:number) => {
-        if(num == e + 1) {
-            setNum(0)
-        } else {
-            setNum(e+1)
-        }
-    }
+    useEffect(() => {
+      if (data && data[currentIndex]) {
+        setDate(data[currentIndex].date);
+      }
+    }, [currentIndex, data]);
+    const handlePrev = () => {
+      if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
+    };
+    
+    const handleNext = () => {
+      if (data && currentIndex < data.length - 1) setCurrentIndex(currentIndex + 1);
+    };
 
     return(
-        <div className="w-full px-[5vw] sm:px-0 lg:px-6 lg:pb-8">
+        <div className={`w-full  md:px-[5vw] sm:px-0 lg:px-6 lg:pb-20 text-white `} style={{
+            backgroundImage:
+      'linear-gradient(0deg, transparent, rgba(178, 53, 53, 1) 10%, rgba(15, 6, 6, 1) 20%, rgba(15, 18, 40, 1) 49%, rgba(20, 8, 8, 1) 80%, rgba(185, 59, 59, 1) 90%, transparent)',
+
+          }}
+        >
             {data? 
-                <div className="w-[90%] mx-auto lg:w-[70%]">
-                {data.map((value, index) => (
-                    <motion.div initial={{opacity:0.9, scale:1}} whileHover={{opacity:1, scale:1.02}} transition={{ease:"easeInOut", duration:0.2}}  key={index} className="cursor-pointer rounded-xl my-[5vw] lg:my-12 shadow-sm drop-shadow-sm border-2 bg-white border-slate-100 " onClick={() => (numCon(index))}>
-                        <div>
-                            <div className="font-medium px-[3vw] pt-[2vw] lg:pt-4 lg:px-6 text-[3.5vw] lg:text-2xl flex items-center bg-gradient-to-br from-fuchsia-500 via-purple-400 to-sky-400 bg-clip-text text-transparent  ">
-                                <span className="pr-[1vw]">{value.date}</span>
-                                <GoClockFill className="relative top-[0.12vw] mr-[1vw] scale-90 text-purple-400"></GoClockFill>
-                                <span>{value.time}</span>
-                                
+            <div className="w-[90%] mx-auto lg:w-[80%] lg:py-36 py-20">
+                <div className="flex flex-col justify-center py-8">
+                    <div className={`flex justify-center min-h-[64px] text-3xl py-2 ${KaiseiDecol.className} font-bold border-t-2 border-b-2 items-center `}>高校軽音楽部</div>
+                    <div className="flex justify-center text-3xl py-8">{showData && showData[0].date}</div>
+                    <div className="flex items-center justify-center gap-4 py-4">
+                      <button
+                        onClick={handlePrev}
+                        disabled={currentIndex === 0}
+                        className="px-4 py-2  text-white rounded disabled:opacity-0"
+                      >
+                        <AiFillCaretLeft size={40}></AiFillCaretLeft>
+                      </button>
+
+                      <div className="text-xl font-bold">{data[currentIndex].date}</div>
+
+                      <button
+                        onClick={handleNext}
+                        disabled={currentIndex === data.length - 1}
+                        className="px-4 py-2  text-white rounded disabled:opacity-0"
+                      >
+                        <AiFillCaretRight size={40}/>
+                      </button>
+                    </div>                    
+                </div>
+                <div className={`flex flex-col   text-2xl pb-20`}>
+                    {showData && 
+                    showData.map((value,i)=>(
+                    <div key={i} onClick={() => setSelectedSlot(value)} className=" grid grid-cols-10 border-b-[0.5px] py-1 border-slate-700 lg:border-b-[0.5px] lg:border-slate-900">
+                      <div className={`hidden lg:col-span-2 lg:flex items-center justify-end border-r-[0.5px] border-slate-900 font-bold text-xl px-4 ${KaiseiDecol.className} `}>
+                        {value.time.split("~")[0]}
+                      </div>
+                      <div className={`hidden lg:flex lg:col-span-6 px-4 py-2 font-semibold  text-xl  items-center justify-start ${roboto.className}`}>
+                        {value.name}
+                      </div>
+                      <div className="flex justify-start items-center col-span-8 lg:hidden p-3">
+                        <div className="sm:flex sm:flex-col  "> 
+                            <div className={`items-center  border-slate-50 font-bold text-base  ${roboto.className} `}>
+                                {value.time}
+                            </div>
+                            <div className={`items-center  border-slate-50 font-bold text-lg  ${roboto.className} `}>
+                             {value.name}
+                            </div>
                         </div>
-                        <div className="flex  items-center justify-end italic bg-gradient-to-br from-fuchsia-500  to-sky-400 bg-clip-text text-transparent text-[6vw] lg:text-4xl pt-[1.5vw] pb-[2vw] pr-[5%] lg:pt-4 lg:pb-5">
-                                <MdMusicNote className="mr-[1vw] relative top-[0.1vw] text-purple-400 rotate-6"></MdMusicNote>
-                                <p>{value.name}</p>
-                            </div>
-                            <motion.div className="" animate={num == index + 1 ? "open": "close"} variants={view_variants} >
-                                <p className="flex text-[2.5vw] lg:text-2xl  items-center absolute bottom-[10%] left-[3%] opacity-65">
-                                <MdKeyboardDoubleArrowLeft className="translate-y-1.5"></MdKeyboardDoubleArrowLeft>
-                                view more
-                            </p>
-                            </motion.div>
-                            
-                        </div>
-                        <motion.div className="w-[95%] mx-auto mb-1.5 opacity-85 rounded-lg border-2 border-slate-100 overflow-hidden" animate={num == index + 1 ? "open": "close"} variants={variants}>   
-                            <div className="mx-4">
-                                <div className="flex justify-center items-center italic text-gray-800 text-[6vw] lg:text-4xl pt-[1.5vw] pb-[2vw] pr-[5%] lg:pt-4 lg:pb-5">
-                                    
-                                    <div>{value.name}</div>
-                                </div>
-                            </div>
-                            <div className="mx-4 px-2 py-2 rounded-xl bg-slate-300">
-                                {data.filter((e) => (e.id== value.id))
-                                .map((content,n)=>(
-                                        <div key={n} className="flex items-center">
-                                        <p className={`text-[3.5vw] font-medium tracking-tight text-slate-500  bg-white px-[3vw] py-[0.2vw] rounded-full  inline-block  text-left  my-[0.7vw] translate-y-[0%]     lg:text-lg  `}>
-                                            Live{n+1}         
-                                        </p>
-                                        <div className="font-medium px-[3vw] py-[2vw] lg:py-2 text-[3.5vw] lg:text-2xl flex items-center text-white  ">
-                                            <span className="pr-[1vw]">{content.date}</span>
-                                            <GoClockFill className="relative top-[0.12vw] mr-[1vw] scale-90 text-white"></GoClockFill>
-                                            <span>{content.time}</span>
-                                            
-                                            <p className="border-t-2 translate-y-1/2"></p>
-                                        </div>
-                                    </div>
+                      </div>
+                      <div className="col-span-2 lg:col-span-1 aspect-square relative overflow-hidden">
+                        <Image src={value.imgURL || "/NOIMAGE"} alt={value.name} fill className="object-cover" />
+                      </div>
+                    </div>
 
-                                    )
-                                )
-                                
-                            }
-                            </div>
-                            <div className="flex flex-col sm:flex-row items-center gap-4 py-4">
-                              <div className="whitespace-pre-wrap text-blue-600 ml-[2vw] mr-[3vw] my-[3vw] text-[4vw] lg:ml-4 lg:mr-6 lg:text-2xl lg:my-5 lg:leading-[150%]  font-light tracking-[-0.01rem]  opacity-80 leading-[160%]  text-left  sm:flex-1 w-full px-2">
-                                {value.comment}
-                              </div>
+                    ))
+                    }
+                </div>
+                <div className="flex flex-col justify-center py-8">
+                    <div className="flex items-center justify-center gap-4 py-4">
+                      <button
+                        onClick={handlePrev}
+                        disabled={currentIndex === 0}
+                        className="px-4 py-2  text-white rounded disabled:opacity-0"
+                      >
+                        <AiFillCaretLeft size={40}></AiFillCaretLeft>
+                      </button>
 
-                              <div className="relative overflow-hidden ml-[2vw] mr-[3vw]  lg:ml-4 lg:mr-6 rounded-xl shadow-lg group w-full sm:w-[40%] aspect-square">
-                              <Image
-                                src={value.imgURL && !value.imgURL.includes("NOIMAGE") ? value.imgURL : "/NOIMAGE.png"}
-                                alt="バンド画像"
-                                fill
-                                sizes="(max-width: 640px) 100vw, 30vw"
-                                className="object-cover "
-                              />
+                      <div className="text-xl font-bold">{data[currentIndex].date}</div>
 
-                              
-                            </div>
-
-                            </div>
-
-
-
-
-                        </motion.div>   
-                    </motion.div>
-                ))}
+                      <button
+                        onClick={handleNext}
+                        disabled={currentIndex === data.length - 1}
+                        className="px-4 py-2  text-white rounded disabled:opacity-0"
+                      >
+                        <AiFillCaretRight size={40}/>
+                      </button>
+                    </div>                    
+                </div>
             </div>
             :
             <div className="pt-[10vw]">
                     <Loading></Loading>
                     {/* <p className={`text-[5vw] ${kaiseiDecol.className} text-center bg-gradient-to-br from-fuchsia-500 via-purple-400 to-sky-400 bg-clip-text text-transparent`}>・・・読み込み中・・・</p> */}
             </div>}  
+
+        {/* モーダル表示用 */}
+        {selectedSlot && (
+          <div 
+          className=" fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50"
+          onClick={() => setSelectedSlot(null)}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="bg-white text-black rounded-lg p-6 w-[90%] max-w-[600px] shadow-xl relative flex flex-col gap-6"
+            >
+              <div className="absolute top-4 right-4 w-[130px] h-[130px] rounded overflow-hidden shadow-md">
+                <Image
+                  src={selectedSlot.imgURL || "/NOIMAGE"}
+                  alt={selectedSlot.name}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+
+
+              <button
+                onClick={() => setSelectedSlot(null)}
+                className="absolute top-2 right-2 text-xl text-gray-600 hover:text-black z-10"
+              >
+                ×
+              </button>
+
+
+              <div className="flex flex-col gap-2">
+                <h2 className={`text-2xl font-bold ${KaiseiDecol.className}`}>
+                  {selectedSlot.name}
+                </h2>
+                <div className="flex gap-2">
+                  <div className="py-[1px] px-2 border-[0.5px] border-black rounded-sm">
+                    {selectedSlot.date}
+                  </div>
+                  <div className="py-[1px] px-2 border-[0.5px] border-black rounded-sm">
+                    {selectedSlot.time}
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                    <a href="https://www.instagram.com/your_account" target="_blank" rel="noopener noreferrer">
+                      <FaInstagram size={32} className="text-[#E1306C] hover:scale-110 transition" />
+                    </a>
+                    <div className="flex items-center">
+                        {selectedSlot.name}
+                    </div>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-gray-300">
+                <p className={`text-base ${roboto.className}`}>{selectedSlot.comment}</p>
+              </div>
+            </motion.div>
+          </div>
+        )}
         </div>
     )
 }

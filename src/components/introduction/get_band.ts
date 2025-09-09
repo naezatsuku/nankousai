@@ -27,13 +27,9 @@ type Slot = {
     imageVersion:string
 }
 type GroupedSlot = Record<string,Slot[]>
-type new_data = {
-    name:string,
-    time:string,
-    comment:string,
-    available:boolean,
-    timeStamp:Array<number>,
-    timeText:Array<string>
+type groupedData = {
+    date:string,
+    data:Slot[]
 }
 
 export async function getBandData() {
@@ -42,9 +38,8 @@ export async function getBandData() {
     const {data:band} = await supabase.from('band').select(`*` );
 
     if(band == null) {
-        return "failed"
+        return {groupedByDate:null,dates:null}
     }
-    console.log("band",band)
     const edited_data = await Promise.all(
         band.map(async(value)=>{
             const {data} = await supabase.storage.from("band-img").getPublicUrl(value.imgURL);
@@ -79,8 +74,18 @@ export async function getBandData() {
     const resultedData: Slot[] = Object.keys(grouped)
         .sort((a, b) => a.localeCompare(b)) 
         .flatMap((date) => grouped[date]);
-
-    
-    return resultedData;
-    const new_data:Array<new_data>  = []
+    const groupedByDate:groupedData[] = Object.entries(
+      resultedData.reduce<Record<string, Slot[]>>((acc, item) => {
+        if (!acc[item.date]) acc[item.date] = [];
+        acc[item.date].push(item);
+        return acc;
+      }, {})
+    ).map(([date, data]) => ({ date, data })).sort((a,b)=> {
+        const d1 = new Date(`2025/${a.date}`);
+        const d2 = new Date(`2025/${b.date}`);
+        return d1.getTime() - d2.getTime()
+    });
+    //console.log("this",groupedByDate);
+    const dates = groupedByDate.map((value)=>value.date);
+    return {groupedByDate,dates};
 }
