@@ -76,6 +76,10 @@ body {
 /* ベースカラー darkturquoise */
 
 @layer components {
+  .base-svg {
+    fill:#ec3801 ;
+  }
+
   .text-color-base {
     --tw-text-opacity: 1;
     color: #ec3801;

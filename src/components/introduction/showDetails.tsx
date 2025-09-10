@@ -123,37 +123,46 @@ export default function ShowDetails (
     //テーマによって色を変える
     const setTextColor = (e:any, type:string) => {
         let result = ""
+        let fill = ""
 
         if(e.includes("クラス展示") || e.includes("部活動展示")){
             result = " from-blue-500 via-indigo-500 to-purple-500"
+            fill = "fill-indigo-500"
         }
 
         if(e.includes("PTA")) {
             result = "from-yellow-300 via-lime-400 to-green-400"
+            fill = "fill-lime-400"
         }
 
         if(e.includes("フード")) {
             result = "from-orange-400 via-orange-400 to-yellow-400"
+            fill = "fill-orange-400"
         }
         
         if(e.includes("ライブ")) {
             result = "from-purple-300 via-fuchsia-400 to-pink-400"
+            fill = "fill-fuchsia-400"
         }
 
         if(e.includes("パフォーマンス")) {
             result = " from-blue-400 via-sky-300 to-sky-200"
+            fill = "fill-sky-300"
         }
 
         if(e.includes("体験")) {
             result = " from-green-300 via-teal-400 to-cyan-500"
+            fill = "fill-teal-400"
         }
 
         if(e.includes("アトラクション")) {
             result = "from-red-300 via-purple-400 to-blue-500"
+            fill = "fill-purple-400"
         }
 
         if(e.includes("休憩")) {
             result = "from-cyan-500 to-yellow-300"
+            fill = "fill-cyan-400"
         }
 
         if(type == "bg") {
@@ -162,26 +171,37 @@ export default function ShowDetails (
             } else {
                 result += " bg-gradient-to-br"
             }
+            return result
         } else if(type == "text") {
             if(result == "") {
                 result = "bg-gradient-to-br bg-clip-text text-transparent from-sky-600 to-sky-100 "
             } else {
                 result += " bg-gradient-to-br bg-clip-text text-transparent "
             }
+            return result
+        } else if(type == "fill") {
+            if(fill == "") {
+                fill = "fill-sky-400"
+            } else {
+            }
+            return fill
         }
 
-        return result
+        
     }
+
+    const kari = [0,0,0]
+    const kari_mobile = [0]
  
     return(
-        <div className="mt-[min(15vw,80px)]  md:mt-[13vw]   lg:mt-16 xl:mt-[min(15vw,80px)] bg-white min-h-screen">
+        <div className="mt-[min(15vw,80px)]  md:mt-[13vw]   lg:mt-16 xl:mt-[min(15vw,80px)] bg-white min-h-screen ">
             <div className="w-full h-[35vw] lg:h-44 xl:h-60 relative">
                 <Image src={img_tag || "/AdobeStock_335757173.jpeg"} alt="ヘッダー画像" fill priority className="object-cover object-center z-0 opacity-95 brightness-90"></Image>
                 <div className="w-auto h-full absolute z-10 flex ">
                     <p className={`${kaiseiDecol.className} pl-[3vw] my-auto text-[10vw] lg:text-6xl xl:text-7xl text-white font-bold`}>{name}</p>
                 </div>
             </div>
-            <div className="max-w-[1000px] lg:mx-auto pb-[20vw] lg:pb-[5vw] bg-white lg:px-4 lg:shadow-md ">
+            <div className="max-w-[1024px] lg:mx-auto pb-[20vw] lg:pb-[5vw] bg-white lg:px-4 lg:shadow-md ">
                 <div className="pt-[6vw] px-[3vw]  lg:pt-2 lg:px-6">
                     <p className={`text-[3.5vw] font-medium tracking-tight  text-white px-[3vw] py-[0.2vw] rounded-full  inline-block  text-left  my-[0.7vw] translate-y-[0%]   ${setTextColor(event.tags, "bg")} lg:text-lg lg:px-8 lg:py-1 lg:mt-6 lg:mb-2`}>
                         タイトル           
@@ -259,10 +279,10 @@ export default function ShowDetails (
                     
                 }
                 {event.available == true ?
-                <div>
+                <div className="w-full">
                     
-                    <div className="w-auto">
-                    {newDetails.map((value) => (
+                    <div className="w-auto w">
+                    {/* {newDetails.map((value) => (
                         <div key={value.title} className="mb-[12vw] mt-[7vw] mx-[4vw] lg:mx-8 lg:mb-14 lg:my-10">
                             <div className="flex shadow-slate-100 shadow-md">
                                 <div className=" w-[2vw] lg:w-4 bg-gradient-to-b from-[#01e1e5] to-[#039fa2]"></div>
@@ -270,6 +290,43 @@ export default function ShowDetails (
                             </div>
                             <div className="ml-[2vw] mr-[3vw] my-[3vw] text-[4vw] lg:ml-4 lg:mr-6 lg:text-2xl lg:my-5 lg:leading-[150%] text-[#00b2b5] font-light tracking-[-0.01rem]  opacity-80 leading-[160%] text-justify">
                                 <p className="whitespace-pre-line"> &ensp;{value.content}</p>
+                            </div>
+                        </div>
+                    ))} */}
+                    {newDetails.map((value) => (
+                        <div key={value.title} className="mb-[14vw] mt-[8vw] lg:mt-20 lg:mb-8 w-full lg:w-[80%] lg:mx-auto lg:px-4">
+                            <div className={`min-w-[80%] inline-block lg:min-w-fit  rounded-r-full lg:rounded-full lg:w-auto lg:inline-block ${setTextColor(event.tags, "bg")}`}>
+                                <p className={ ` ${kaiseiDecol.className} text-xl md:text-4xl lg:text-2xl lg:px-12 lg:py-4 py-4 pl-8 pr-6 md:py-9 md:pl-16 text-white `}>{value.title}</p>
+                            </div>
+                            <div className="px-8 md:px-16 py-5 md:py-10 lg:px-10 lg:py-8 ">
+                                <p className={`text-base md:text-3xl lg:text-xl  md:leading-normal lg: whitespace-pre-line font-medium ${setTextColor(event.tags, "text")}`}> &ensp;{value.content}</p>
+                            </div>
+                            <div className="relative flex justify-center">
+                                <p className={`font-semibold text-lg md:text-3xl lg:text-2xl ${kaiseiDecol.className} ${setTextColor(event.tags, "text")}`}>Scribbling</ p>
+                                <svg viewBox="0 0 100 100" className={`rotate-45 w-[10px] h-[10px] md:w-4 md:h-4 lg:w-3 lg:h-3 absolute top-[30%] left-[65%] fill-cyan-300`}>
+                                    <rect width="100" height="100" />
+                                </svg>
+                                <svg viewBox="0 0 100 100" className={` ${setTextColor(event.tags, "fill")} rotate-45 w-[10px] h-[10px]  md:w-4 md:h-4 lg:w-3 lg:h-3 absolute top-[30%] left-[74%] lg:left-[75%] base-svg`}>
+                                    <rect width="100" height="100" />
+                                </svg>
+                                <svg viewBox="0 0 100 100" className={`${setTextColor(event.tags, "fill")} rotate-45 w-[10px] h-[10px] md:w-4 md:h-4 lg:w-3 lg:h-3 absolute top-[30%] left-[83%] lg:left-[85%]  base-svg`}>
+                                    <rect width="100" height="100" />
+                                </svg>
+                                <svg viewBox="0 0 100 100" className={`rotate-45 w-[10px] h-[10px]  hidden lg:block md:w-4 md:h-4 lg:w-3 lg:h-3 absolute top-[30%] left-[33%] fill-cyan-300`}>
+                                    <rect width="100" height="100" />
+                                </svg>
+                                <svg viewBox="0 0 100 100" className={ `${setTextColor(event.tags, "fill")} rotate-45 w-[10px] h-[10px] hidden lg:block  md:w-4 md:h-4 lg:w-3 lg:h-3 absolute top-[30%] left-[24%] lg:left-[23%] base-svg`}>
+                                    <rect width="100" height="100" />
+                                </svg>
+                                <svg viewBox="0 0 100 100" className={`${setTextColor(event.tags, "fill")} rotate-45 w-[10px] h-[10px]  hidden lg:block md:w-4 md:h-4 lg:w-3 lg:h-3 absolute top-[30%] left-[15%] lg:left-[13%] base-svg`}>
+                                    <rect width="100" height="100" />
+                                </svg>
+                                <svg viewBox="0 0 100 100" className={`${setTextColor(event.tags, "fill")} rotate-45 w-[10px] h-[10px]  hidden lg:block md:w-4 md:h-4 lg:w-3 lg:h-3 absolute top-[30%] left-[7%] lg:left-[3%] base-svg`}>
+                                    <rect width="100" height="100" />
+                                </svg>
+                                <svg viewBox="0 0 100 100" className={`${setTextColor(event.tags, "fill")} rotate-45 w-[10px] h-[10px]   md:w-4 md:h-4 lg:w-3 lg:h-3 absolute top-[30%] left-[92%] lg:left-[95%]  base-svg`}>
+                                    <rect width="100" height="100" />
+                                </svg>
                             </div>
                         </div>
                     ))}
@@ -281,16 +338,16 @@ export default function ShowDetails (
                 }
                 
 
-                <div className="my-[5vw] lg:mt-14 lg:mb-0 lg:pb-14 rounded-lg  lg:mx-6">
-                    <p className={`my-[3vw] ${kaiseiDecol.className} text-[5vw]  text-center lg:text-4xl lg:py-8 lg:my-0`}>・・・関連タグ・・・</p>
-                    <div className=" flex flex-wrap mx-[3vw] justify-start lg:mx-3 ">
+                <div className="my-[5vw] lg:mt-10 lg:mb-0 lg:pb-0 rounded-lg  lg:mx-6">
+                    <p className={`my-[3vw] ${kaiseiDecol.className} text-[5vw] ${setTextColor(event.tags, "text")}  text-center lg:text-4xl lg:py-8 lg:my-0`}>・・・関連タグ・・・</p>
+                    <div className=" flex flex-wrap mx-[6vw] justify-between lg:mx-3  ">
                         {event.tags.map((value) => {
                           const tagData = Tags.find((item) => item.name === value);
                           if (tagData) {
                             return (
-                              <Link key={value} href={{ pathname: "/event", query: { type: value } }}>
+                              <Link key={value} href={{ pathname: "/event", query: { type: value } }} className="lg:w-[17%]">
                                 <div
-                                  className={`my-[2vw] w-[25vw] aspect-[3/1] bg-gradient-to-br ${tagData.color} rounded-md flex mx-[2vw] opacity-90 lg:ml-0 lg:mr-6 lg:max-w-[10.5rem] lg:mb-6 lg:mt-0`}
+                                  className={`my-[2vw] w-[25vw] aspect-[3/1] bg-gradient-to-br ${tagData.color} rounded-md flex  opacity-90 lg:ml-0  lg:w-full lg:mb-6 lg:mt-0`}
                                 >
                                   <p className="m-auto text-[3vw] lg:text-lg text-gray-50 font-medium">{value}</p>
                                 </div>
@@ -301,12 +358,12 @@ export default function ShowDetails (
                             
                                 <div key = {value}
                               
-                              className="my-[2vw] w-[25vw] aspect-[3/1] bg-gradient-to-br from-purple-400 to-purple-600 rounded-md flex flex-col justify-center mx-[2vw] opacity-70 lg:ml-0 lg:mr-6 lg:max-w-[10.5rem] lg:mb-6 lg:mt-0 border border-gray-500"
+                              className="my-[2vw] w-[25vw] aspect-[3/1] bg-gradient-to-br from-purple-400 to-purple-600 rounded-md flex flex-col justify-center  opacity-70 lg:ml-0 lg:w-[17%] lg:mb-6 lg:mt-0 border border-gray-500"
                             >
                               <div className="text-center text-white font-medium text-[3vw] lg:text-lg">
                                 {value}
                               </div>
-                              <div className="text-center text-white text-[2.5vw] lg:text-sm mt-1 opacity-80">
+                              <div className="text-center text-white text-[2.5vw] lg:text-xs mt-1 opacity-80">
                                 クラスオリジナル
                               </div>
                             </div>
@@ -316,6 +373,14 @@ export default function ShowDetails (
                           }
                           
                         })}
+                        {kari.map((value, index) => 
+                            <div key = {index}
+                            className="my-[2vw] hidden lg:block w-[25vw] aspect-[3/1] opacity-70 lg:ml-0 lg:w-[17%] lg:mb-6 lg:mt-0"
+                            ></div>
+                        )}
+                        <div
+                            className="lg:hidden my-[2vw]  w-[25vw] aspect-[3/1] opacity-70 lg:ml-0 lg:w-[17%] lg:mb-6 lg:mt-0"
+                        ></div>
                     </div>
 
                 </div>
