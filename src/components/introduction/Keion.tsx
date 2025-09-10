@@ -131,7 +131,7 @@ export default function Keion() {
                       <div className={`hidden lg:col-span-2 lg:flex items-center justify-end border-r-[0.5px] border-slate-900 font-bold text-xl px-4 ${KaiseiDecol.className} `}>
                         {value.time.split("~")[0]}
                       </div>
-                      <div className={`hidden lg:flex lg:col-span-6 px-4 py-2 font-semibold  text-xl  items-center justify-start ${roboto.className}`}>
+                      <div className={`underline-offset-4 underline hidden lg:flex lg:col-span-6 px-4 py-2 font-semibold  text-xl  items-center justify-start ${roboto.className}`}>
                         {value.name}
                       </div>
                       <div className="flex justify-start items-center col-span-8 lg:hidden p-3">
@@ -139,7 +139,7 @@ export default function Keion() {
                             <div className={`items-center  border-slate-50 font-bold text-base  ${roboto.className} `}>
                                 {value.time}
                             </div>
-                            <div className={`items-center  border-slate-50 font-bold text-lg  ${roboto.className} `}>
+                            <div className={`items-center  border-slate-50 font-bold text-lg underline underline-offset-4 ${roboto.className} `}>
                              {value.name}
                             </div>
                         </div>
