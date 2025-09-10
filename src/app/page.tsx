@@ -9,9 +9,9 @@ import Image from "next/image"
 import Head from "next/head"
 
 export const metadata = {
-  title: "南高祭公式サイト",
+  title: "南高祭公式サイト2025",
   description: "南高・南高附属中最大の行事へようこそ。フード販売やバンドの生演奏など魅力的な展示を公開しています。どなたも入場無料。ぜひ気軽にお越しください！",
-  keywords: "南高祭, 文化祭, 学園祭, イベント, 展示, フード, 学校",
+  keywords: "横浜,南高附属中学校,2025,南高祭, 文化祭, 学園祭, イベント, 展示, フード, 学校",
   openGraph: {
     title: "南高祭公式サイト",
     description: "南高・南高附属中最大の行事へようこそ。フード販売やバンドの生演奏など魅力的な展示を公開しています。",
