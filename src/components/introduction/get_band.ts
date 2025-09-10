@@ -14,7 +14,8 @@ type RowData = {
     comment:string,
     available:boolean,
     imgURL:string,
-    imageVersion:string
+    imageVersion:string,
+    instagram:string
 }
 type Slot = {
     id:UUID,
@@ -25,6 +26,7 @@ type Slot = {
     available:boolean,
     imgURL:string,
     imageVersion:string
+    instagram:string
 }
 type GroupedSlot = Record<string,Slot[]>
 type groupedData = {

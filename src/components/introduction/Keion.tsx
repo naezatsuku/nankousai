@@ -16,6 +16,7 @@ import { UUID } from "crypto";
 import { AiFillCaretRight } from 'react-icons/ai';
 import { AiFillCaretLeft } from 'react-icons/ai';
 import { FaInstagram } from 'react-icons/fa';
+import Link from "next/link";
 type band_type = {
     name:string,
     time:string,
@@ -43,7 +44,8 @@ type Slot = {
     comment:string,
     available:boolean,
     imgURL:string,
-    imageVersion:string
+    imageVersion:string,
+    instagram:string
 }
 type groupedData = {
     date:string,
@@ -220,9 +222,11 @@ export default function Keion() {
                   </div>
                 </div>
                 <div className="flex gap-2">
-                    <a href="https://www.instagram.com/your_account" target="_blank" rel="noopener noreferrer">
+                    {(selectedSlot.instagram && selectedSlot.instagram.trim() != "") &&
+                      <Link href={selectedSlot.instagram} target="_blank" rel="noopener noreferrer">
                       <FaInstagram size={32} className="text-[#E1306C] hover:scale-110 transition" />
-                    </a>
+                    </Link>
+                    }
                     <div className="flex items-center">
                         {selectedSlot.name}
                     </div>
