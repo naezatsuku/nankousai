@@ -34,12 +34,14 @@ export function SquareButtonPinkShadow(
             <div className="w-full h-full rounded-lg bg-white">
                 <div className="w-full h-full bg-gradient-to-br  light-gradient absolute opacity-70 rounded-md lg:rounded-lg"></div>
                 <div className="h-full w-full absolute z-10 flex">
-                    <p className={`text-white m-auto text-[4.5vw] lg:text-2xl`}>{text}</p>
+                    <p className={`text-white m-auto text-[4.5vw] lg:text-2xl md:text-2xl`}>{text}</p>
                 </div>
             </div>
         </div>
     )
 }
+
+
 
 export function SquareButtonPinkShadow2(
     {text}:Props

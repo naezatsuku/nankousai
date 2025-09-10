@@ -70,6 +70,7 @@ export default function Page() {
 
                 let name_modified = ""
                 if(value.place != null) {
+                    name_modified = value.place
                     if(value.place.includes("教室")) {
                         name_modified = value.place.replace("教室","");
                     } if(value.place.includes("-")) {
@@ -97,6 +98,8 @@ export default function Page() {
                             if(value.types.includes("クラス展示")) {
                                 filtered[n-1].class.push(value)
                                 return
+                            } else {
+                                filtered[n -1].other.push(value)
                             }
                         } else {
                             filtered[n -1].other.push(value)
@@ -280,7 +283,9 @@ export default function Page() {
     }
 
     const [hovered, setHovered] = useState("")
+    const [map_hovered, setMapHovered] = useState("")
     const [modal_data, setModal] = useState<{position:modal_position, data:Array<event>}>()
+    const [name_modal, setNameModal] = useState<{position:string, floor:number, data:(event)}>()
 
     const filterEventByPlace = (name:string, floor:number, positionX:string, positionY:string) => {
         let data:Array<filtered> = []
@@ -335,7 +340,7 @@ export default function Page() {
         <div className="py-[30vw] 2xl:py-40 lg:py-32">
             <title>フロアマップ</title>      
             <h1 className={`${kaiseiDecol.className} text-center text-[12vw]  lg:text-6xl 2xl:text-8xl`}>フロアマップ</h1>
-            <div className="mt-12">
+            <div className="mt-16">
                 {map_img.map((value, index) => (
                     <div key={index} className={`w-full mx-auto mb-20 md:mb-28 lg:w-[95%]`}>
                         <div className="relative flex mx-4 mb-3 md:mx-6 lg:mb-6 lg:items-center lg:hidden">
@@ -368,24 +373,28 @@ export default function Page() {
                                                 見つかりませんでした
                                             </div>
                                             }
+                                            
                                         {modal_data?.data?.map((modal_value, modal_index) => 
-                                            <div key={"modal:" + String(modal_index)} className="px-5">
-                                                <div className={`${(modal_index == 0 || modal_data.data.length == 0) ? "" : "border-b"} border-gray-400 py-2 flex justify-between items-center ${modal_index == modal_data.data.length - 1 && "pb-3 md:pb-4"}`} key={"modal_data"+ String(modal_index)}>
-                                                    <div className=" overflow-hidden">
-                                                        <p className="text-lg">{modal_value.className}</p>
-                                                        <p className="text-3xl text-nowrap whitespace-nowrap py-2">{modal_value.title}</p>
-                                                        <div className="flex text-lg pt-1">
-                                                            <p>{modal_value.time[0]}</p>
-                                                            <p className="pl-5">待ち時間:{modal_value.waitTime}分</p>
+                                            <Link href={{pathname:"/event/introduction", query:{name:modal_value.className}}}>
+                                                <div key={"modal:" + String(modal_index)} className="px-5">
+                                                    <div className={`${(modal_index == 0 || modal_data.data.length == 0) ? "" : "border-t"} border-gray-400 py-3 flex justify-between items-center ${modal_index == modal_data.data.length - 1 && "pb-3 md:pb-4"}`} key={"modal_data"+ String(modal_index)}>
+                                                        <div className=" overflow-hidden pr-2">
+                                                            <p className="text-lg">{modal_value.className}</p>
+                                                            <p className="text-3xl text-nowrap whitespace-nowrap py-2 ">{modal_value.title}</p>
+                                                            <div className="flex text-lg pt-1">
+                                                                <p className="max-w-24 text-nowrap overflow-hidden">{modal_value.time[0]}</p>
+                                                                <p className="pl-5">待ち時間:{modal_value.waitTime}分</p>
+                                                            </div>
                                                         </div>
+                                                        {modal_value.img == null ? 
+                                                            <Image src={"/pexels-aulsh99-2860705.jpg"} alt="展示いらすと" width={800} height={800} className="aspect-square rounded-full w-40"></Image> :
+                                                            <Image src={modal_value.img} alt="展示いらすと" width={800} height={800} className="aspect-square rounded-full  w-40"></Image>
+                                                        }
+                                                        
                                                     </div>
-                                                    {modal_value.img == null ? 
-                                                        <Image src={"/pexels-aulsh99-2860705.jpg"} alt="展示いらすと" width={800} height={800} className="aspect-square rounded-full w-40"></Image> :
-                                                        <Image src={modal_value.img} alt="展示いらすと" width={800} height={800} className="aspect-square rounded-full  w-40"></Image>
-                                                    }
-                                                    
                                                 </div>
-                                            </div>
+                                            </Link>
+                                            
                                         )}
                                     </div>
                                     <div style={{
@@ -408,9 +417,10 @@ export default function Page() {
                                             </div>
                                         }
                                         {modal_data?.data?.map((modal_value, modal_index) => 
+                                        <Link href={{pathname:"/event/introduction", query:{name:modal_value.className}}}>
                                             <div key={"modal:" + String(modal_index)} className="px-4 md:px-5">
-                                                <div className={`${(modal_index == 0 || modal_data.data.length == 0) ? "" : "border-b"} border-gray-400 py-2 flex justify-between items-center ${modal_index == modal_data.data.length - 1 && "pb-3 md:pb-4"}`} key={"modal_data"+ String(modal_index)}>
-                                                    <div className="overflow-hidden">
+                                                <div className={`${(modal_index == 0 || modal_data.data.length == 0) ? "" : "border-t"} border-gray-400 py-2 flex justify-between items-center ${modal_index == modal_data.data.length - 1 && "pb-3 md:pb-4"}`} key={"modal_data"+ String(modal_index)}>
+                                                    <div className="overflow-hidden ">
                                                         <p className="text-xs md:text-base">{modal_value.className}</p>
                                                         <p className="text-xl md:text-2xl text-nowrap whitespace-nowrap py-1">{modal_value.title}</p>
                                                         <div className="flex text-xs md:text-base">
@@ -419,12 +429,13 @@ export default function Page() {
                                                         </div>
                                                     </div>
                                                     {modal_value.img == null ? 
-                                                        <Image src={"/pexels-aulsh99-2860705.jpg"} alt="展示いらすと" width={800} height={800} className="aspect-square rounded-full w-24 md:w-32"></Image> :
+                                                        <Image src={"/pexels-aulsh99-2860705.jpg"} alt="展示いらすと" width={800} height={800} className="aspect-square rounded-full w-24 md:w-32 bg-white"></Image> :
                                                         <Image src={modal_value.img} alt="展示いらすと" width={800} height={800} className="aspect-square rounded-full  w-24  md:w-32"></Image>
                                                     }
                                                     
                                                 </div>
                                             </div>
+                                            </Link>
                                         )}
                                         
                                     </div>
@@ -437,9 +448,9 @@ export default function Page() {
                                             top:map_value.positionY + "%",
                                             width:map_value.width_relative + "%"
                                         }} 
-                                        onMouseEnter={() => {setHovered(map_value.name)}} onMouseLeave={() => {setHovered("")}}
+                                        onMouseEnter={() => {setMapHovered(map_value.name)}} onMouseLeave={() => {setMapHovered("")}}
                                         onClick={() => {filterEventByPlace(map_value.name,index,map_value.positionX,map_value.positionY)}}
-                                        className={`absolute  cursor-pointer fill-white mix-blend-screen   ${hovered == map_value.name ? "opacity-50" :"opacity-0"}`}>
+                                        className={`absolute  cursor-pointer fill-white mix-blend-screen   ${map_hovered == map_value.name ? "opacity-50" :"opacity-0"}`}>
                                             <svg  className="w-full " style={{aspectRatio:map_value.width_num/map_value.height_num}} viewBox={`0 0 ${map_value.width_num} ${map_value.height_num}`}>
                                                 {map_value.type == "rect" && 
                                                     <rect  x={0} y={0} height={map_value.height_num} width={map_value.width_num}></rect>     
@@ -466,15 +477,14 @@ export default function Page() {
                                                 </div>
                                                 <div className="flex flex-wrap mx-2 justify-between w-full overflow-hidden mb-2 lg:mb-4">
                                                     {filteredData[index].class.map((class_value, class_index) => (
-                                                        <div className={`w-[50%] overflow-hidden flex items-center pb-3 md:pb-4 lg:pb-4 xl:pb-6 cursor-pointer ${hovered == class_value.className && " opacity-60"}`} key={`${class_index} + "map`}  onMouseEnter={() => {setHovered(class_value.className)}} onMouseLeave={() => {setHovered("")}} >
+                                                        <Link href={{pathname:"/event/introduction", query:{name:class_value.className}}} className={`w-[50%] relative overflow-hidden flex items-center pb-3 md:pb-4 lg:pb-4 xl:pb-6 cursor-pointer ${hovered == class_value.className && " opacity-60"}`} key={`${class_index} + "map`}  onMouseEnter={() => {setHovered(class_value.className)}} onMouseLeave={() => {setHovered("")}}>
                                                             <div className="min-w-14 md:min-w-24 xl:min-w-32 flex items-center px-2 justify-center shrink-0 text-white bg-[#f9a1bd] rounded-full py-1">
                                                                 <p className="text-[10px] md:text-base lg:text-sm xl:text-lg  text-nowrap whitespace-nowrap">{class_value.className.replace("年", "-").replace("組", "").replace("学", "").replace("校", "")} </p>
                                                             </div>
                                                             <div className="pl-2 md:pl-4 overflow-hidden grow min-w-32">
                                                                 <p className="  text-sm md:text-lg lg:text-base xl:text-2xl text-nowrap whitespace-nowrap g">{class_value.title}</p>
                                                             </div>
-                                                            
-                                                        </div>
+                                                        </Link>
                                                     ))}
                                                 </div>
                                             </div>
@@ -488,15 +498,14 @@ export default function Page() {
                                                 </div>
                                                 <div className="flex flex-wrap mx-2 justify-between w-full overflow-hidden">
                                                     {filteredData[index].time_limited.map((time_value, time_index) => (
-                                                        <div className={`w-[50%] overflow-hidden flex items-center pb-3 md:pb-4 lg:pb-4 xl:pb-6 cursor-pointer ${hovered == time_value.className && " opacity-60"}`} key={`${time_index} + "map`}  onMouseEnter={() => {setHovered(time_value.className)}} onMouseLeave={() => {setHovered("")}}>
+                                                        <Link href={{pathname:"/event/introduction", query:{name:time_value.className}}} className={`w-[50%] overflow-hidden flex items-center pb-3 md:pb-4 lg:pb-4 xl:pb-6 cursor-pointer ${hovered == time_value.className && " opacity-60"}`} key={`${time_index} + "map`}  onMouseEnter={() => {setHovered(time_value.className)}} onMouseLeave={() => {setHovered("")}}>
                                                             <div className="min-w-14 md:min-w-24 xl:min-w-32 flex items-center px-2 justify-center shrink-0 text-white bg-[#f9a1bd] rounded-full py-1">
                                                                 <p className="text-[10px] md:text-base lg:text-sm xl:text-lg  text-nowrap whitespace-nowrap">{time_value.className.replace("年", "-").replace("組", "").replace("学", "").replace("校", "")} </p>
                                                             </div>
                                                             <div className="pl-2 md:pl-4 overflow-hidden grow min-w-32">
                                                                 <p className="  text-sm md:text-lg lg:text-base xl:text-2xl text-nowrap whitespace-nowrap g">{time_value.title}</p>
                                                             </div>
-                                                            
-                                                        </div>
+                                                        </Link>
                                                     ))}
                                                 </div>
                                             </div>
@@ -510,15 +519,14 @@ export default function Page() {
                                                 </div>
                                                 <div className="flex flex-wrap mx-2 justify-between w-full overflow-hidden">
                                                     {filteredData[index].other.map((other_value, other_index) => (
-                                                        <div className={`w-[50%] overflow-hidden flex items-center pb-3 md:pb-4 lg:pb-4 xl:pb-6 cursor-pointer ${hovered == other_value.className && " opacity-60"}`} key={`${other_index} + "map`}  onMouseEnter={() => {setHovered(other_value.className)}} onMouseLeave={() => {setHovered("")}}>
+                                                        <Link href={{pathname:"/event/introduction", query:{name:other_value.className}}}  className={`w-[50%] overflow-hidden flex items-center pb-3 md:pb-4 lg:pb-4 xl:pb-6 cursor-pointer ${hovered == other_value.className && " opacity-60"}`} key={`${other_index} + "map`}  onMouseEnter={() => {setHovered(other_value.className)}} onMouseLeave={() => {setHovered("")}}>
                                                             <div className="min-w-14 md:min-w-24 xl:min-w-32 flex items-center px-2 justify-center shrink-0 text-white bg-[#f9a1bd] rounded-full py-1">
                                                                 <p className="text-[10px] md:text-base lg:text-sm xl:text-lg  text-nowrap whitespace-nowrap">{other_value.className} </p>
                                                             </div>
                                                             <div className="pl-2 md:pl-4 overflow-hidden grow min-w-32">
                                                                 <p className="  text-sm md:text-lg lg:text-base xl:text-2xl text-nowrap whitespace-nowrap g">{other_value.title}</p>
                                                             </div>
-                                                            
-                                                        </div>
+                                                        </Link>
                                                     ))}
                                                 </div>
                                             </div>
