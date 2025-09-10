@@ -454,7 +454,7 @@ export default function ShowEvent(
                 }
 
                 {selected_card.map((value:any, index:number) => (
-                    <motion.div  key={find_cardIndex(value)} className="w-full  max-w-[92%] mx-auto  my-[4vw] lg:my-5 bg-slate-100  flex justify-between p-[0.2vw] opacity-90 drop-shadow rounded-lg lg:w-[47%] lg:max-w-[580px] lg:h-auto lg:mx-0 aspect-[2.6/1] lg:aspect-[2.4/1] lg:p-[1px] xl:w-[31%] xl:max-w-none 2xl:max-h-[250px]"
+                    <motion.div  key={find_cardIndex(value)} className="w-full  max-w-[92%] mx-auto  my-[4vw] lg:my-5 bg-slate-100  flex justify-between p-[0.2vw] opacity-90 drop-shadow rounded-lg lg:w-[47%] lg:max-w-[580px] lg:h-auto lg:mx-0 aspect-[2.6/1] lg:aspect-[2.4/1] lg:p-[1px] xl:w-[31%] xl:max-w-none 2xl:max-h-[220px]"
                     initial={{y:20, opacity:0}} animate={selected_card.includes(value)? {y:0, opacity:1} : {y:20, opacity:0}} transition={{ease:"easeOut", duration:0.4, delay:find_cardIndex(value) * 0.05}}>
                         <div className="w-full h-full rounded-md bg-white flex min-h-0">
                             <div className={`flex-none basis-[calc(63%-1.5vw)] px-[2vw] py-2 2xl:py-3  lg:pl-3 lg:pr-2  min-w-0  flex flex-col justify-around rounded-l-md}  ${setTextColor(value.tags)}`}>
