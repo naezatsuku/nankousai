@@ -181,7 +181,7 @@ export default function ShowDetails (
                     <p className={`${kaiseiDecol.className} pl-[3vw] my-auto text-[10vw] lg:text-6xl xl:text-7xl text-white font-bold`}>{name}</p>
                 </div>
             </div>
-            <div className="max-w-[1100px] lg:mx-auto pb-[20vw] lg:pb-[5vw] bg-white lg:px-4 lg:shadow-md ">
+            <div className="max-w-[1000px] lg:mx-auto pb-[20vw] lg:pb-[5vw] bg-white lg:px-4 lg:shadow-md ">
                 <div className="pt-[6vw] px-[3vw]  lg:pt-2 lg:px-6">
                     <p className={`text-[3.5vw] font-medium tracking-tight  text-white px-[3vw] py-[0.2vw] rounded-full  inline-block  text-left  my-[0.7vw] translate-y-[0%]   ${setTextColor(event.tags, "bg")} lg:text-lg lg:px-8 lg:py-1 lg:mt-6 lg:mb-2`}>
                         タイトル           
@@ -216,19 +216,14 @@ export default function ShowDetails (
                     </motion.div>}
                     
                 </div>
-                {event.TimeVisible ? 
+                {event.TimeVisible && 
                 <div className="flex justify-center ">
                     <div className="flex justify-center flex-col w-auto h-auto p-6 bg-slate-50  border-slate-100 shadow-xl rounded-xl">
                         <AnimatedClockArc minutes={event.waitTime} />
                         <div className="text-center mt-2 text-black text-lg ">現在の待ち時間</div>
                         <div className="text-center mt-2 text-black text-lg ">更新:{event.renewTime}</div>
                     </div>
-                </div>:
-                <div className="flex justify-center ">
-                    <div className="flex justify-center flex-col w-auto h-auto p-6 bg-slate-50  border-slate-100 shadow-xl rounded-xl">
-                        <div className="text-center mt-2 text-black text-lg ">この団体は待ち時間表示をしません</div>
-                    </div>
-                </div>     
+                </div>   
                 }
 
                 <div className="w-full my-[7vw] px-12 lg:my-10">
@@ -288,7 +283,7 @@ export default function ShowDetails (
 
                 <div className="my-[5vw] lg:mt-14 lg:mb-0 lg:pb-14 rounded-lg  lg:mx-6">
                     <p className={`my-[3vw] ${kaiseiDecol.className} text-[5vw]  text-center lg:text-4xl lg:py-8 lg:my-0`}>・・・関連タグ・・・</p>
-                    <div className=" flex flex-wrap mx-[3vw] justify-start lg:mx-4 ">
+                    <div className=" flex flex-wrap mx-[3vw] justify-start lg:mx-3 ">
                         {event.tags.map((value) => {
                           const tagData = Tags.find((item) => item.name === value);
                           if (tagData) {
