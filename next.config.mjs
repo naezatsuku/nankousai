@@ -2,6 +2,8 @@
 const nextConfig = {
   images: {
     domains: ["fonts.gstatic.com","myypelzqjunsrpytkiee.supabase.co"],
+    loader: "custom",
+    loaderFile: "./src/imageLoader.ts",
      // ここでフォント取得を許可
   },
   async headers() {
