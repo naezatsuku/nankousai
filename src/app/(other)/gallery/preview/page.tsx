@@ -46,7 +46,7 @@ export default function Page() {
 
     return(
         <div className="w-full pt-[25vw] h-screen bg-white 2xl:py-40 lg:py-32">
-            <title>プレビュー | 第71回南高祭・展示の部2024</title>
+            <title>プレビュー | 第72回南高祭・展示の部2025</title>
             <div>
                 {title == "パンフレット" ? <div>
 

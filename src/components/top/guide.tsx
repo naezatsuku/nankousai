@@ -39,7 +39,7 @@ export default function Guide() {
                 {description.map((value,index) => 
                     <p key={index} className={` text-sm md:text-xl text-center xl:text-2xl lg:text-2xl py-4` }>{value}</p>
                 )}
-                <Link href={""} className="w-full flex justify-center pt-4 md:pt-8">
+                <Link href={"https://forms.gle/CKmR6Tv45WrK4fza8"} className="w-full flex justify-center pt-4 md:pt-8">
                     <div className="w-[180px] md:w-[280px] lg:w-[30vw] aspect-[3.5/1] 2xl:max-w-[300px] xl:w-[300px]  opacity-90">
                         <SquareButtonPinkShadow text={"アンケートはこちら"}></SquareButtonPinkShadow>
                     </div>

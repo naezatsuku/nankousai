@@ -11,8 +11,11 @@ export default function Gallery () {
 
     const img_tags = [
         {title:"第71回南高祭ポスター", img:"/第71回 南高祭ポスター（376x524mm）.jpg"},
-        {title:"rondo表紙", img:"/rondo.jpg"},
+        {title:"第72回南高祭ポスター", img:"/第72回 南高祭ポスター（376x524mm）.png"},
+        {title:"rondo表紙2024", img:"/rondo.jpg"},
+        {title:"rondo表紙2025", img:"/rondo2025.png"},
         {title:"ご来場お待ちしております", img:"/1725741490270.jpg",  artist:"作者不明"},
+        
         // {title:"rondo表紙", img:"/rondo.jpg"},
         // {title:"rondo表紙", img:"/rondo.jpg"},
         // {title:"rondo表紙", img:"/rondo.jpg"},
