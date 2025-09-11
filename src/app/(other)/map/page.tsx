@@ -377,10 +377,10 @@ export default function Page() {
                                         {modal_data?.data?.map((modal_value, modal_index) => 
                                             <Link href={{pathname:"/event/introduction", query:{name:modal_value.className}}} key={modal_index}>
                                                 <div key={"modal:" + String(modal_index)} className="px-5">
-                                                    <div className={`${(modal_index == 0 || modal_data.data.length == 0) ? "" : "border-t"} border-gray-400 py-3 flex justify-between items-center ${modal_index == modal_data.data.length - 1 && "pb-3 md:pb-4"}`} key={"modal_data"+ String(modal_index)}>
+                                                    <div className={`${(modal_index == 0 || modal_data.data.length == 0) ? "" : "border-t"} border-gray-400 py-3 flex justify-between items-center  ${modal_index == modal_data.data.length - 1 && "pb-3 md:pb-4"}`} key={"modal_data"+ String(modal_index)}>
                                                         <div className=" overflow-hidden pr-2">
                                                             <p className="text-lg">{modal_value.className}</p>
-                                                            <p className="text-3xl text-nowrap whitespace-nowrap py-2 ">{modal_value.title}</p>
+                                                            <p className="text-3xl text-nowrap whitespace-nowrap ">{modal_value.title}</p>
                                                             <div className="flex text-lg pt-1">
                                                                 <p className="max-w-24 text-nowrap overflow-hidden">{modal_value.time[0]}</p>
                                                                 <p className="pl-5">待ち時間:{modal_value.waitTime}分</p>
@@ -420,9 +420,9 @@ export default function Page() {
                                         <Link href={{pathname:"/event/introduction", query:{name:modal_value.className}}} key={modal_index}>
                                             <div key={"modal:" + String(modal_index)} className="px-4 md:px-5">
                                                 <div className={`${(modal_index == 0 || modal_data.data.length == 0) ? "" : "border-t"} border-gray-400 py-2 flex justify-between items-center ${modal_index == modal_data.data.length - 1 && "pb-3 md:pb-4"}`} key={"modal_data"+ String(modal_index)}>
-                                                    <div className="overflow-hidden ">
+                                                    <div className="overflow-hidden pr-2">
                                                         <p className="text-xs md:text-base">{modal_value.className}</p>
-                                                        <p className="text-xl md:text-2xl text-nowrap whitespace-nowrap py-1">{modal_value.title}</p>
+                                                        <p className="text-xl md:text-2xl text-nowrap whitespace-nowrap py-1 ">{modal_value.title}</p>
                                                         <div className="flex text-xs md:text-base">
                                                             <p>{modal_value.time[0]}</p>
                                                             <p className="pl-3">待ち時間:{modal_value.waitTime}分</p>
