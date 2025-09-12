@@ -1,18 +1,36 @@
+"use client"
 import Image from "next/image";
 import { FaExclamationCircle } from "react-icons/fa";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { KaiseiDecol } from "@/app/fonts";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
+import { fetchServerResponse } from "next/dist/client/components/router-reducer/fetch-server-response";
 
 const kaiseiDecol = KaiseiDecol
-
+type Attention ={
+    title:string,
+    content:string,
+    type:string,
+}
 export default function Attention() {
-    const attentions = [
+    const initial = [
         {title:"落とし物・迷子", content:"本部(1階職員室)にて対応いたします。", type:""},
         {title:"飲食について", content:"くすのき広場にて、高校3年生によるフード販売の他、1階にて食堂が営業しております。食べ歩き、決められた場所以外での飲食は禁止です。", type:""},
         {title:"ゴミについて", content:"くすのき広場、食堂で購入したもののみ、くすのき広場と食堂に設置したゴミ箱にお捨てください。", type:""},
         {title:"写真撮影について", content:"写真・動画のSNSへの投稿はご遠慮ください。", type:"notAllowed"},
         {title:"立ち入り禁止エリア", content:"6階は立ち入り禁止エリアです。その他、通行禁止の通路がありますのでご注意ください。", type:"notAllowed"},
     ]
+    const [attentions,setAttentions] = useState<Attention[]>(initial)
+    useEffect(()=>{
+        const fetch = async () =>{
+            const {data,error} = await supabase.from("others").select("data").eq("DATANAME","InfoAttentions").select();
+            if(!data || data?.length == 0 || error) return console.log("failed");
+            setAttentions(data[0].data)
+            console.log(data[0].data)
+        }
+        fetch();
+    },[])
 
     return(
         <div className="py-[18vw] 2xl:pt-36 lg:pt-20 lg:pb-20 lg:max-w-[1200px] lg:mx-auto">
