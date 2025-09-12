@@ -6,6 +6,7 @@ import Guide from "@/components/top/guide"
 import Map from "@/components/top/map"
 import Image from "next/image"
 import Head from "next/head"
+import Footer from "@/components/global/footer"
 
 export const metadata = {
   title: "南高祭公式サイト2025",
@@ -85,6 +86,7 @@ export default function page() {
         <Map></Map>
         <Guide></Guide>
       </div>
+      <Footer/>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
