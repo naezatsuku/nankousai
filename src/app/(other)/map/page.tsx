@@ -320,15 +320,6 @@ export default function Page() {
             "https://drive.google.com/file/d/137obuAzNIB6r-501h6D0-6SoFgLnqXd3/view?usp=drive_link"
         ],
     };
-
-    const mapImages = [
-        {floor:"1階", href:"/0001.png"},
-        {floor:"2階-1", href:"/0002.png"},
-        {floor:"2階-2", href:"/0003.png"},
-        {floor:"3階", href:"/0004.png"},
-        {floor:"4階", href:"/0005.png"},
-        {floor:"5階", href:"/0006.png"},
-    ]
     //https://labs.d-s-b.jp/ImagemapGenerator/に上記のmap_imgを読み込ませて座標を取得しました
 
 
@@ -340,14 +331,14 @@ export default function Page() {
         <div className="py-[30vw] 2xl:py-40 lg:py-32">
             <title>フロアマップ</title>      
             <h1 className={`${kaiseiDecol.className} text-center text-[12vw]  lg:text-6xl 2xl:text-8xl`}>フロアマップ</h1>
-            <div className="mt-16">
+            <div className="mt-16 xl:mt-24">
                 {map_img.map((value, index) => (
-                    <div key={index} className={`w-full mx-auto mb-20 md:mb-28 lg:w-[95%]`}>
+                    <div key={index} className={`w-full mx-auto mb-20 md:mb-28 lg:w-[95%] xl:mb-36`}>
                         <div className="relative flex mx-4 mb-3 md:mx-6 lg:mb-6 lg:items-center lg:hidden">
                             <div className=" w-[2vw] lg:w-3  lg:h-16 bg-gradient-to-br from-rose-500 to-rose-300"></div>
                             <p className={`${kaiseiDecol.className}  text-[#f74b69] text-[10vw] ml-[2vw] lg:ml-3 lg:text-5xl  text-nowrap z-10`}>{index+1}階</p>
                         </div>
-                        <div className={`w-full mx-auto flex flex-wrap lg:flex-nowrap`}>
+                        <div className={`w-full mx-auto flex flex-wrap lg:flex-nowrap px-2 md:px-6 lg:px-0 box-border`}>
                             <div className={`${index == 2 ? "w-[40vw]" : "w-[70vw]"} lg:w-[45%] lg:shrink-0 mx-auto mb-5`}>
                                 <div className="relative  mx-6 mb-6  lg:items-center lg:flex hidden">
                                     <div className=" w-[2vw] lg:w-3  lg:h-16 bg-gradient-to-br from-rose-500 to-rose-300"></div>
@@ -465,72 +456,37 @@ export default function Page() {
                                 </div>
                                 
                             </div>
-                            <div className="w-full text-black border-rose-400 lg:border-none lg:shadow-none border-2 mx-4 md:mx-6 rounded-xl shadow-md relative lg:mx-0">
+                            <div className="w-full text-black border-rose-400 lg:border-none lg:shadow-none border-2  rounded-xl shadow-md relative ">
+                                <p className={`${kaiseiDecol.className} absolute top-4 right-4 text-xl md:text-3xl md:top-6 md:right-6 text-[#f74b69] lg:hidden`}>{index + 1}階</p>
                                 {filteredData != undefined &&
-                                    <div className="m-2 my-3 md:m-4 lg:m-0">   
-                                        <p className={`${kaiseiDecol.className} absolute top-4 right-4 text-xl md:text-3xl md:top-6 md:right-6 text-[#f74b69] lg:hidden`}>{index + 1}階</p>
-                                        {filteredData[index].class.length > 0 && 
-                                            <div>
-                                                <div className="flex items-center my-3 md:my-5 lg:m-0 lg:mb-5 relative lg:right-7 xl:right-9" >
-                                                    <Image src={"/classLogo.png"} alt="クラスロゴ" width={300} height={300} className="aspect-square w-11 md:w-16 xl:w-20"></Image>
-                                                    <p className={`pl-1 text-[#f74b69] text-xl md:text-3xl xl:text-4xl xl:pl-4 font-semibold ${KaiseiDecol.className}`}>クラス展示</p>
-                                                </div>
-                                                <div className="flex flex-wrap mx-2 justify-between w-full overflow-hidden mb-2 lg:mb-4">
-                                                    {filteredData[index].class.map((class_value, class_index) => (
-                                                        <Link href={{pathname:"/event/introduction", query:{name:class_value.className}}} className={`w-[50%] relative overflow-hidden flex items-center pb-3 md:pb-4 lg:pb-4 xl:pb-6 cursor-pointer ${hovered == class_value.className && " opacity-60"}`} key={`${class_index} + "map`}  onMouseEnter={() => {setHovered(class_value.className)}} onMouseLeave={() => {setHovered("")}}>
-                                                            <div className="min-w-14 md:min-w-24 xl:min-w-32 flex items-center px-2 justify-center shrink-0 text-white bg-[#f9a1bd] rounded-full py-1">
-                                                                <p className="text-[10px] md:text-base lg:text-sm xl:text-lg  text-nowrap whitespace-nowrap">{class_value.className.replace("年", "-").replace("組", "").replace("学", "").replace("校", "")} </p>
-                                                            </div>
-                                                            <div className="pl-2 md:pl-4 overflow-hidden grow min-w-32">
-                                                                <p className="  text-sm md:text-lg lg:text-base xl:text-2xl text-nowrap whitespace-nowrap g">{class_value.title}</p>
-                                                            </div>
-                                                        </Link>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        }
-                                        {filteredData[index].time_limited.length > 0 &&
-                                            <div>
-                                                <p className={`${kaiseiDecol.className} absolute top-4 right-4 text-xl md:text-3xl md:top-6 md:right-6 text-[#f74b69] lg:hidden`}>{index + 1}階</p>
-                                                <div className="flex items-center my-3 md:my-5 lg:m-0 lg:mb-5 relative lg:right-7 xl:right-9" >
-                                                    <Image src={"/time_limited.png"} alt="時限ロゴ" width={300} height={300} className="aspect-square w-11 md:w-16 xl:w-20"></Image>
-                                                    <p className={`pl-1 text-[#f74b69] text-xl md:text-3xl xl:text-4xl xl:pl-4 font-semibold ${KaiseiDecol.className}`}>時限開催展示</p>
-                                                </div>
-                                                <div className="flex flex-wrap mx-2 justify-between w-full overflow-hidden">
-                                                    {filteredData[index].time_limited.map((time_value, time_index) => (
-                                                        <Link href={{pathname:"/event/introduction", query:{name:time_value.className}}} className={`w-[50%] overflow-hidden flex items-center pb-3 md:pb-4 lg:pb-4 xl:pb-6 cursor-pointer ${hovered == time_value.className && " opacity-60"}`} key={`${time_index} + "map`}  onMouseEnter={() => {setHovered(time_value.className)}} onMouseLeave={() => {setHovered("")}}>
-                                                            <div className="min-w-14 md:min-w-24 xl:min-w-32 flex items-center px-2 justify-center shrink-0 text-white bg-[#f9a1bd] rounded-full py-1">
-                                                                <p className="text-[10px] md:text-base lg:text-sm xl:text-lg  text-nowrap whitespace-nowrap">{time_value.className.replace("年", "-").replace("組", "").replace("学", "").replace("校", "")} </p>
-                                                            </div>
-                                                            <div className="pl-2 md:pl-4 overflow-hidden grow min-w-32">
-                                                                <p className="  text-sm md:text-lg lg:text-base xl:text-2xl text-nowrap whitespace-nowrap g">{time_value.title}</p>
-                                                            </div>
-                                                        </Link>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        }
-                                        {filteredData[index].other.length > 0 &&
-                                            <div>
-                                                <p className={`${kaiseiDecol.className} absolute top-4 right-4 text-xl md:text-3xl md:top-6 md:right-6 text-[#f74b69] lg:hidden`}>{index + 1}階</p>
-                                                <div className="flex items-center my-3 md:my-5 lg:m-0 lg:mb-5 relative lg:right-7 xl:right-9" >
-                                                    <Image src={"/others.png"} alt="そのほかロゴ" width={200} height={200} className="aspect-square w-11 md:w-16 xl:w-20"></Image>
-                                                    <p className={`pl-1 text-[#f74b69] text-xl md:text-3xl xl:text-4xl xl:pl-4 font-semibold ${KaiseiDecol.className}`}>その他の展示</p>
-                                                </div>
-                                                <div className="flex flex-wrap mx-2 justify-between w-full overflow-hidden">
-                                                    {filteredData[index].other.map((other_value, other_index) => (
-                                                        <Link href={{pathname:"/event/introduction", query:{name:other_value.className}}}  className={`w-[50%] overflow-hidden flex items-center pb-3 md:pb-4 lg:pb-4 xl:pb-6 cursor-pointer ${hovered == other_value.className && " opacity-60"}`} key={`${other_index} + "map`}  onMouseEnter={() => {setHovered(other_value.className)}} onMouseLeave={() => {setHovered("")}}>
-                                                            <div className="min-w-14 md:min-w-24 xl:min-w-32 flex items-center px-2 justify-center shrink-0 text-white bg-[#f9a1bd] rounded-full py-1">
-                                                                <p className="text-[10px] md:text-base lg:text-sm xl:text-lg  text-nowrap whitespace-nowrap">{other_value.className} </p>
-                                                            </div>
-                                                            <div className="pl-2 md:pl-4 overflow-hidden grow min-w-32">
-                                                                <p className="  text-sm md:text-lg lg:text-base xl:text-2xl text-nowrap whitespace-nowrap g">{other_value.title}</p>
-                                                            </div>
-                                                        </Link>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        }
+                                
+                                    <div className="p-2 pb-1 pt-4 md:p-4 md:pt-6 lg:p-0">
+                                        {[{data_set:filteredData[index].class, name:"クラス展示"}, {data_set:filteredData[index].time_limited, name:"時限開催展示"}, {data_set:filteredData[index].other, name:"そのほかの展示"}].map((list_type_value, list_index) => 
+                                            <>  
+                                                
+                                                {list_type_value.data_set.length > 0 &&
+                                                    <div className="w-full" key={list_index}>
+                                                        <div className="flex items-center mb-4  md:mb-5 lg:m-0 lg:mb-5 relative lg:right-7 xl:right-9" >
+                                                            <Image src={"/classLogo.png"} alt={list_type_value.name + "ロゴ"} width={300} height={300} className="aspect-square w-11 md:w-16 xl:w-20"></Image>
+                                                            <p className={`pl-1 text-[#f74b69] text-xl md:text-3xl xl:text-4xl xl:pl-4 font-semibold ${KaiseiDecol.className}`}>{list_type_value.name}</p>
+                                                        </div>
+                                                        <div className="flex flex-wrap pl-2 justify-between w-full overflow-hidden mb-2 md:mb-5 lg:mb-4 box-border">
+                                                            {list_type_value.data_set.map((class_value, class_index) => (
+                                                                <Link href={{pathname:"/event/introduction", query:{name:class_value.className}}} className={`w-[100%] md:w-[48%] relative overflow-hidden flex items-center pb-4 md:pb-4 lg:pb-4 xl:pb-7 cursor-pointer ${hovered == class_value.className && " opacity-60"}`} key={`${class_index} + "map`}  onMouseEnter={() => {setHovered(class_value.className)}} onMouseLeave={() => {setHovered("")}}>
+                                                                    <div className="min-w-14 md:min-w-24 xl:min-w-32 flex items-center px-2 justify-center shrink-0 text-white bg-[#f9a1bd] rounded-full py-1">
+                                                                        <p className="text-[10px] md:text-base lg:text-sm xl:text-lg  text-nowrap whitespace-nowrap">{class_value.className.replace("年", "-").replace("組", "").replace("学", "").replace("校", "")} </p>
+                                                                    </div>
+                                                                    <div className="pl-2 md:pl-4 overflow-hidden flex">
+                                                                        <p className="  text-sm md:text-lg lg:text-base xl:text-2xl text-nowrap whitespace-nowrap g">{class_value.title}</p>
+                                                                        
+                                                                    </div>
+                                                                </Link>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </>
+                                        )}   
                                     </div>
                                 } 
                             </div>
