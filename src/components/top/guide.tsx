@@ -28,7 +28,7 @@ export default function Guide() {
                 <div className="lg:flex flex-col justify-center">
                     <p className={`${kaiseiDecol.className} text-[5vw] text-center xl:text-4xl lg:text-2xl` }>1階のエントランスにて受領可能<br/>おひとり様1部まで</p>
                     <Link href={"/gallery"}>
-                        <div className="w-[40vw] md:w-[280px] mx-auto my-[7vw] lg:max-w-[230px] lg:my-10">
+                        <div className="w-[40vw] md:w-[250px] mx-auto my-[7vw] lg:max-w-[230px] lg:my-10">
                             <SquareButtonPinkShadow text="電子版はこちら"></SquareButtonPinkShadow>
                         </div>
                     </Link>   
@@ -40,7 +40,7 @@ export default function Guide() {
                     <p key={index} className={` text-sm md:text-xl text-center xl:text-2xl lg:text-2xl py-4` }>{value}</p>
                 )}
                 <Link href={"https://forms.gle/CKmR6Tv45WrK4fza8"} className="w-full flex justify-center pt-4 md:pt-8">
-                    <div className="w-[180px] md:w-[280px] lg:w-[30vw] aspect-[3.5/1] 2xl:max-w-[300px] xl:w-[300px]  opacity-90">
+                    <div className="w-[200px] md:w-[280px] lg:w-[30vw] aspect-[3.5/1] 2xl:max-w-[300px] xl:w-[300px]  opacity-90">
                         <SquareButtonPinkShadow text={"アンケートはこちら"}></SquareButtonPinkShadow>
                     </div>
                 </Link>
