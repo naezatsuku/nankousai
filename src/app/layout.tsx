@@ -33,7 +33,6 @@ export default function RootLayout({
       <body className={`${kiwi_Maru.className}`}>
             {children}
         <Analytics />
-        
       </body>
     </html>
   );

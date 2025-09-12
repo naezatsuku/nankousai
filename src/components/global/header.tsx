@@ -74,7 +74,7 @@ export default function Header() {
 
     const links = [
         {link:"/info", name:"参加方法"}, 
-        {link:"/map", name:"地図"},
+        {link:"/map", name:"マップ"},
         {link:"/", name:"トップ"}, 
         {link:"/event", name:"展示一覧"}, 
         {link:"/info#access", name:"アクセス"}, 
@@ -86,14 +86,13 @@ export default function Header() {
     const links_pc = [
         {link:"/event", name:"イベント"}, 
         {link:"/info#access", name:"アクセス"}, 
-        {link:"/", name:"トップ"}, 
-        
+        {link:"/map", name:"マップ"}, 
         {link:"/gallery", name:"ギャラリー"},
     ]
 
     const link_pc_mini = [
         {link:"/event", name:"イベント"}, 
-        {link:"/", name:"トップ"}, 
+        {link:"/map", name:"マップ"}, 
     ]
 
     const pullDownMenu = () => {

@@ -1,5 +1,5 @@
 import Header from "@/components/global/header";
-
+import Footer from "@/components/global/footer";
 
 import { LoadingLayout } from "@/components/global/parts/loading_layout";
 import { KaiseiDecol } from "@/app/fonts";
@@ -28,7 +28,7 @@ export default function RootLayout({
               </div> */}
               {children}
             </div>
-            
+            <Footer></Footer>
         </div>
     );
 }

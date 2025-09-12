@@ -2,6 +2,7 @@ import Pamphlet from "@/components/gallery/pamphlet"
 import Gallery from "@/components/gallery/gallery"
 import type { Metadata } from "next";
 import BackTo from "@/components/global/back_button";
+import Footer from "@/components/global/footer";
 
 export const metadata: Metadata = {
     title: "ギャラリー | 第72回南高祭・展示の部2025",
@@ -31,7 +32,7 @@ export default function page() {
     };
 
     return(
-        <div className="pt-[25vw] h-screen bg-white 2xl:py-40 lg:py-32">
+        <div className="pt-[25vw] bg-white 2xl:py-40 lg:py-32">
             <Pamphlet></Pamphlet>
             <div className="mt-[15vw] lg:mt-36">
                 <Gallery></Gallery>
@@ -39,6 +40,7 @@ export default function page() {
             <div>
                 {/* <BackTo link="/" name="トップ"></BackTo> */}
             </div>
+            
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

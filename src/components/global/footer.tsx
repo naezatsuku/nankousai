@@ -18,19 +18,20 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-[#1a1a1a] text-white px-6 py-12 text-sm font-light">
+    <footer className="bg-black text-white px-6 py-12 pt-14 text-sm font-light">
       <div className="max-w-screen-xl lg:max-w-3xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-12">
-        <div className="flex items-center justify-end w-full lg:w-1/2 gap-6">
-          <div className="relative w-40 h-40 shrink-0">
+        <div className="flex items-center justify-center w-full lg:w-1/2 gap-6">
+          <div className="relative w-20 h-20 shrink-0">
             <Image
-              src="/70周年ロゴB.png"
+              src="/南高70ロゴ.png"
               alt="ロゴ"
-              fill
-              className="object-cover"
+              width={400}
+              height={400}
+              className="object-cover w-full aspect-square"
               priority
             />
           </div>
-          <div className="flex flex-col gap-6 underline underline-offset-4">
+          <div className="flex flex-col gap-6 ">
             {externalLinks.map((item, i) => (
               <Link
                 key={i}
@@ -39,14 +40,14 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="text-lg lg:text-xl font-medium hover:underline text-white/90"
               >
-                {item.label} <FiExternalLink className="inline-block text-lg" />
+                {item.label} <FiExternalLink className="inline-block text-lg relative -top-[2px]" />
               </Link>
             ))}
           </div>
         </div>
 
         {/* 右側：内部リンク（横並び） */}
-        <div className="basis-1/3 flex flex-wrap justify-start gap-x-6 gap-y-3 w-full lg:w-1/2 ">
+        <div className="basis-1/3 flex flex-wrap  justify-center lg:justify-start gap-x-6 gap-y-3 w-full lg:w-1/2 ">
           {internalLinks.map((item, i) => (
             <Link
               key={i}

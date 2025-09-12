@@ -341,8 +341,7 @@ export default function Page() {
 
     const [hovered, setHovered] = useState("")
     const [map_hovered, setMapHovered] = useState("")
-    const [modal_data, setModal] = useState<{position:modal_position, data:Array<event>}>()
-    const [name_modal, setNameModal] = useState<{position:string, floor:number, data:(event)}>()
+    const [modal_data, setModal] = useState<{position:modal_position, data:events}>()
 
     const filterEventByPlace = (name:string, floor:number, positionX:string, positionY:string) => {
         let data:Array<filtered> = []
@@ -355,6 +354,21 @@ export default function Page() {
         })
 
         setModal({position:{floor:floor, name:name, positionX:positionX ,positionY:positionY}, data:filter_name})
+    }
+
+    const findModalData= (name:string, floor:number) => {
+        let data:Array<filtered> = []
+        if(filteredData != undefined) {
+            data = filteredData
+        }
+        let filter_floor = data[floor]
+        let find_data = filter_floor.class_filtered.findIndex((n) => 
+            n.place == name
+        )
+        if(find_data != undefined) {
+            setModal({position:{floor:floor, name:name, positionX:"" ,positionY:""}, data:filter_floor.class_filtered[find_data].events})
+        }
+        
     }
 
     const jsonLd = {
@@ -398,98 +412,14 @@ export default function Page() {
                         <div className={`w-full mx-auto flex flex-wrap lg:flex-nowrap px-2 md:px-6 lg:px-0 box-border`}>
                             <div className={`${index == 2 ? "w-[40vw]" : "w-[70vw]"} lg:w-[55%] lg:shrink-0 mx-auto mb-5`}>
                                 <div className="relative  mx-6 mb-6  lg:items-center lg:flex hidden">
-                                    <div className=" w-[2vw] lg:w-3  lg:h-16 bg-gradient-to-br from-rose-500 to-rose-300"></div>
-                                    <p className={`${kaiseiDecol.className}  text-[#f74b69] lg:ml-3 lg:text-5xl  text-nowrap z-10`}>{index+1}階</p>
+                                    <div className=" w-[2vw] lg:w-3  lg:h-16 xl:h-20 bg-gradient-to-br from-rose-500 to-rose-300"></div>
+                                    <p className={`${kaiseiDecol.className}  text-[#f74b69] lg:ml-3 lg:text-5xl xl:text-6xl  text-nowrap z-10`}>{index+1}階</p>
                                 </div>  
                                 <div className={`${index == 2 ? "lg:w-[50%]" : "lg:w-[65%]"}  w-full relative mx-auto`}>
-                                    <div style={{
-                                        top:String(Number(modal_data?.position?.positionY) + 10) + "%",
-                                        left:String(Number(modal_data?.position?.positionX) + 10) + "%"
-                                    }}
-                                    className={`${modal_data?.position?.floor == index ? " lg:block hidden " : " hidden "} absolute w-[500px] z-20 rounded-xl border border-gray-400 shadow-lg bg-white text-black pb-2`}>
-                                        <div className="flex p-5 pb-0 justify-between">
-                                            <div  className="flex items-center">
-                                                <div className=" flex items-center justify-center  bg-[#f9a1bd]  rounded-full w-16 aspect-square">
-                                                    <p className="text-white z-10 text-2xl">{index + 1}F</p>
-                                                </div>
-                                                <p className="text-2xl pl-2">{modal_data?.position.name}</p>
-                                            </div>
-                                            <Image src={"/クロス (1).png"} alt="閉じる" width={200} height={200} className="mt-2 w-10 h-10 cursor-pointer" onClick={() => {setModal({position:{floor:99, name:"", positionX:"" ,positionY:""}, data:[]})}}></Image>           
-                                            </div>
-                                            {modal_data?.data?.length == 0 && 
-                                            <div className="w-full text-center md:text-xl pt-1 pb-4 md:py-5 md:pt-2">
-                                                見つかりませんでした
-                                            </div>
-                                            }
-                                            
-                                        {modal_data?.data?.map((modal_value, modal_index) => 
-                                            <Link href={{pathname:"/event/introduction", query:{name:modal_value.className}}} key={modal_index}>
-                                                <div key={"modal:" + String(modal_index)} className="px-5">
-                                                    <div className={`${(modal_index == 0 || modal_data.data.length == 0) ? "" : "border-t"} border-gray-400 py-3 flex justify-between items-center  ${modal_index == modal_data.data.length - 1 && "pb-3 md:pb-4"}`} key={"modal_data"+ String(modal_index)}>
-                                                        <div className=" overflow-hidden pr-2">
-                                                            <p className="text-lg">{modal_value.className}</p>
-                                                            <p className="text-3xl text-nowrap whitespace-nowrap ">{modal_value.title}</p>
-                                                            <div className="flex text-lg pt-1">
-                                                                <p className="max-w-24 text-nowrap overflow-hidden">{modal_value.time[0]}</p>
-                                                                <p className="pl-5">待ち時間:{modal_value.waitTime}分</p>
-                                                            </div>
-                                                        </div>
-                                                        {modal_value.img == null ? 
-                                                            <Image src={"/pexels-aulsh99-2860705.jpg"} alt="展示いらすと" width={400} height={400} className="aspect-square rounded-full w-40"></Image> :
-                                                            <Image src={modal_value.img} alt="展示いらすと" width={400} height={400} className="aspect-square rounded-full  w-40"></Image>
-                                                        }
-                                                        
-                                                    </div>
-                                                </div>
-                                            </Link>
-                                            
-                                        )}
-                                    </div>
-                                    <div style={{
-                                        top:String(Number(modal_data?.position?.positionY) + 20) + "%",
-                                        left:"-10%"
-                                    }}
-                                    className={`${modal_data?.position?.floor == index ? " lg:hidden block  " : " hidden "} absolute w-80 md:w-[500px] z-20 rounded-xl border border-gray-400 shadow-lg bg-white text-black `}>
-                                        <div className="flex p-3 md:p-4 md:pb-0 pb-0 justify-between ">
-                                            <div className="flex items-center">
-                                                <div className=" flex items-center justify-center  bg-[#f9a1bd]  rounded-full w-12 md:w-16 aspect-square">
-                                                    <p className="text-white z-10 text-xl md:text-2xl">{index + 1}F</p>
-                                                </div>
-                                                <p className="text-xl md:text-2xl pl-2">{modal_data?.position.name}</p> 
-                                            </div>
-                                            <Image src={"/クロス (1).png"} alt="閉じる" width={200} height={200} className="w-8 h-8 mt-1 aspect-square cursor-pointer" onClick={() => {setModal({position:{floor:99, name:"", positionX:"" ,positionY:""}, data:[]})}}></Image> 
-                                        </div>
-                                            {modal_data?.data?.length == 0 && 
-                                            <div className="w-full text-center md:text-xl pt-1 pb-4 md:py-5 md:pt-2">
-                                                見つかりませんでした
-                                            </div>
-                                        }
-                                        {modal_data?.data?.map((modal_value, modal_index) => 
-                                        <Link href={{pathname:"/event/introduction", query:{name:modal_value.className}}} key={modal_index}>
-                                            <div key={"modal:" + String(modal_index)} className="px-4 md:px-5">
-                                                <div className={`${(modal_index == 0 || modal_data.data.length == 0) ? "" : "border-t"} border-gray-400 py-2 flex justify-between items-center ${modal_index == modal_data.data.length - 1 && "pb-3 md:pb-4"}`} key={"modal_data"+ String(modal_index)}>
-                                                    <div className="overflow-hidden pr-2">
-                                                        <p className="text-xs md:text-base">{modal_value.className}</p>
-                                                        <p className="text-xl md:text-2xl text-nowrap whitespace-nowrap py-1 ">{modal_value.title}</p>
-                                                        <div className="flex text-xs md:text-base">
-                                                            <p>{modal_value.time[0]}</p>
-                                                            <p className="pl-3">待ち時間:{modal_value.waitTime}分</p>
-                                                        </div>
-                                                    </div>
-                                                    {modal_value.img == null ? 
-                                                        <Image src={"/pexels-aulsh99-2860705.jpg"} alt="展示いらすと" width={400} height={400} className="aspect-square rounded-full w-24 md:w-32 bg-white"></Image> :
-                                                        <Image src={modal_value.img} alt="展示いらすと" width={400} height={400} className="aspect-square rounded-full  w-24  md:w-32"></Image>
-                                                    }
-                                                    
-                                                </div>
-                                            </div>
-                                            </Link>
-                                        )}
-                                        
-                                    </div>
                                     <Image src={value.href} alt={`${value.floor}階の画像`} width={600} height={800} className="w-full" style={{aspectRatio:value.size[0]/value.size[1]}}>
                                     </Image>
                                     {map_filtered[index].areas.map((map_value, map_index) => (
+                                        <>
                                         <div key={map_index} id={map_value.name} 
                                         style={{
                                             left:map_value.positionX+ "%",
@@ -509,6 +439,98 @@ export default function Page() {
                                             </svg>
                                             
                                         </div>
+                                        {/* モーダルpc用 */}
+                                        <div style={{
+                                        top:String(Number(map_value.positionY) + 20) + "%",
+                                        left:"-10%"
+                                        }}
+                                        className={`${(modal_data?.position?.floor == index && modal_data?.position?.name == map_value.name) ? " lg:hidden block  " : " hidden "} absolute w-80 md:w-[500px] z-20 rounded-xl border border-gray-400 shadow-lg bg-white text-black `}>
+                                            <div className="flex p-3 md:p-4 md:pb-0 pb-0 justify-between ">
+                                                <div className="flex items-center">
+                                                    <div className=" flex items-center justify-center  bg-[#f9a1bd]  rounded-full w-12 md:w-16 aspect-square">
+                                                        <p className="text-white z-10 text-xl md:text-2xl">{index + 1}F</p>
+                                                    </div>
+                                                    <p className="text-xl md:text-2xl pl-2">{map_value.name}</p> 
+                                                </div>
+                                                <Image src={"/クロス (1).png"} alt="閉じる" width={200} height={200} className="w-8 h-8 mt-1 aspect-square cursor-pointer" onClick={() => {setModal({position:{floor:99, name:"", positionX:"" ,positionY:""}, data:[]})}}></Image> 
+                                            </div>
+                                                {modal_data?.data?.length == 0 && 
+                                                <div className="w-full text-center md:text-xl pt-1 pb-4 md:py-5 md:pt-2">
+                                                    見つかりませんでした
+                                                </div>
+                                            }
+                                            {modal_data?.data?.map((modal_value, modal_index) => 
+                                            <Link href={{pathname:"/event/introduction", query:{name:modal_value.className}}} key={modal_index}>
+                                                <div key={"modal:" + String(modal_index)} className="px-4 md:px-5">
+                                                    <div className={`${(modal_index == 0 || modal_data.data.length == 0) ? "" : "border-t"} border-gray-400 py-2 flex justify-between items-center ${modal_index == modal_data.data.length - 1 && "pb-3 md:pb-4"}`} key={"modal_data"+ String(modal_index)}>
+                                                        <div className="overflow-hidden pr-2">
+                                                            <p className="text-xs md:text-base">{modal_value.className}</p>
+                                                            <p className="text-xl md:text-2xl text-nowrap relative  whitespace-nowrap py-1 ">{modal_value.title}</p>
+                                                            <div className="flex text-xs md:text-base">
+                                                                {/* <p>{modal_value.time[0]}</p> */}
+                                                                <p className="">待ち時間:{modal_value.waitTime}分</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="flex items-center bg-white  shrink-0 pl-4">
+                                                            {modal_value.img == null ? 
+                                                            <Image src={"/pexels-aulsh99-2860705.jpg"} alt="展示いらすと" width={400} height={400} className="aspect-square rounded-full w-28 md:w-32 bg-white "></Image> :
+                                                            <Image src={modal_value.img} alt="展示いらすと" width={400} height={400} className="aspect-square rounded-full  w-28  md:w-32 "></Image>
+                                                        }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </Link>
+                                            )}
+                                         </div>
+                                         {/* モーダルpc用 */}
+                                        <div style={{
+                                    top:String(Number(map_value.positionY) + 10) + "%",
+                                    left:String(Number(map_value.positionX) + 10) + "%"
+                                    }}
+                                    className={`${(modal_data?.position?.floor == index && modal_data?.position?.name == map_value.name) ? " lg:block hidden " : " hidden "} absolute w-[500px] z-20 rounded-xl border border-gray-400  bg-white text-black pb-2`}>
+                                        <div className="flex p-5 pb-0 justify-between">
+                                            <div  className="flex items-center">
+                                                <div className=" flex items-center justify-center  bg-[#f9a1bd]  rounded-full w-16 aspect-square">
+                                                    <p className="text-white z-10 text-2xl">{index + 1}F</p>
+                                                </div>
+                                                <p className="text-2xl pl-2">{modal_data?.position.name}</p>
+                                            </div>
+                                            <Image src={"/クロス (1).png"} alt="閉じる" width={200} height={200} className="mt-2 w-10 h-10 cursor-pointer" onClick={() => {setModal({position:{floor:99, name:"", positionX:"" ,positionY:""}, data:[]})}}></Image>           
+                                            </div>
+                                            {modal_data?.data?.length == 0 && 
+                                            <div className="w-full text-center md:text-xl pt-1 pb-4 md:py-5 md:pt-2">
+                                                見つかりませんでした
+                                            </div>
+                                            }
+                                            
+                                        {modal_data?.data?.map((modal_value, modal_index) => 
+                                            <Link href={{pathname:"/event/introduction", query:{name:modal_value.className}}} key={modal_index}>
+                                                <div key={"modal:" + String(modal_index)} className="px-5">
+                                                    <div className={`${(modal_index == 0 || modal_data.data.length == 0) ? "" : "border-t"} border-gray-400 py-4 flex justify-between items-center  ${modal_index == modal_data.data.length - 1 && "pb-3 md:pb-4"}`} key={"modal_data"+ String(modal_index)}>
+                                                        <div className=" overflow-hidden pr-2">
+                                                            <p className="text-lg font-light">{modal_value.className}</p>
+                                                            <p className="text-3xl text-nowrap whitespace-nowrap py-1 relative -left-1">{modal_value.title}</p>
+                                                            <div className="flex text-lg pt-1  font-light">
+                                                                {/* <p className="max-w-24 text-nowrap overflow-hidden">{modal_value.time[0]}</p> */}
+                                                                <p className="">待ち時間:{modal_value.waitTime}分</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="flex items-center  shrink-0 pl-4">
+                                                            {modal_value.img == null ? 
+                                                            <Image src={"/pexels-aulsh99-2860705.jpg"} alt="展示いらすと" width={400} height={400} className="aspect-square rounded-full w-40"></Image> :
+                                                            <Image src={modal_value.img} alt="展示いらすと" width={400} height={400} className="aspect-square rounded-full w-40"></Image>
+                                                        }
+
+                                                        </div>       
+                                                        
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                            
+                                        )}
+                                    </div>   
+                                        </>
+                                        
                                     ))}
                                 </div>
                                 
@@ -517,15 +539,18 @@ export default function Page() {
                                 {filteredData != undefined &&
                                 
                                     <div className="p-2 pb-1 pt-4 md:p-4 md:pt-6 lg:p-0 ">
+                                        {filteredData[index].class_filtered[0].events.length == 1 &&
+                                            <p className="w-full from-rose-500 font-light to-pink-400 rounded-xl bg-gradient-to-br pl-8 py-1 md:pl-12 md:py-3 lg:py-2 mb-4 md:mb-6 lg:mb-5 xl:mb-7 text-white text-lg md:text-3xl lg:text-xl ">展示一覧</p>
+                                        }
                                         {filteredData[index].class_filtered.map((filter_value, filter_index) => 
                                             <div key={filter_index}>
                                             {filter_value.events.length > 1 &&
                                                 <div className="pb-7 md:pb-14 lg:pb-7 xl:pb-12">
-                                                    <p className="w-full from-rose-500 font-light to-pink-400 rounded-lg bg-gradient-to-br pl-8 py-1 md:pl-12 md:py-3 lg:py-2 text-white text-xl md:text-3xl lg:text-xl ">{filter_value.place}</p>
+                                                    <p className="w-full from-rose-500 font-light to-pink-400 rounded-lg bg-gradient-to-br pl-8 py-1 md:pl-12 md:py-3 lg:py-2 text-white text-lg md:text-3xl lg:text-xl ">{filter_value.place}</p>
                                                     <div className="flex justify-between flex-wrap w-full">
                                                         {filter_value.events.map((event_value, event_index) => 
-                                                        <div className="flex items-center w-[48%] 2xl:w-[48%]"  key={`${event_value} + "map`}>
-                                                            <Link href={{pathname:"/event/introduction", query:{name:event_value.className}}} className={` relative overflow-hidden pt-4 md:pt-6 lg:pt-5 xl:pt-7 cursor-pointer ${hovered == event_value.className && " opacity-60"}`}  onMouseEnter={() => {setHovered(event_value.className)}} onMouseLeave={() => {setHovered("")}}>
+                                                        <div className="flex items-center w-[48%] 2xl:w-[48%]"  key={`${event_value} + "map`} onClick={()=>findModalData(filter_value.place, index)}>
+                                                            <div  className={` relative overflow-hidden pt-4 md:pt-6 lg:pt-5 xl:pt-7 cursor-pointer ${hovered == event_value.className && " opacity-60"}`}  onMouseEnter={() => {setHovered(event_value.className)}} onMouseLeave={() => {setHovered("")}}>
                                                                 <div className="flex items-center ">
                                                                     <div className="min-w-20 md:min-w-32 lg:min-w-24 xl:min-w-32 flex  items-center px-2 md:px-4 justify-center shrink-0 text-white bg-[#ff75a1] rounded-full py-1 md:py-2 lg:py-2 text-[10px] md:text-base lg:text-xs  xl:text-sm  space-x-1">
                                                                     <p className=" text-nowrap whitespace-nowrap ">{event_value.className} </p>
@@ -535,14 +560,15 @@ export default function Page() {
                                                                     
                                                                     </div>
                                                                 </div>
-                                                            </Link>
+                                                            </div>
                                                         </div>
                                                         )}
                                                     </div>
                                                 </div>  
                                             }
+                                            
                                             {filter_value.events.length == 1 &&
-                                                    <Link href={{pathname:"/event/introduction", query:{name:filter_value.events[0].className}}} className={`w-full relative overflow-hidden flex items-center pb-4 md:pb-8 lg:pb-4 2xl:pb-7 cursor-pointer ${hovered == filter_value.events[0].className && " opacity-60"}`}  onMouseEnter={() => {setHovered(filter_value.events[0].className)}} onMouseLeave={() => {setHovered("")}}>
+                                                    <div onClick={()=>findModalData(filter_value.place, index)} className={`w-full relative overflow-hidden flex items-center pb-4 md:pb-8 lg:pb-4 2xl:pb-7 cursor-pointer ${hovered == filter_value.events[0].className && " opacity-60"}`}  onMouseEnter={() => {setHovered(filter_value.events[0].className)}} onMouseLeave={() => {setHovered("")}}>
                                                         <div className="w-[50%] flex items-center shrink-0">
                                                             <div className="min-w-20 md:min-w-40 lg:min-w-24 xl:min-w-32 flex  items-center px-3 md:px-4 justify-center shrink-0 text-white bg-[#ff75a1] rounded-full py-1  md:py-2 lg:py-2 text-[10px] md:text-lg  lg:text-xs xl:text-sm space-x-1">
                                                             <p className=" text-nowrap whitespace-nowrap">{filter_value.events[0].className} </p>
@@ -555,7 +581,7 @@ export default function Page() {
                                                         <div className=" overflow-hidden flex">
                                                             <p className="  text-base md:text-2xl lg:text-base xl:text-lg text-nowrap whitespace-nowrap g">{filter_value.events[0].title}</p>
                                                         </div>
-                                                    </Link>
+                                                    </div>
                                             }
                                             </div>
                                         )}

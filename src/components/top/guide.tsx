@@ -35,9 +35,9 @@ export default function Guide() {
                 </div>  
             </div>      
             <div className={`flex justify-center flex-col w-full ${kaiseiDecol.className} py-24`}>
-                <div className={`${kaiseiDecol.className} text-[9vw] md:text-5xl text-center 2xl:text-7xl lg:text-6xl  pb-4  md:pb-8`}>当サイトについて</div>
+                <div className={`${kaiseiDecol.className} text-[9vw] md:text-7xl text-center 2xl:text-7xl lg:text-6xl  pb-4  md:pb-8`}>当サイトについて</div>
                 {description.map((value,index) => 
-                    <p key={index} className={` text-sm md:text-xl text-center xl:text-2xl lg:text-2xl py-4` }>{value}</p>
+                    <p key={index} className={` text-sm md:text-3xl text-center xl:text-2xl lg:text-2xl py-4 md:py-5 lg:py-4` }>{value}</p>
                 )}
                 <Link href={"https://forms.gle/CKmR6Tv45WrK4fza8"} className="w-full flex justify-center pt-4 md:pt-8">
                     <div className="w-[200px] md:w-[280px] lg:w-[30vw] aspect-[3.5/1] 2xl:max-w-[300px] xl:w-[300px]  opacity-90">
@@ -45,7 +45,6 @@ export default function Guide() {
                     </div>
                 </Link>
             </div>
-            <p className="hidden 2xl:block text-base absolute bottom-0 right-0">所在地： 〒233-0011 神奈川県横浜市港南区東永谷２丁目１−１</p>
         </div>
     )
 }
