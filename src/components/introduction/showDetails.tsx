@@ -299,7 +299,7 @@ export default function ShowDetails (
                                 <p className={ ` ${kaiseiDecol.className} text-xl md:text-4xl lg:text-2xl lg:px-12 lg:py-4 py-4 pl-8 pr-6 md:py-9 md:pl-16 text-white `}>{value.title}</p>
                             </div>
                             <div className="px-8 md:px-16 py-5 md:py-10 lg:px-10 lg:py-8 ">
-                                <p className={`text-base md:text-3xl lg:text-xl  md:leading-normal lg: whitespace-pre-line font-medium ${setTextColor(event.tags, "text")}`}> &ensp;{value.content}</p>
+                                <p className={`text-base md:text-3xl lg:text-xl  md:leading-normal  lg: whitespace-pre-line  ${setTextColor(event.tags, "text")}`}> &ensp;{value.content}</p>
                             </div>
                             <div className="relative flex justify-center">
                                 <p className={`font-semibold text-lg md:text-3xl lg:text-2xl ${kaiseiDecol.className} ${setTextColor(event.tags, "text")}`}>Scribbling</ p>
