@@ -30,7 +30,7 @@ export default function Attention() {
                         {index == 1  &&
                             <div className="w-[60%] mx-auto lg:mt-12 lg:mb-0 mt-[7vw]">
                                 <p className="text-center lg:text-xl my-2 text-sm">・・・くすのき広場周辺図・・・</p>
-                                <Image src={"/飲食可・ゴミ箱.png"} alt="ゴミ箱・飲食エリア" width={1000} height={800} className=" w-full aspect-auto"></Image>
+                                <Image src={"/飲食可・ゴミ箱.png"} alt="ゴミ箱・飲食エリア" width={500} height={400} className=" w-full aspect-auto"></Image>
                             </div>     
                         }
                     </div>

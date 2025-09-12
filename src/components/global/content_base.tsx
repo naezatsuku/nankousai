@@ -28,12 +28,11 @@ export default function BaseContent(
             </div>
             <div className="text-sm md:text-base lg:text-lg md:w-[160vw] w-full md:mt-0 md:max-w-[750px] ">
                 {image != "" &&
-                    <Image src={image} alt={image_description} width={1200} height={1000} className="rounded-md drop-shadow-lg w-full aspect-auto mt-5" placeholder={`data:image/svg+xml;base64,${toBase64(skeleton(128, 240))}`}></Image>
+                    <Image src={image} alt={image_description} width={900} height={750} className="rounded-md drop-shadow-lg w-full aspect-auto mt-5" placeholder={`data:image/svg+xml;base64,${toBase64(skeleton(128, 240))}`}></Image>
                 } 
                 <p className="px-1 leading-relaxed text-[#70564d] mt-6 xl:mt-8">{content}</p>
             </div>
         </div>
-
         //xl:min-w-[700px] lg:min-w-[600px] md:min-w-[450px]
     )
 }

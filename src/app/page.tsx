@@ -1,5 +1,4 @@
 import MainTitle from "@/components/top/main_title"
-import { MainTitlePC } from "@/components/top/main_title"
 import Date from "@/components/top/date"
 import Header from "@/components/global/header"
 import Events from "@/components/top/event"

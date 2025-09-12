@@ -119,7 +119,7 @@ export default function Header() {
             <div className="w-full h-full flex items-center justify-between">
                 <Link href={"/"} onClick={clickLogo}>
                     <motion.div whileHover={{scale:1.05, opacity:1}} whileTap={{scale:0.9}} transition={{type:"spring", duration:0.2, bounce:0.2}} className="relative ml-[3.5vw] flex items-center opacity-90 xl:ml-10 ">
-                        <Image src={"/70周年ロゴB.png"} alt="70周年ロゴ" width={500} height={500} className="h-[6.8vw] w-[7vw] lg:w-9 lg:h-9 xl:h-10 xl:w-10 xl:translate-y-[0.1rem]"></Image>
+                        <Image src={"/70周年ロゴB.png"} alt="70周年ロゴ" width={200} height={200} className="h-[6.8vw] w-[7vw] lg:w-9 lg:h-9 xl:h-10 xl:w-10 xl:translate-y-[0.1rem]"></Image>
                         <p className={` text-white mx-[2px] font-light text-[6vw] lg:text-3xl -translate-y-[5%] xl:-translate-y-0mx-[1.2vw] lg:mx-2 xl:text-4xl ${kaiseiDecol.className}`}>南高祭</p>
                         <div ref={targetLogo}  className="absolute border-white opacity-0 w-10 h-10 border-0 rounded-full top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2"></div>
                     </motion.div>

@@ -22,7 +22,7 @@ export default function Guide() {
             <div className="lg:flex justify-center lg:my-14">
                 <div className="w-[60vw] mx-auto h-auto relative my-[7vw] lg:my-0 xl:max-w-[500px] lg:max-w-[400px] lg:mx-12">
                     <Link href={"/gallery"}>
-                        <Image src={"/0001.png"} alt="パンフレット" width={2000} height={1200} className="rounded-md w-full aspect-auto drop-shadow-lg "></Image>
+                        <Image src={"/0001.png"} alt="パンフレット" width={600} height={360} className="rounded-md w-full aspect-auto drop-shadow-lg "></Image>
                     </Link>     
                 </div>
                 <div className="lg:flex flex-col justify-center">

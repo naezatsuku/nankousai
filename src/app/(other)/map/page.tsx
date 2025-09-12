@@ -366,7 +366,7 @@ export default function Page() {
                                                 </div>
                                                 <p className="text-2xl pl-2">{modal_data?.position.name}</p>
                                             </div>
-                                            <Image src={"/クロス (1).png"} alt="閉じる" width={300} height={300} className="mt-2 w-10 h-10 cursor-pointer" onClick={() => {setModal({position:{floor:99, name:"", positionX:"" ,positionY:""}, data:[]})}}></Image>           
+                                            <Image src={"/クロス (1).png"} alt="閉じる" width={200} height={200} className="mt-2 w-10 h-10 cursor-pointer" onClick={() => {setModal({position:{floor:99, name:"", positionX:"" ,positionY:""}, data:[]})}}></Image>           
                                             </div>
                                             {modal_data?.data?.length == 0 && 
                                             <div className="w-full text-center md:text-xl pt-1 pb-4 md:py-5 md:pt-2">
@@ -387,8 +387,8 @@ export default function Page() {
                                                             </div>
                                                         </div>
                                                         {modal_value.img == null ? 
-                                                            <Image src={"/pexels-aulsh99-2860705.jpg"} alt="展示いらすと" width={800} height={800} className="aspect-square rounded-full w-40"></Image> :
-                                                            <Image src={modal_value.img} alt="展示いらすと" width={800} height={800} className="aspect-square rounded-full  w-40"></Image>
+                                                            <Image src={"/pexels-aulsh99-2860705.jpg"} alt="展示いらすと" width={400} height={400} className="aspect-square rounded-full w-40"></Image> :
+                                                            <Image src={modal_value.img} alt="展示いらすと" width={400} height={400} className="aspect-square rounded-full  w-40"></Image>
                                                         }
                                                         
                                                     </div>
@@ -409,7 +409,7 @@ export default function Page() {
                                                 </div>
                                                 <p className="text-xl md:text-2xl pl-2">{modal_data?.position.name}</p> 
                                             </div>
-                                            <Image src={"/クロス (1).png"} alt="閉じる" width={300} height={300} className="w-8 h-8 mt-1 aspect-square cursor-pointer" onClick={() => {setModal({position:{floor:99, name:"", positionX:"" ,positionY:""}, data:[]})}}></Image> 
+                                            <Image src={"/クロス (1).png"} alt="閉じる" width={200} height={200} className="w-8 h-8 mt-1 aspect-square cursor-pointer" onClick={() => {setModal({position:{floor:99, name:"", positionX:"" ,positionY:""}, data:[]})}}></Image> 
                                         </div>
                                             {modal_data?.data?.length == 0 && 
                                             <div className="w-full text-center md:text-xl pt-1 pb-4 md:py-5 md:pt-2">
@@ -429,8 +429,8 @@ export default function Page() {
                                                         </div>
                                                     </div>
                                                     {modal_value.img == null ? 
-                                                        <Image src={"/pexels-aulsh99-2860705.jpg"} alt="展示いらすと" width={800} height={800} className="aspect-square rounded-full w-24 md:w-32 bg-white"></Image> :
-                                                        <Image src={modal_value.img} alt="展示いらすと" width={800} height={800} className="aspect-square rounded-full  w-24  md:w-32"></Image>
+                                                        <Image src={"/pexels-aulsh99-2860705.jpg"} alt="展示いらすと" width={400} height={400} className="aspect-square rounded-full w-24 md:w-32 bg-white"></Image> :
+                                                        <Image src={modal_value.img} alt="展示いらすと" width={400} height={400} className="aspect-square rounded-full  w-24  md:w-32"></Image>
                                                     }
                                                     
                                                 </div>
@@ -439,7 +439,7 @@ export default function Page() {
                                         )}
                                         
                                     </div>
-                                    <Image src={value.href} alt={`${value.floor}階の画像`} width={value.size[0]} height={value.size[1]} className="w-full" style={{aspectRatio:value.size[0]/value.size[1]}}>
+                                    <Image src={value.href} alt={`${value.floor}階の画像`} width={600} height={800} className="w-full" style={{aspectRatio:value.size[0]/value.size[1]}}>
                                     </Image>
                                     {map_filtered[index].areas.map((map_value, map_index) => (
                                         <div key={map_index} id={map_value.name} 
@@ -514,7 +514,7 @@ export default function Page() {
                                             <div>
                                                 <p className={`${kaiseiDecol.className} absolute top-4 right-4 text-xl md:text-3xl md:top-6 md:right-6 text-[#f74b69] lg:hidden`}>{index + 1}階</p>
                                                 <div className="flex items-center my-3 md:my-5 lg:m-0 lg:mb-5 relative lg:right-7 xl:right-9" >
-                                                    <Image src={"/others.png"} alt="そのほかロゴ" width={300} height={300} className="aspect-square w-11 md:w-16 xl:w-20"></Image>
+                                                    <Image src={"/others.png"} alt="そのほかロゴ" width={200} height={200} className="aspect-square w-11 md:w-16 xl:w-20"></Image>
                                                     <p className={`pl-1 text-[#f74b69] text-xl md:text-3xl xl:text-4xl xl:pl-4 font-semibold ${KaiseiDecol.className}`}>その他の展示</p>
                                                 </div>
                                                 <div className="flex flex-wrap mx-2 justify-between w-full overflow-hidden">
@@ -541,72 +541,7 @@ export default function Page() {
                 ))}
             </div>
 
-            <div className="hidden 2xl:mt-20 lg:mt-14 xl:mx-40 mx-16">
-                {mapImages.map((value, index) => (
-                    <div className="w-full aspect-auto mb-20" key={index}>
-                        <Image src={value.href} alt="フロアマップ" width={2000} height={1000} className="w-full aspect-auto"></Image>
-                    </div>
-                ))}
-            </div>
-
-            <div className="my-[15vw] w-full hidden">
-                {mapImages.map((value, index) => (
-                    <div className="my-[15vw]" key={value.href}>
-                        <div className="flex  mx-[4vw] mb-[7vw] relative">
-                            <div className=" w-[2vw]   base-bg"></div>
-                            <p className={`${kaiseiDecol.className} text-[10vw] ml-[2vw]  `}>{value.floor}</p>
-                            <p className="left-1/2 -translate-x-1/2 -bottom-1/3 absolute text-nowrap text-[3vw] bg-gray-300 px-[2vw] text-white rounded-xl">ズーム・ドラッグで全体を見渡せます</p>
-                        </div>
-                        <TransformWrapper
-                            smooth={true} 
-                            wheel={{
-                                step:0.5,
-                                smoothStep:0.003
-                            }}
-                            initialPositionX={-100}
-                            initialPositionY={-100}
-                            centerZoomedOut={false}
-
-                            initialScale={1.2}
-                            minScale={0.5}
-                        >
-                            <TransformComponent
-                                wrapperStyle={{
-                                    width:"auto",
-                                    aspectRatio:"1/1",
-                                    margin:"0 4vw",
-                                    borderRadius:"2vw",
-                                    cursor:"pointer",
-                                    border:"solid",
-                                    borderWidth:"0.8vw",
-                                    borderColor:"#EEEEEE"
-                                }}
-
-                                contentStyle={{
-                                    width:"120vw",
-                                    padding:"10vw",
-                                }}
-                            >
-                                <Image src={value.href} alt="フロアマップ" width={1000} height={2000}></Image>
-                            </TransformComponent>
-                        </TransformWrapper>
-                        {/* <div className="  mt-[3vw]">
-                            <p className="text-center text-[3.5vw] text-gray-400">展示一覧</p>
-                            <div className="flex flex-wrap mx-[4vw] justify-center mt-[1vw]">
-                                {imgs[index].test.map((value, index) => (
-                                    <div key={index} className="pr-[2vw]">
-                                        <Link href={{pathname:"/event/introduction", query:{name:value.name}}} className="text-[2.8vw] text-gray-500">#{value.num} {value.name}</Link>
-                                    </div>
-                                ))}
-                            </div>
-                        </div> */}
-                    </div>
-                ))}
-
-            </div>
-            <div>
-                {/* <BackTo link="/" name="トップ"></BackTo> */}
-            </div>
+        
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

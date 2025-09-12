@@ -510,9 +510,9 @@ export default function ShowEvent(
                             <Link href={{pathname:"/viewer/introduction", query:{name:value.className}}} replace className="flex-none w-[calc(35%-1vw)] p-0 flex-grow overflow-hidden">
                                 <div className="xl:w-full w-auto xl:h-auto h-full aspect-square border-l-2 border-gray-50 ">
                                     {value.img==null ?
-                                        <Image placeholder={`data:image/svg+xml;base64,${toBase64(skeleton(128, 160))}`} src={"/1725741490270.jpg"}  alt="展示イラスト" width={1000} height={1000} className=" h-full w-full rounded-r-md object-cover"></Image >
+                                        <Image placeholder={`data:image/svg+xml;base64,${toBase64(skeleton(128, 160))}`} src={"/1725741490270.jpg"}  alt="展示イラスト" width={300} height={300} className=" h-full w-full rounded-r-md object-cover"></Image >
                                     : 
-                                        <Image placeholder={`data:image/svg+xml;base64,${toBase64(skeleton(128, 160))}`} src={value.img} alt="展示イラスト" width={1000} height={1000} className=" h-full w-full rounded-r-md object-cover"></Image >
+                                        <Image placeholder={`data:image/svg+xml;base64,${toBase64(skeleton(128, 160))}`} src={value.img} alt="展示イラスト" width={300} height={300} className=" h-full w-full rounded-r-md object-cover"></Image >
                                     }
                                     
                                 </div>

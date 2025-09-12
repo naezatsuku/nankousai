@@ -29,7 +29,7 @@ export default function Gallery () {
                 {img_tags.map((value) => (
                     <Link key={value.title} href={{pathname:"/gallery/preview", query:{title:value.title} }} replace>
                         <div className="bg-white drop-shadow-lg rounded-md cursor-pointer mb-3">
-                            <Image src={value.img} alt="image" width={1000} height={1000}  className="w-full aspect-square object-cover object-left-top rounded-t-md" placeholder={`data:image/svg+xml;base64,${toBase64(skeleton(128, 128))}`}></Image>
+                            <Image src={value.img} alt="image" width={500} height={500}  className="w-full aspect-square object-cover object-left-top rounded-t-md" placeholder={`data:image/svg+xml;base64,${toBase64(skeleton(128, 128))}`}></Image>
                             <p className="pt-[1.5vw] text-gray-600 text-center text-nowrap text-xs lg:text-2xl lg:pt-4 overflow-hidden ">{value.title}</p>
                             <p className="text-[0.6rem] pr-[1.5vw] pb-[1vw] text-right lg:pr-4 lg:text-xl lg:pt-1 lg:pb-3 text-gray-500">もっと見る→</p>
                         </div>
