@@ -33,7 +33,7 @@ export function EventLinkMobile() {
                             <p className={` font-normal text-justify text-[3.5vw] leading-[150%] tracking-tight my-[2vw]`}>{value.comment}</p>
                         </div>         
                         <div className="grow bg-yellow-100 aspect-[5/4] ml-[5vw] mr-[8vw] mt-[8vw]  relative"> 
-                            <Image src={value.src} alt="展示の様子" fill className="aspect-auto rounded-xl opacity-90 object-cover " placeholder={`data:image/svg+xml;base64,${toBase64(skeleton(128, 128))}`}></Image>
+                            <Image src={value.src} alt="展示の様子" fill className="h-full w-full aspect-auto  rounded-xl opacity-90 object-cover " placeholder={`data:image/svg+xml;base64,${toBase64(skeleton(128, 128))}`}></Image>
                         </div>
                         <div className="w-full mt-[7vw]">
                             <Link href={{pathname:"/event", query:{type:value.value}}}>
