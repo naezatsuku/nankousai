@@ -33,7 +33,7 @@ export function EventLinkMobile() {
                             <p className={` font-normal text-justify text-[3.5vw] leading-[150%] tracking-tight my-[2vw]`}>{value.comment}</p>
                         </div>         
                         <div className="grow bg-yellow-100 aspect-[5/4] ml-[5vw] mr-[8vw] mt-[8vw]  relative"> 
-                            <Image src={value.src} alt="展示の様子" width={500} height={350} className="aspect-auto rounded-xl opacity-90 object-cover " placeholder={`data:image/svg+xml;base64,${toBase64(skeleton(128, 128))}`}></Image>
+                            <Image src={value.src} alt="展示の様子" fill className="aspect-auto rounded-xl opacity-90 object-cover " placeholder={`data:image/svg+xml;base64,${toBase64(skeleton(128, 128))}`}></Image>
                         </div>
                         <div className="w-full mt-[7vw]">
                             <Link href={{pathname:"/event", query:{type:value.value}}}>
@@ -63,7 +63,7 @@ export function EventLinkPC() {
                 <div key={i} className="w-[40%]   bg-white  rounded-2xl 2xl:mt-16 2xl:mx-16 mx-10 mt-10">    
                     <div className={"flex " + value.text}>
                     <div className=" w-[50%] aspect-square relative"> 
-                            <Image src={value.src} alt="展示の様子" width={600} height={400} className="rounded-l-2xl opacity-90 object-cover w-full h-full" placeholder={`data:image/svg+xml;base64,${toBase64(skeleton(128, 128))}`}></Image>
+                            <Image src={value.src} alt="展示の様子" width={2000} height={2000} className="rounded-l-2xl opacity-90 object-cover w-full h-full" placeholder={`data:image/svg+xml;base64,${toBase64(skeleton(128, 128))}`}></Image>
                         </div>
                         <div className="flex flex-col text-wrap 2xl:mx-5 mx-2 justify-center items-center">
                             <p className={`${kaiseiDecol.className} text-left  2xl:text-5xl xl:text-3xl text-2xl`}>{value.title}</p>
