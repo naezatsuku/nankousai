@@ -13,6 +13,7 @@ import { table } from "console";
 import { PiPolygon } from "react-icons/pi";
 import path from "path";
 import { number } from "motion/react";
+import { MdOutlinePlace } from "react-icons/md";
 
 const kaiseiDecol = KaiseiDecol
 
@@ -36,6 +37,10 @@ type events = Array<
     event
 >
 
+type class_filteredByPlace = Array<
+    {place:string,events:events}
+>
+
 type area = {       
     name:string,
     positionX:string,
@@ -49,7 +54,7 @@ type area = {
     type:string
 }   
 
-type filtered = {floor:number, class:events, all:events, time_limited:events, other:events}
+type filtered = {floor:number, class:events, all:events, time_limited:events, other:events, class_filtered: class_filteredByPlace}
 
 
 export default function Page() {
@@ -57,7 +62,7 @@ export default function Page() {
 
     useEffect(() => {
         let filtered:Array<filtered> = map_img.map((value) => 
-        ({floor:value.floor ,class:[], time_limited:[], all:[],other:[]}));
+        ({floor:value.floor ,class:[], time_limited:[], all:[],other:[], class_filtered:[]}));
 
         const getData = async () => {
             const result = await getEvents() 
@@ -65,32 +70,74 @@ export default function Page() {
                 return 
             }
 
-
-            result.forEach((value) => {
-
+            const modifying_place = (text:(string))  =>{
                 let name_modified = ""
-                if(value.place != null) {
-                    name_modified = value.place
-                    if(value.place.includes("教室")) {
-                        name_modified = value.place.replace("教室","");
-                    } if(value.place.includes("-")) {
+                if(text != null) {
+                    name_modified = text
+                    if( (text.includes("教室"))) {
+                        name_modified = text.replace("教室","");
+                    } if(text.includes("-")) {
                         let name_splitted = name_modified.split("-");
                         name_modified = name_splitted[0] + "年" + name_splitted[1] + "組" 
                     }
                 }
+                return name_modified
+            }
+
+
+            result.forEach((value) => {
+
+                let name_modified = modifying_place(value.place)
+
+                let name_separated:Array<string> = []
+                if(value.place.includes("・")) {
+                    let t = value.place.split("・")
+                    t.forEach((e:string) => {
+                        let m = modifying_place(e)
+                        name_separated.push(m)
+                    });
+                } else {
+                    name_separated[0] = modifying_place(value.place)
+                }
+
+
                 
 
                 let floor:Array<number> = []
                 coordinatesOfArea.forEach((d) => {
                     if(d.name == name_modified) {
-                        floor.push(d.floor)
+                        if(floor.includes(d.floor) == false) {
+                            floor.push(d.floor)
+                        }
                     }
+                })
+
+                name_separated.forEach((name) => {
+                    coordinatesOfArea.forEach((coordinate) => {
+                    if(coordinate.name == name) {
+                        let included = ""
+                        filtered[coordinate.floor-1].class_filtered.forEach((item, item_index) => {
+                            if(item.place == name) {
+                                filtered[coordinate.floor-1].class_filtered[item_index].events.push(value)
+                                included = "confirmed"
+                                return
+                            }
+                        })
+                        if(included != "confirmed") {
+                            filtered[coordinate.floor-1].class_filtered.push({ place:name, events:[value]})
+                        }
+                    }
+                    })
                 })
 
                 value.place_modified = name_modified 
                 if(floor.length > 0) {
                     floor.forEach((n) => {
+                        let included = ""
+
                         filtered[n - 1].all.push(value)
+
+
                         if (!(value.time[0] == "終日開催" || value.time[0] == "")) {
                             filtered[n -1].time_limited.push(value)
                             return
@@ -109,8 +156,19 @@ export default function Page() {
                     })
                 }
             })
+            filtered.forEach((filtered_data) => {
+                for(let i = 0; i < filtered_data.class_filtered.length; i++) {
+                    for(let n = i + 1; n < filtered_data.class_filtered.length; n++) {
+                        if(filtered_data.class_filtered[i].events.length < filtered_data.class_filtered[n].events.length){
+                            let current_data = filtered_data.class_filtered[i]
+                            filtered_data.class_filtered[i] = filtered_data.class_filtered[n]
+                            filtered_data.class_filtered[n] = current_data
+                        }        
+                    }
+                }
+            })
 
-             setFilteredData(filtered)
+            setFilteredData(filtered)
         }
 
         getData()
@@ -132,9 +190,8 @@ export default function Page() {
     const coordinatesOfArea = [
         {coordinate:"648,3507,115,3507,115,3425,87,3425,85,3395,59,3395,59,3004,83,3002,87,2979,113,2974,115,2888,646,2890", name:"食堂",floor:1, type:"polygon"}, 
         {coordinate:"1433,2334,1994,2334,1991,2809,2047,2809,2050,2918,1382,2918,1377,2809,1435,2806", name:"南高ホール",floor:1, type:"polygon"}, 
-        {coordinate:"1375,2332,1155,2223", name:"エントランス前",floor:1, type:"rect"}, 
-        {coordinate:"906,932,2113,1750", name:"くすのき広場",floor:1, type:"rect"}, 
-        {coordinate:"2210,606,1337,296", name:"駐車場",floor:1, type:"rect"}, 
+        {coordinate:"1375,2332,1155,2223", name:"エントランス前",floor:1, type:"rect"},  
+        {coordinate:"2210,606,1337,296", name:"くすのき広場",floor:1, type:"rect"}, 
         {coordinate:"564,2334,421,2113", name:"職員室前",floor:1, type:"rect"}, 
         {coordinate:"645,2451,733,2588", name:"エレベーター前",floor:1, type:"rect"}, 
         {coordinate:"104,91,524,653", name:"サブアリーナ",floor:2, type:"rect"}, 
@@ -339,12 +396,12 @@ export default function Page() {
                             <p className={`${kaiseiDecol.className}  text-[#f74b69] text-[10vw] ml-[2vw] lg:ml-3 lg:text-5xl  text-nowrap z-10`}>{index+1}階</p>
                         </div>
                         <div className={`w-full mx-auto flex flex-wrap lg:flex-nowrap px-2 md:px-6 lg:px-0 box-border`}>
-                            <div className={`${index == 2 ? "w-[40vw]" : "w-[70vw]"} lg:w-[45%] lg:shrink-0 mx-auto mb-5`}>
+                            <div className={`${index == 2 ? "w-[40vw]" : "w-[70vw]"} lg:w-[55%] lg:shrink-0 mx-auto mb-5`}>
                                 <div className="relative  mx-6 mb-6  lg:items-center lg:flex hidden">
                                     <div className=" w-[2vw] lg:w-3  lg:h-16 bg-gradient-to-br from-rose-500 to-rose-300"></div>
                                     <p className={`${kaiseiDecol.className}  text-[#f74b69] lg:ml-3 lg:text-5xl  text-nowrap z-10`}>{index+1}階</p>
                                 </div>  
-                                <div className={`${index == 2 ? "lg:w-[50%]" : "lg:w-[65%]"} w-full relative mx-auto`}>
+                                <div className={`${index == 2 ? "lg:w-[50%]" : "lg:w-[65%]"}  w-full relative mx-auto`}>
                                     <div style={{
                                         top:String(Number(modal_data?.position?.positionY) + 10) + "%",
                                         left:String(Number(modal_data?.position?.positionX) + 10) + "%"
@@ -456,12 +513,54 @@ export default function Page() {
                                 </div>
                                 
                             </div>
-                            <div className="w-full text-black border-rose-400 lg:border-none lg:shadow-none border-2  rounded-xl shadow-md relative ">
-                                <p className={`${kaiseiDecol.className} absolute top-4 right-4 text-xl md:text-3xl md:top-6 md:right-6 text-[#f74b69] lg:hidden`}>{index + 1}階</p>
+                            <div className="w-full text-black  lg:border-none lg:shadow-none   rounded-xl  relative overflow-hidden">
                                 {filteredData != undefined &&
                                 
-                                    <div className="p-2 pb-1 pt-4 md:p-4 md:pt-6 lg:p-0">
-                                        {[{data_set:filteredData[index].class, name:"クラス展示"}, {data_set:filteredData[index].time_limited, name:"時限開催展示"}, {data_set:filteredData[index].other, name:"そのほかの展示"}].map((list_type_value, list_index) => 
+                                    <div className="p-2 pb-1 pt-4 md:p-4 md:pt-6 lg:p-0 ">
+                                        {filteredData[index].class_filtered.map((filter_value, filter_index) => 
+                                            <div key={filter_index}>
+                                            {filter_value.events.length > 1 &&
+                                                <div className="pb-7 md:pb-14 lg:pb-7 xl:pb-12">
+                                                    <p className="w-full from-rose-500 font-light to-pink-400 rounded-lg bg-gradient-to-br pl-8 py-1 md:pl-12 md:py-3 lg:py-2 text-white text-xl md:text-3xl lg:text-xl ">{filter_value.place}</p>
+                                                    <div className="flex justify-between flex-wrap w-full">
+                                                        {filter_value.events.map((event_value, event_index) => 
+                                                        <div className="flex items-center w-[48%] 2xl:w-[48%]"  key={`${event_value} + "map`}>
+                                                            <Link href={{pathname:"/event/introduction", query:{name:event_value.className}}} className={` relative overflow-hidden pt-4 md:pt-6 lg:pt-5 xl:pt-7 cursor-pointer ${hovered == event_value.className && " opacity-60"}`}  onMouseEnter={() => {setHovered(event_value.className)}} onMouseLeave={() => {setHovered("")}}>
+                                                                <div className="flex items-center ">
+                                                                    <div className="min-w-20 md:min-w-32 lg:min-w-24 xl:min-w-32 flex  items-center px-2 md:px-4 justify-center shrink-0 text-white bg-[#ff75a1] rounded-full py-1 md:py-2 lg:py-2 text-[10px] md:text-base lg:text-xs  xl:text-sm  space-x-1">
+                                                                    <p className=" text-nowrap whitespace-nowrap ">{event_value.className} </p>
+                                                                    </div>
+                                                                    <div className="pl-2 md:pl-4 overflow-hidden flex">
+                                                                        <p className="  text-sm md:text-xl lg:text-base xl:text-lg text-nowrap whitespace-nowrap ">{event_value.title}</p>
+                                                                    
+                                                                    </div>
+                                                                </div>
+                                                            </Link>
+                                                        </div>
+                                                        )}
+                                                    </div>
+                                                </div>  
+                                            }
+                                            {filter_value.events.length == 1 &&
+                                                    <Link href={{pathname:"/event/introduction", query:{name:filter_value.events[0].className}}} className={`w-full relative overflow-hidden flex items-center pb-4 md:pb-8 lg:pb-4 2xl:pb-7 cursor-pointer ${hovered == filter_value.events[0].className && " opacity-60"}`}  onMouseEnter={() => {setHovered(filter_value.events[0].className)}} onMouseLeave={() => {setHovered("")}}>
+                                                        <div className="w-[50%] flex items-center shrink-0">
+                                                            <div className="min-w-20 md:min-w-40 lg:min-w-24 xl:min-w-32 flex  items-center px-3 md:px-4 justify-center shrink-0 text-white bg-[#ff75a1] rounded-full py-1  md:py-2 lg:py-2 text-[10px] md:text-lg  lg:text-xs xl:text-sm space-x-1">
+                                                            <p className=" text-nowrap whitespace-nowrap">{filter_value.events[0].className} </p>
+                                                            </div>
+                                                            <div className="text-xs md:text-xl lg:text-sm 2xl:text-lg mx-auto font-light">
+                                                                <p>{filter_value.place}</p>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div className=" overflow-hidden flex">
+                                                            <p className="  text-base md:text-2xl lg:text-base xl:text-lg text-nowrap whitespace-nowrap g">{filter_value.events[0].title}</p>
+                                                        </div>
+                                                    </Link>
+                                            }
+                                            </div>
+                                        )}
+
+                                        {/* {[{data_set:filteredData[index].class, name:"クラス展示"}, {data_set:filteredData[index].time_limited, name:"時限開催展示"}, {data_set:filteredData[index].other, name:"そのほかの展示"}].map((list_type_value, list_index) => 
                                             <>  
                                                 
                                                 {list_type_value.data_set.length > 0 &&
@@ -472,13 +571,16 @@ export default function Page() {
                                                         </div>
                                                         <div className="flex flex-wrap pl-2 justify-between w-full overflow-hidden mb-2 md:mb-5 lg:mb-4 box-border">
                                                             {list_type_value.data_set.map((class_value, class_index) => (
-                                                                <Link href={{pathname:"/event/introduction", query:{name:class_value.className}}} className={`w-[100%] md:w-[48%] relative overflow-hidden flex items-center pb-4 md:pb-4 lg:pb-4 xl:pb-7 cursor-pointer ${hovered == class_value.className && " opacity-60"}`} key={`${class_index} + "map`}  onMouseEnter={() => {setHovered(class_value.className)}} onMouseLeave={() => {setHovered("")}}>
-                                                                    <div className="min-w-14 md:min-w-24 xl:min-w-32 flex items-center px-2 justify-center shrink-0 text-white bg-[#f9a1bd] rounded-full py-1">
-                                                                        <p className="text-[10px] md:text-base lg:text-sm xl:text-lg  text-nowrap whitespace-nowrap">{class_value.className.replace("年", "-").replace("組", "").replace("学", "").replace("校", "")} </p>
-                                                                    </div>
-                                                                    <div className="pl-2 md:pl-4 overflow-hidden flex">
-                                                                        <p className="  text-sm md:text-lg lg:text-base xl:text-2xl text-nowrap whitespace-nowrap g">{class_value.title}</p>
+                                                                <Link href={{pathname:"/event/introduction", query:{name:class_value.className}}} className={`w-[48%] 2xl:w-[48%] relative overflow-hidden   pb-4 md:pb-4 lg:pb-6 xl:pb-7 cursor-pointer ${hovered == class_value.className && " opacity-60"}`} key={`${class_index} + "map`}  onMouseEnter={() => {setHovered(class_value.className)}} onMouseLeave={() => {setHovered("")}}>
+                                                                    <div className="flex items-center ">
+                                                                        <div className="min-w-14 lg:min-w-32 xl:min-w-40 flex  items-center px-2 md:px-4 justify-center shrink-0 text-white bg-[#f9a1bd] rounded-full py-1 lg:py-2 text-[10px] md:text-base lg:text-sm xl:text-lg space-x-1">
+                                                                            <MdOutlinePlace className="relative top-[1px]"></MdOutlinePlace>
+                                                                        <p className=" text-nowrap whitespace-nowrap">{class_value.place_modified} </p>
+                                                                        </div>
+                                                                        <div className="pl-2 md:pl-4 overflow-hidden flex">
+                                                                            <p className="  text-sm md:text-lg lg:text-base xl:text-2xl text-nowrap whitespace-nowrap g">{class_value.className}</p>
                                                                         
+                                                                        </div>
                                                                     </div>
                                                                 </Link>
                                                             ))}
@@ -486,7 +588,7 @@ export default function Page() {
                                                     </div>
                                                 }
                                             </>
-                                        )}   
+                                        )}    */}
                                     </div>
                                 } 
                             </div>
