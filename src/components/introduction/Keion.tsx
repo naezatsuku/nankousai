@@ -9,8 +9,6 @@ import { GoClockFill } from "react-icons/go";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { motion } from "framer-motion";
 import { KaiseiDecol } from "@/app/fonts"
-import { roboto } from "@/app/fonts"
-import {notoSansJP} from "@/app/fonts"
 import Image from "next/image" 
 import { UUID } from "crypto";
 import { AiFillCaretRight } from 'react-icons/ai';
@@ -131,15 +129,15 @@ export default function Keion() {
                       <div className={`hidden lg:col-span-2 lg:flex items-center justify-end border-r-[0.5px] border-slate-900 font-bold text-xl px-4 ${KaiseiDecol.className} `}>
                         {value.time.split("~")[0]}
                       </div>
-                      <div className={`underline-offset-4 underline hidden lg:flex lg:col-span-6 px-4 py-2 font-semibold  text-xl  items-center justify-start ${roboto.className}`}>
+                      <div className={`underline-offset-4 underline hidden lg:flex lg:col-span-6 px-4 py-2 font-semibold  text-xl  items-center justify-start `}>
                         {value.name}
                       </div>
                       <div className="flex justify-start items-center col-span-8 lg:hidden p-3">
                         <div className="sm:flex sm:flex-col  "> 
-                            <div className={`items-center  border-slate-50 font-bold text-base  ${roboto.className} `}>
+                            <div className={`items-center  border-slate-50 font-bold text-base   `}>
                                 {value.time}
                             </div>
-                            <div className={`items-center  border-slate-50 font-bold text-lg underline underline-offset-4 ${roboto.className} `}>
+                            <div className={`items-center  border-slate-50 font-bold text-lg underline underline-offset-4  `}>
                              {value.name}
                             </div>
                         </div>
@@ -234,7 +232,7 @@ export default function Keion() {
               </div>
 
               <div className="pt-4 border-t border-gray-300">
-                <p className={`text-base ${roboto.className}`}>{selectedSlot.comment}</p>
+                <p className={`text-base`}>{selectedSlot.comment}</p>
               </div>
             </motion.div>
           </div>
