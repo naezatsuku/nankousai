@@ -173,9 +173,15 @@ export default function MainTitle() {
                         </motion.div>
                     )}
                 </motion.div>
+                <motion.div initial={{opacity:0}} animate={{opacity:0.7}} transition={{delay:0.5, duration:0.5}} className="absolute text-white  top-2 right-3">
+                    <p>イラスト：安住はな</p>
+                </motion.div>
             </div>
             {/* ノートPC,タブレット用(ipadPro)レイアウト */}
             <div  className="h-full w-full hidden lg:max-xl:block relative">
+                <motion.div initial={{opacity:0}} animate={{opacity:0.7}} transition={{delay:0.5, duration:0.5}} className="z-30 absolute text-white  top-2 right-3 ">
+                    <p>イラスト：安住はな</p>
+                </motion.div>
                 <motion.div animate={{opacity:0}} transition={{delay:0.2, duration:0.5}} className="w-full h-full absolute top-0 left-0 z-40 flex justify-center items-center pointer-events-none">
                     <p className={`text-4xl text-yellow-400 ${kaiseiDecol.className}`}>welcome</p>
                 </motion.div>
@@ -190,6 +196,9 @@ export default function MainTitle() {
             {/* タブレット用レイアウト */}
             <div className="h-full w-full hidden md:max-lg:block relative
             ">
+                <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:0.5, duration:0.5}} className="absolute text-white  bottom-1 right-3 text-2xl" >
+                    <p>イラスト：安住はな</p>
+                </motion.div>
                 <motion.div animate={{opacity:0}} transition={{delay:0.2, duration:0.5}} className="w-full h-full absolute top-0 left-0 z-40 flex justify-center items-center pointer-events-none">
                     <p className={`text-3xl text-yellow-400 ${kaiseiDecol.className}`}>welcome</p>
                 </motion.div>
@@ -201,6 +210,9 @@ export default function MainTitle() {
             </div>
             {/* スマホ用レイアウト */}
             <div className="h-full w-full md:hidden relative">
+                <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:0.5, duration:0.5}} className="absolute text-white  bottom-7 right-3">
+                    <p>イラスト：安住はな</p>
+                </motion.div>
                 <motion.div animate={{opacity:0}} transition={{delay:0.2, duration:0.5}} className="w-full h-full absolute top-0 left-0 z-40 flex justify-center items-center pointer-events-none">
                     <p className={`text-3xl text-yellow-400 ${kaiseiDecol.className}`}>welcome</p>
                 </motion.div>

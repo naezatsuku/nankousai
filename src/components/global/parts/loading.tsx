@@ -15,7 +15,7 @@ export function LoadingPage() {
     return(
         <div className="w-[100vw] h-[100vh] bg-gradient-to-br base-gradient ">
             {/* <Image src={"/ロード背景.jpg"} alt="ロード画面背景" fill className="brightness-95  object-left-top object-cover top-0 left-0"></Image> */}
-            <p className={`${kaiseiDecol.className} text-4xl text-yellow-300 text-center  absolute left-[50vw] -translate-x-1/2 top-[50vh] -translate-y-1/2 text-nowrap`}>Loading...</p>
+            <p className={`${kaiseiDecol.className} text-2xl md:text-4xl text-yellow-300 text-center  absolute left-[50vw] -translate-x-1/2 top-[50vh] -translate-y-1/2 text-nowrap`}>Loading...</p>
         </div>
     )
 }

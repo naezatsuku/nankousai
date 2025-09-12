@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["fonts.gstatic.com","myypelzqjunsrpytkiee.supabase.co","cdn.toolpods.io"],
+    domains: ["fonts.gstatic.com","myypelzqjunsrpytkiee.supabase.co"],
      // ここでフォント取得を許可
   },
   async headers() {

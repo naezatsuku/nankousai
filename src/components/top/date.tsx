@@ -38,7 +38,7 @@ export default function Date() {
                     </Link> 
                     <Link href={"/info#attention"}>
                         <div className="w-[40vw] aspect-[3/1]">
-                            <Rounded_base text={"南高祭とは？"} size={50} color="red-gradient"></Rounded_base>
+                            <Rounded_base text={"お知らせ"} size={50} color="red-gradient"></Rounded_base>
                         </div>
                     </Link>
                 </div>
