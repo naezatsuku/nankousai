@@ -382,7 +382,18 @@ export default function ShowDetails (
                             className="lg:hidden my-[2vw]  w-[25vw] aspect-[3/1] opacity-70 lg:ml-0 lg:w-[17%] lg:mb-6 lg:mt-0"
                         ></div>
                     </div>
-
+                <div className={`fixed left-0 ${setTextColor(event.tags, "bg")} bottom-6 drop-shadow-lg opacity-80 hover:opacity-100 md:py-4 md:px-8 md:bottom-12 lg:bottom-16 lg:py-5 py-2 px-5 z-30 lg:pr-10 lg:pl-14  rounded-r-full `}>
+                    <Link href={"/event"} className="text-white lg:text-2xl text-base md:text-2xl">
+                        展示一覧へ
+                    </Link>
+                </div>
+                {/* <div className={`fixed bottom-0 left-0 w-full flex md:justify-end  justify-center `}>
+                    <div className={` ${setTextColor(event.tags, "bg")} rounded-t-2xl opacity-80  py-2  px-6 md:mr-20 mr-0`}>
+                        <Link href={"/event"} className="text-white md:text-lg text-sm">
+                        展示一覧へ
+                        </Link>
+                    </div>
+                </div> */}
                 </div>
             </div> 
         </div>

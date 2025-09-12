@@ -79,7 +79,7 @@ export default function Page() {
       };
 
     return(
-        <div className="h-screen bg-white">
+        <div className=" bg-white">
             {name?
             <div className="w-full">
                 <title>{name} | 第72回南高祭・展示の部2025</title>
@@ -107,7 +107,6 @@ export default function Page() {
             //     </Link>
             // </div>
             }
-            
         </div>
     )
 }
