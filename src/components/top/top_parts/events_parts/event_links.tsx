@@ -17,9 +17,9 @@ const kaiseiDecol = KaiseiDecol
 
 export function EventLinkMobile() {
     const eventData = [
-        {title:"クラス展示",comment:"27クラスによる色彩豊かな展示を体験できます。", src:"/pleasant_cloud.jpg", value:"クラス展示", color:"light-gradient", text:" text-[#fc6579]"},
-        {title:"部活動展示",comment:"中高の部活動によるアクティビティや体験の数々", src:"/fireworksSky.jpg", value:"部活動展示", color:"violet-gradient", text:" text-[#4f46e5]"},
-        {title:"フード販売",comment:"高校3年、食堂などによる絶品フードとドリンク", src:"/burger-2762431_1920.jpg", value:"フード", color:"base-gradient", text:" text-[#ec3801]"},
+        {title:"クラス展示",comment:"27クラスによる色彩豊かな展示を体験できます。", src:"/pleasant_cloud.webp", value:"クラス展示", color:"light-gradient", text:" text-[#fc6579]"},
+        {title:"部活動展示",comment:"中高の部活動によるアクティビティや体験の数々", src:"/fireworksSky.webp", value:"部活動展示", color:"violet-gradient", text:" text-[#4f46e5]"},
+        {title:"フード販売",comment:"高校3年、食堂などによる絶品フードとドリンク", src:"/burger-2762431_1920.webp", value:"フード", color:"base-gradient", text:" text-[#ec3801]"},
     ]
 
     return(
@@ -52,9 +52,9 @@ export function EventLinkMobile() {
 
 export function EventLinkPC() {
     const eventData = [
-        {title:"クラス展示",comment:"27クラスによる色彩豊かな展示を体験できます。", src:"/pleasant_cloud.jpg", value:"クラス展示", color:"light-gradient", text:" text-[#fc6579]"},
-        {title:"部活動展示",comment:"中高の部活動によるアクティビティや体験の数々", src:"/fireworksSky.jpg", value:"部活動展示", color:"violet-gradient", text:" text-[#4f46e5]"},
-        {title:"フード販売",comment:"高校3年、食堂などによる絶品フードとドリンク", src:"/burger-2762431_1920.jpg", value:"フード", color:"base-gradient", text:" text-[#ec3801]"},
+        {title:"クラス展示",comment:"27クラスによる色彩豊かな展示を体験できます。", src:"/pleasant_cloud.webp", value:"クラス展示", color:"light-gradient", text:" text-[#fc6579]"},
+        {title:"部活動展示",comment:"中高の部活動によるアクティビティや体験の数々", src:"/fireworksSky.webp", value:"部活動展示", color:"violet-gradient", text:" text-[#4f46e5]"},
+        {title:"フード販売",comment:"高校3年、食堂などによる絶品フードとドリンク", src:"/burger-2762431_1920.webp", value:"フード", color:"base-gradient", text:" text-[#ec3801]"},
     ]
 
     return(

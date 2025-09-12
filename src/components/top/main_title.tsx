@@ -125,9 +125,9 @@ export default function MainTitle() {
 
     
     const eyeCatch_positions_src = [
-        {pos:" top-[3svh] right-[-8svh] h-[22svh] aspect-[4/1]", src:"/SEPT13.png", alt:"sept13", size:[500,2000]},
-        {pos:" top-[20svh] right-[-2svh] h-[22svh] aspect-[9/5]", src:"/and14.png", alt:"sept13", size:[500,900]},
-        {pos:" top-[37svh] right-[-7svh] h-[22svh] aspect-[4/1]", src:"/visitUs.png", alt:"sept13" ,size:[500,2000]}
+        {pos:" top-[3svh] right-[-8svh] h-[22svh] aspect-[4/1]", src:"/SEPT13.webp", alt:"sept13", size:[500,2000]},
+        {pos:" top-[20svh] right-[-2svh] h-[22svh] aspect-[9/5]", src:"/and14.webp", alt:"sept13", size:[500,900]},
+        {pos:" top-[37svh] right-[-7svh] h-[22svh] aspect-[4/1]", src:"/visitUs.webp", alt:"sept13" ,size:[500,2000]}
     ]
 
     const ripple_rugs = [
@@ -157,7 +157,7 @@ export default function MainTitle() {
                 <motion.div animate={{opacity:0}} transition={{delay:0.2, duration:0.5}} className="w-full h-full absolute top-0 left-0 z-40 flex justify-center items-center pointer-events-none">
                     <p className={`text-4xl text-yellow-400 ${kaiseiDecol.className}`}>welcome</p>
                 </motion.div>
-                <Image height={800} width={2400} src={"/pc背景決.jpg"} alt="背景用ポスター画像" className=" aspect-auto h-full w-full object-cover object-right-top -z-10" priority></Image>
+                <Image height={800} width={2400} src={"/pc背景決.webp"} alt="背景用ポスター画像" className=" aspect-auto h-full w-full object-cover object-right-top -z-10" priority></Image>
                 {/* ポスターのエマージングアニメーション用赤幕 */}
                 <motion.div variants={bg_image_animation} className="bottom-0 right-0 absolute z-0 h-full w-full bg-[#F02004]" initial="initial" custom={4000} whileInView="animate"></motion.div>
                 {/* 二つのボタン */}
@@ -186,7 +186,7 @@ export default function MainTitle() {
                     <p className={`text-4xl text-yellow-400 ${kaiseiDecol.className}`}>welcome</p>
                 </motion.div>
                 <motion.div variants={bg_image_animation} custom={1500} className="bottom-0 right-0 absolute z-[5] h-full w-full bg-[#F02004]" initial="initial" whileInView="animate"></motion.div>
-                <Image height={800} width={2400} src={"/pc背景決.jpg"} alt="背景用ポスター" className="  w-full object-cover object-right-top absolute bottom-0 right-0 h-[125svh] aspect-[3/1] z-0" priority></Image>
+                <Image height={600} width={1800} src={"/pc背景決.webp"} alt="背景用ポスター" className="  w-full object-cover object-right-top absolute bottom-0 right-0 h-[125svh] aspect-[3/1] z-0" priority></Image>
                 
                 <motion.div variants={variants} initial={count == 0?"initial" :"loop_initial"} animate={count == 0?"animate" :"loop_animate"} ref={button} >
                     <SunButton name="展示一覧" pos=" top-[-2svh] left-[-3svw] h-[55svh] max-h-[50svw]  "></SunButton>
@@ -202,7 +202,7 @@ export default function MainTitle() {
                 <motion.div animate={{opacity:0}} transition={{delay:0.2, duration:0.5}} className="w-full h-full absolute top-0 left-0 z-40 flex justify-center items-center pointer-events-none">
                     <p className={`text-3xl text-yellow-400 ${kaiseiDecol.className}`}>welcome</p>
                 </motion.div>
-                <Image height={900} width={1600} src={"/2025_nankouposter.jpg"} alt="背景用ポスター" className="aspect-auto h-full w-full object-cover object-left-top -z-10" priority></Image>
+                <Image height={900} width={1600} src={"/2025_nankouposter.webp"} alt="背景用ポスター" className="aspect-auto h-full w-full object-cover object-left-top -z-10" priority></Image>
                 <motion.div variants={bg_image_animation} custom={1000} className="bottom-0 right-0 absolute z-0 h-full w-full bg-[#F02004]" initial="initial" whileInView="animate"></motion.div>
                 <motion.div variants={variants} initial={count == 0?"initial" :"loop_initial"} animate={count == 0?"animate" :"loop_animate"} ref={button} >
                     <SunButton name="展示一覧" pos=" bottom-[5vw] right-[5vw] w-[38svw] "></SunButton>
@@ -216,7 +216,7 @@ export default function MainTitle() {
                 <motion.div animate={{opacity:0}} transition={{delay:0.2, duration:0.5}} className="w-full h-full absolute top-0 left-0 z-40 flex justify-center items-center pointer-events-none">
                     <p className={`text-3xl text-yellow-400 ${kaiseiDecol.className}`}>welcome</p>
                 </motion.div>
-                 <Image height={2400} width={800} src={"/南高祭スマホ.jpg"} alt="背景用ポスター" className="aspect-auto h-full w-full object-cover object-right-bottom -z-10" priority></Image>   
+                 <Image height={1800} width={600} src={"/南高祭スマホ.webp"} alt="背景用ポスター" className="aspect-auto h-full w-full object-cover object-right-bottom -z-10" priority></Image>   
                  <motion.div variants={bg_image_animation} className="bottom-0 right-0 absolute z-0 h-full w-full bg-[#F02004]" initial="initial" whileInView="animate" custom={800}></motion.div>
                  <motion.div variants={variants} initial={count == 0?"initial" :"loop_initial"} animate={count == 0?"animate" :"loop_animate"} ref={button} >
                     <SunButton name="展示一覧" pos=" top-[12vw]  right-[-2vw] w-[50svw] max-w-[20svh] "></SunButton>
@@ -362,7 +362,7 @@ export function SunButton(
         <div>   
             <motion.div variants={button_animations} className={"absolute aspect-square z-20 " + pos}  onHoverStart={openHalo} onHoverEnd={closeHalo}>
                 <Link href={name == "展示一覧"? "/event" : "/info"}>
-                    <Image src={name == "展示一覧"?"/展示一覧ミニ.png":"/事前登録ミニ.png"} alt={name == "展示一覧" ?"展示一覧" :"事前登録" + "ジャンプボタン"} width={400} height={400} className="aspect-square object-cover w-full h-full "></Image>
+                    <Image src={name == "展示一覧"?"/展示一覧ミニ.webp":"/事前登録ミニ.webp"} alt={name == "展示一覧" ?"展示一覧" :"事前登録" + "ジャンプボタン"} width={400} height={400} className="aspect-square object-cover w-full h-full "></Image>
                 </Link>
             </motion.div>
             {/* ボタンをホバー時に出てくるヘイロー。大きいほうと小さいほうどっちも */}
