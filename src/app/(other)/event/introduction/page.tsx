@@ -79,7 +79,7 @@ export default function Page() {
       };
 
     return(
-        <div className=" bg-white">
+        <div className="min-h-screen bg-white">
             {name?
             <div className="w-full">
                 <title>{name} | 第72回南高祭・展示の部2025</title>

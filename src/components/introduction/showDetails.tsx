@@ -237,7 +237,7 @@ export default function ShowDetails (
                     
                 </div>
                 {event.TimeVisible && 
-                <div className="flex justify-center ">
+                <div className="flex justify-center mt-4">
                     <div className="flex justify-center flex-col w-auto h-auto p-6 bg-slate-50  border-slate-100 shadow-xl rounded-xl">
                         <AnimatedClockArc minutes={event.waitTime} />
                         <div className="text-center mt-2 text-black text-lg ">現在の待ち時間</div>
@@ -382,8 +382,8 @@ export default function ShowDetails (
                             className="lg:hidden my-[2vw]  w-[25vw] aspect-[3/1] opacity-70 lg:ml-0 lg:w-[17%] lg:mb-6 lg:mt-0"
                         ></div>
                     </div>
-                <div className={`fixed left-0 ${setTextColor(event.tags, "bg")} bottom-6 drop-shadow-lg opacity-80 hover:opacity-100 md:py-4 md:px-8 md:bottom-12 lg:bottom-16 lg:py-5 py-2 px-5 z-30 lg:pr-10 lg:pl-14  rounded-r-full `}>
-                    <Link href={"/event"} className="text-white lg:text-2xl text-base md:text-2xl">
+                <div className={`fixed right-0 light-gradient bg-gradient-to-br bottom-6 drop-shadow-lg opacity-80 hover:opacity-100 md:py-5 md:px-10 md:bottom-12 lg:bottom-16 lg:py-5 py-2 px-6 z-30 lg:pr-10 lg:pl-14  rounded-l-full `}>
+                    <Link href={"/event"} className="text-white lg:text-2xl text-lg md:text-3xl">
                         展示一覧へ
                     </Link>
                 </div>

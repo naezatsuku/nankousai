@@ -40,7 +40,7 @@ export default function page() {
         <link rel="canonical" href="https://nankousai.vercel.app/" />
     </Head>
     return(
-        <div className="pt-[min(15vw,80px)]  bg-white md:pt-[13vw]  lg:pt-16 xl:pt-[min(15vw,80px)]">
+        <div className="pt-[min(15vw,80px)] min-h-screen bg-white md:pt-[13vw]  lg:pt-16 xl:pt-[min(15vw,80px)]">
 
             <div className="w-full h-[30vw] lg:h-48 2xl:h-60 relative">
                 <Image src={"/coloful_sky.webp"} alt="展示の様子" width={1000} height={500} priority className="object-cover z-0 opacity-95 w-full h-full absolute"></Image>

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { Kiwi_Maru } from "next/font/google";
 import "./globals.css";
 // グローバルクラス、各階層で使う独自クラスを定義しています。各年のテーマカラーを使いたい場合はここを参照
@@ -8,7 +7,6 @@ import { headers } from "next/headers";
 import { LoadingLayout } from "@/components/global/parts/loading_layout";
 import { Analytics } from '@vercel/analytics/react';
 
-const inter = Inter({ subsets: ["latin"] });
 
 const kiwi_Maru = Kiwi_Maru({weight:["300","400","500"], subsets:["latin"]})
 
@@ -29,8 +27,8 @@ export default function RootLayout({
   const requestUrl = headers().get("x-url")
 
   return (
-    <html lang="jp">
-      <body className={`${kiwi_Maru.className}`}>
+    <html lang="jp"  className={`${kiwi_Maru.className} `}>
+      <body>
             {children}
         <Analytics />
       </body>
