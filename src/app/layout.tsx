@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Kiwi_Maru } from "next/font/google";
+import { KiwiMaru } from "./fonts";
 import "./globals.css";
 // グローバルクラス、各階層で使う独自クラスを定義しています。各年のテーマカラーを使いたい場合はここを参照
 
@@ -8,7 +8,6 @@ import { LoadingLayout } from "@/components/global/parts/loading_layout";
 import { Analytics } from '@vercel/analytics/react';
 
 
-const kiwi_Maru = Kiwi_Maru({weight:["300","400","500"], subsets:["latin"]})
 
 export const metadata: Metadata = {
   title: "第72回南高祭・展示の部2025",
@@ -16,7 +15,7 @@ export const metadata: Metadata = {
   openGraph:{images:"https://drive.google.com/file/d/137obuAzNIB6r-501h6D0-6SoFgLnqXd3/view?usp=drive_link", type:"website", description:"南高・南高附属中最大の行事へようこそ。どなたでも来場可。魅力的な催し物をたくさん用意しています。"},
   other:{
     "google-site-verification":["0oZkaqm-Q6yVAvi6FkC6TXOroxI5c0S2dUMsxRa__uw"]
-  },
+  }, 
 };
 
 export default function RootLayout({
@@ -27,7 +26,7 @@ export default function RootLayout({
   const requestUrl = headers().get("x-url")
 
   return (
-    <html lang="jp"  className={`${kiwi_Maru.className} `}>
+    <html lang="jp"  className={`${KiwiMaru.className} `}>
       <body>
             {children}
         <Analytics />
