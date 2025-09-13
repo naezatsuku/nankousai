@@ -239,16 +239,18 @@ export default function ShowDetails (
                     
                 </div>
                 {event.TimeVisible && 
-                event.Block ? 
-                    <div className="w-full mt-[5vw] lg:mt-10 px-[4vw] lg:px-6 py-[3vw] lg:py-6 rounded-lg bg-slate-100 text-center">
+                (
+                    event.Block ? 
+                    <div className="w-full mt-[5vw] lg:mt-10 px-[4vw] lg:px-6 py-[3vw] lg:py-6 rounded-lg  text-center">
                         <p className="text-[4vw] lg:text-2xl text-slate-500 font-medium">受付終了しました</p>
                     </div>  :
-                    (event.ticket ?<div className="w-full mt-[5vw] lg:mt-10 px-[4vw] lg:px-6 py-[3vw] lg:py-6 rounded-lg bg-slate-100 text-center">
+                    (event.ticket ?<div className="w-full mt-[5vw] lg:mt-10 px-[4vw] lg:px-6 py-[3vw] lg:py-6 rounded-lg  text-center">
                         <p className="text-[4vw] lg:text-2xl text-slate-500 font-medium">整理券制です</p>
                     </div> : 
-                    <div className="flex justify-center w-full  rounded-lg bg-slate-100">
+                    <div className="flex justify-center w-full  rounded-lg ">
                         <AnimatedClockArc minutes={event.waitTime} ></AnimatedClockArc> 
                     </div>  
+                )
                 )
                 }
 
