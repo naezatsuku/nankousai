@@ -21,6 +21,7 @@ export default function Date() {
                 <span className="mx-12">開始 9:30</span>
                 <span>終了 15:30</span>
             </p>
+            
             <div className="lg:hidden">
                 <div className="my-[7vw] flex justify-center ">
                     <Link href={"/info"}>
@@ -43,6 +44,25 @@ export default function Date() {
                     </Link>
                 </div>
             </div>   
+            <div className="mx-4 p-3 md:p-5 md:mx-10 lg:mt-16 lg:max-w-[700px] lg:mx-auto border-2 border-gray-300 rounded-xl shadow-md">
+                <div className={`${kaiseiDecol.className}  text-center text-[8vw] md:text-5xl  2xl:text-5xl lg:text-4xl lg:my-4 lg:mt-2 mb-2 md:my-4`}>
+                    <p>お知らせ</p>
+                </div>
+                <div>
+                    <div className="flex items-center space-x-4 mb-2 ">
+                          <Link  href={{ pathname: "/event/introduction", query: {name:"吹奏楽部(南winds)"} }} > 
+                            <p className="base-bg md:text-xl text-xs text-white px-4 rounded-full bg-gradient-to-br py-2">{"吹奏楽部(南winds)"}</p>
+                          </Link>
+                    
+                    <p className="md:text-xl text-sm">開催時間変更のお知らせ</p>
+                </div>
+                <div className="text-sm md:text-xl">   
+                    メインアリーナにて10時より開催予定の公演について、10時30分より開催に変更となりました。ご迷惑をおかけしますが、ご了承ください。
+                </div>
+                </div>
+                
+
+            </div>
         </div>
     )
 }
