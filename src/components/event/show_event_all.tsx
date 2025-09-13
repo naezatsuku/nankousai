@@ -446,7 +446,7 @@ export default function ShowEvent(
                     <p>{value}</p>
                 ))}
             </div> */}
-            <motion.div className="bg-white pb-[10vw] lg:flex flex-wrap justify-around lg:px-2" ref={targetDiv}>
+            <motion.div className="bg-white pb-[5vw] lg:flex flex-wrap justify-around lg:px-2" ref={targetDiv}>
                 {notfound == true && 
                     <motion.div initial={{y:20, opacity:0}} animate={{y:0, opacity:1}} transition={{ease:"easeOut", duration:0.4}} className="w-full h-[35vw] xl:h-[15vw] flex">
                         <p className={`${kaiseiDecol.className} m-auto text-[6vw] lg:text-5xl bg-gradient-to-br  light-gradient bg-clip-text text-transparent `}>・・・該当なし・・・</p>

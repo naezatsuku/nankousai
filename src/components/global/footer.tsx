@@ -18,10 +18,10 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-black text-white px-6 py-12 pt-14 text-sm font-light">
+    <footer className="bg-black text-white px-6 py-14 pb-16 text-sm font-light">
       <div className="max-w-screen-xl lg:max-w-3xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-12">
         <div className="flex items-center justify-center w-full lg:w-1/2 gap-6">
-          <div className="relative w-20 h-20 shrink-0">
+          <div className="relative w-28 h-28 shrink-0">
             <Image
               src="/南高70ロゴ.png"
               alt="ロゴ"
@@ -31,14 +31,14 @@ export default function Footer() {
               priority
             />
           </div>
-          <div className="flex flex-col gap-6 ">
+          <div className="flex flex-col gap-5 ">
             {externalLinks.map((item, i) => (
               <Link
                 key={i}
                 href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-lg lg:text-xl font-medium hover:underline text-white/90"
+                className="text-base lg:text-base font-medium hover:underline text-white/90"
               >
                 {item.label} <FiExternalLink className="inline-block text-lg relative -top-[2px]" />
               </Link>

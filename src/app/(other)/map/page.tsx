@@ -90,8 +90,8 @@ export default function Page() {
                 let name_modified = modifying_place(value.place)
 
                 let name_separated:Array<string> = []
-                if(value.place.includes("・")) {
-                    let t = value.place.split("・")
+                if(value.place.includes("/")) {
+                    let t = value.place.split("/")
                     t.forEach((e:string) => {
                         let m = modifying_place(e)
                         name_separated.push(m)
