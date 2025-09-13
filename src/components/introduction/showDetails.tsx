@@ -246,7 +246,9 @@ export default function ShowDetails (
                     (event.ticket ?<div className="w-full mt-[5vw] lg:mt-10 px-[4vw] lg:px-6 py-[3vw] lg:py-6 rounded-lg bg-slate-100 text-center">
                         <p className="text-[4vw] lg:text-2xl text-slate-500 font-medium">整理券制です</p>
                     </div> : 
-                    <AnimatedClockArc minutes={event.waitTime}></AnimatedClockArc>   
+                    <div className="flex justify-center w-full  rounded-lg bg-slate-100">
+                        <AnimatedClockArc minutes={event.waitTime} ></AnimatedClockArc> 
+                    </div>  
                 )
                 }
 
