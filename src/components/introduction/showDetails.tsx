@@ -32,7 +32,9 @@ type eventData = {
         available:boolean,
         waitTime:number,
         renewTime:string,
-        TimeVisible:boolean
+        TimeVisible:boolean,
+        Block:boolean,
+        ticket:boolean
     },
     detail:Array<{
         title:string,
@@ -237,13 +239,15 @@ export default function ShowDetails (
                     
                 </div>
                 {event.TimeVisible && 
-                <div className="flex justify-center mt-4">
-                    <div className="flex justify-center flex-col w-auto h-auto p-6 bg-slate-50  border-slate-100 shadow-xl rounded-xl">
-                        <AnimatedClockArc minutes={event.waitTime} />
-                        <div className="text-center mt-2 text-black text-lg ">現在の待ち時間</div>
-                        <div className="text-center mt-2 text-black text-lg ">更新:{event.renewTime}</div>
-                    </div>
-                </div>   
+                event.Block ? 
+                    <div className="w-full mt-[5vw] lg:mt-10 px-[4vw] lg:px-6 py-[3vw] lg:py-6 rounded-lg bg-slate-100 text-center">
+                        <p className="text-[4vw] lg:text-2xl text-slate-500 font-medium">受付終了しました</p>
+                    </div>  :
+                    (event.ticket ?<div className="w-full mt-[5vw] lg:mt-10 px-[4vw] lg:px-6 py-[3vw] lg:py-6 rounded-lg bg-slate-100 text-center">
+                        <p className="text-[4vw] lg:text-2xl text-slate-500 font-medium">整理券制です</p>
+                    </div> : 
+                    <AnimatedClockArc minutes={event.waitTime}></AnimatedClockArc>   
+                )
                 }
 
                 <div className="w-full my-[7vw] px-12 lg:my-10">

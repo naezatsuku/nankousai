@@ -31,7 +31,9 @@ type Props = {
         tags:Array<string>;
         prevTime:number
         waitTime:number,
-        TimeVisible:boolean
+        TimeVisible:boolean,
+        Block:boolean,
+        ticket:boolean
     }>
 }
 
@@ -50,7 +52,7 @@ type TimeMap ={
     id:number,
     className:string
     prevTime:number
-    waitTime:number
+    waitTime:number,
 }
 const STORAGE_KEY = 'refreshCooldownEnd'
 
@@ -472,9 +474,13 @@ export default function ShowEvent(
                                 <div >
                                     <div className={`font-medium ${setTextColor(value.tags)} pb-[2%]`}>
                                         {value.TimeVisible &&
-                                        <Suspense>
+                                        (value.Block ?
+                                            <p className="text-[2.5vw] lg:text-sm xl:text-xs 2xl:text-sm">受付終了</p>:
+                                            value.ticket ?
+                                            <p className="text-[2.5vw] lg:text-sm xl:text-xs 2xl:text-sm">整理券制です</p>
+                                            :
                                             <ShowTime TimeMap={findTime(value.id)} ></ShowTime>
-                                        </Suspense>
+                                        )
                                         }
                                                     
                                     </div>      

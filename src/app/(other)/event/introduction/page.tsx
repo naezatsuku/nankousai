@@ -25,7 +25,9 @@ type eventData = {
         available:boolean,
         waitTime:number,
         renewTime:string,
-        TimeVisible:boolean
+        TimeVisible:boolean,
+        Block:boolean,
+        ticket:boolean
     },
     detail:Array<{
         title:string,
