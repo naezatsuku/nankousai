@@ -5,6 +5,7 @@ import Events from "@/components/top/event"
 import Guide from "@/components/top/guide"
 import Map from "@/components/top/map"
 import Footer from "@/components/global/footer"
+import NewSitePopup from "@/components/top/new_site_popup"
 
 
 export const metadata = {
@@ -80,6 +81,7 @@ export default function page() {
         <Header></Header>
       </div>
       <div className="z-0 w-full" id="date">
+        <NewSitePopup></NewSitePopup>
         <Date></Date>
         <Events></Events>
         <Map></Map>

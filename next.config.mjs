@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["fonts.gstatic.com","myypelzqjunsrpytkiee.supabase.co"],
+    domains: ["fonts.gstatic.com","myypelzqjunsrpytkiee.supabase.co","nankousai-3d-map.vercel.app"],
      // ここでフォント取得を許可
   },
   async headers() {
